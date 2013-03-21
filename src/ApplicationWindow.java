@@ -1,6 +1,6 @@
 import java.awt.BorderLayout;
-import java.awt.Component;
 import java.awt.EventQueue;
+import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -15,7 +15,8 @@ public class ApplicationWindow {
 
 	private Controller controller;
 	private JFrame frame;
-	ArrayList<JPanel> playerPanels;
+	private ArrayList<JPanel> playerPanels;
+	private JLabel middleText;
 
 	/**
 	 * Launch the application.
@@ -24,7 +25,8 @@ public class ApplicationWindow {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					ApplicationWindow window = new ApplicationWindow();
+					ApplicationWindow window = new ApplicationWindow(
+							new Controller());
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -34,15 +36,17 @@ public class ApplicationWindow {
 	}
 
 	/**
-	 * Create the application.
+	 * Create the application. Need to remove the controller creation once rest
+	 * has been implemented.
 	 */
-	public ApplicationWindow() {
-		setController(new Controller());
+	public ApplicationWindow(Controller cont) {
+		this.controller = cont;
 		initialize();
 	}
 
 	/**
-	 * Initialize the contents of the frame.
+	 * Initialize the contents of the frame and also does an inital update on
+	 * them.
 	 */
 	private void initialize() {
 		frame = new JFrame();
@@ -51,10 +55,40 @@ public class ApplicationWindow {
 		frame.getContentPane().setLayout(new BorderLayout(0, 0));
 
 		createPlayerPanels();
+		createMiddleTextArea();
 
 		updateHands(controller.getAllHands());
+		setMiddleTextArea(controller.getTextForMiddle());
 	}
 
+	/**
+	 * Creates the label that goes in the center of the window.
+	 */
+	private void createMiddleTextArea() {
+		JPanel panel = new JPanel();
+		frame.getContentPane().add(panel, BorderLayout.CENTER);
+		panel.setLayout(new GridBagLayout());
+		middleText = new JLabel();
+		panel.add(middleText);
+	}
+
+	/**
+	 * Updates the middle text. The method changes the string to HTML to
+	 * display, care needs to be taken on any HTML escape charatcers or the
+	 * like.
+	 * 
+	 * @param textForMiddle
+	 *            The string to be placed in the center of window.
+	 */
+	private void setMiddleTextArea(String textForMiddle) {
+		String changedToHTML = "<html>"
+				+ textForMiddle.replaceAll("\n", "<br>") + "</html>";
+		middleText.setText(changedToHTML);
+	}
+
+	/**
+	 * Creates all of the panels that will display the players cards.
+	 */
 	private void createPlayerPanels() {
 		playerPanels = new ArrayList<JPanel>();
 		for (int q = 0; q < 4; q++)
@@ -91,10 +125,6 @@ public class ApplicationWindow {
 		}
 	}
 
-	public void setController(Controller cont) {
-		this.controller = cont;
-	}
-
 	/**
 	 * Updates the GUI to reflect the the hand passed in
 	 * 
@@ -110,7 +140,7 @@ public class ApplicationWindow {
 			if (pos == 0)
 				((JButton) playerPanels.get(pos).getComponent(q))
 						.setText(toSet);
-			else{
+			else {
 				((JLabel) playerPanels.get(pos).getComponent(q)).setText(toSet);
 			}
 			playerPanels.get(pos).getComponent(q).setVisible(true);
