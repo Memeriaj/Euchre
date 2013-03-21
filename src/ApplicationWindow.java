@@ -1,4 +1,5 @@
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.EventQueue;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -36,6 +37,7 @@ public class ApplicationWindow {
 	 * Create the application.
 	 */
 	public ApplicationWindow() {
+		setController(new Controller());
 		initialize();
 	}
 
@@ -65,7 +67,7 @@ public class ApplicationWindow {
 		for (int q = 0; q < 4; q++) {
 			if (q == 0) {
 				playerPanels.get(0).setLayout(new GridLayout(1, 0, 0, 0));
-				for (int w = 0; q < 5; q++) {
+				for (int w = 0; w < 5; w++) {
 					JButton toAdd = new JButton();
 					toAdd.addActionListener(new ActionListener() {
 
@@ -81,9 +83,9 @@ public class ApplicationWindow {
 				// 0 - Horiz, 1 - Vert, 2 - Horiv, 3 - Vert
 				playerPanels.get(q).setLayout(
 						new GridLayout((q + 1) % 2, q % 2, 0, 0));
-				for (int w = 0; q < 5; q++) {
+				for (int w = 0; w < 5; w++) {
 					JLabel toAdd = new JLabel();
-					playerPanels.get(0).add(toAdd);
+					playerPanels.get(q).add(toAdd);
 				}
 			}
 		}
@@ -108,11 +110,12 @@ public class ApplicationWindow {
 			if (pos == 0)
 				((JButton) playerPanels.get(pos).getComponent(q))
 						.setText(toSet);
-			else
+			else{
 				((JLabel) playerPanels.get(pos).getComponent(q)).setText(toSet);
+			}
 			playerPanels.get(pos).getComponent(q).setVisible(true);
 		}
-		for (int q = 0; q < 5 - currentHand.size(); q++)
+		for (int q = currentHand.size(); q < 5; q++)
 			playerPanels.get(pos).getComponent(q).setVisible(false);
 	}
 
