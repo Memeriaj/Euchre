@@ -136,7 +136,7 @@ public class ApplicationWindow {
 	private void updateHands(int pos, ArrayList<Card> currentHand) {
 		for (int q = 0; q < currentHand.size(); q++) {
 			Card currCard = currentHand.get(q);
-			String toSet = currCard.value + " - " + currCard.suit;
+			String toSet = currCard.toString();
 			if (pos == 0)
 				((JButton) playerPanels.get(pos).getComponent(q))
 						.setText(toSet);

@@ -8,6 +8,7 @@ public class Player {
 	public Player(String name)
 	{
 		this.name = name;
+		hand = new ArrayList<Card>();
 	}
 	
 	protected ArrayList<Card> getCardsInHandOfSuit(Card.SUIT suit)
