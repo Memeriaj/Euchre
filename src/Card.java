@@ -18,6 +18,7 @@ public class Card
 		this.value = val;
 	}
 	
+	@Override
 	public String toString()
 	{
 		String ret = "Invalid";
@@ -59,5 +60,14 @@ public class Card
 			break;
 		}
 		return ret;
+	}
+	
+	@Override
+	public boolean equals(Object obj)
+	{
+		if (obj == null || obj.getClass() != this.getClass())
+			return false;
+		Card otherCard = (Card) obj;
+		return this.value == otherCard.value && this.suit == otherCard.suit;
 	}
 }
