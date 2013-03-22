@@ -21,4 +21,5 @@ public class AIPlayer extends Player
 		this.removeCardFromHand(cardToPlay);
 		return cardToPlay;
 	}
+
 }
