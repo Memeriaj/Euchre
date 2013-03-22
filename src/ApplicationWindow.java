@@ -10,6 +10,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 
 public class ApplicationWindow {
 
@@ -41,6 +42,7 @@ public class ApplicationWindow {
 	 */
 	public ApplicationWindow(Controller cont) {
 		this.controller = cont;
+		cont.setAppWindow(this);
 		initialize();
 	}
 
@@ -59,6 +61,8 @@ public class ApplicationWindow {
 
 		updateHands(controller.getAllHands());
 		setMiddleTextArea(controller.getTextForMiddle());
+		
+		
 	}
 
 	/**
@@ -80,7 +84,7 @@ public class ApplicationWindow {
 	 * @param textForMiddle
 	 *            The string to be placed in the center of window.
 	 */
-	private void setMiddleTextArea(String textForMiddle) {
+	public void setMiddleTextArea(String textForMiddle) {
 		String changedToHTML = "<html>"
 				+ textForMiddle.replaceAll("\n", "<br>") + "</html>";
 		middleText.setText(changedToHTML);
@@ -109,6 +113,14 @@ public class ApplicationWindow {
 						public void actionPerformed(ActionEvent arg0) {
 							JButton buttonPressed = (JButton) arg0.getSource();
 							controller.cardPlayed(buttonPressed);
+							frame.revalidate();
+							frame.repaint();
+//							SwingUtilities.invokeLater(new Runnable(){
+//						        @Override public void run() {
+//						          //updateUI(); // <----- repaint? revalidate? what?
+//						        	frame.revalidate();
+//						        }
+//						      });
 						}
 					});
 					playerPanels.get(0).add(toAdd);
@@ -156,7 +168,7 @@ public class ApplicationWindow {
 	 *            All of the hands, must come in order, the human first then
 	 *            around from his left.
 	 */
-	private void updateHands(ArrayList<ArrayList<Card>> currentHands) {
+	public void updateHands(ArrayList<ArrayList<Card>> currentHands) {
 		for (int q = 0; q < currentHands.size(); q++)
 			updateHands(q, currentHands.get(q));
 	}
