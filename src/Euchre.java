@@ -6,11 +6,12 @@ public class Euchre {
 	public LinkedList<Card> deck = new LinkedList<Card>();
 	public ArrayList<Card> allCards = new ArrayList<Card>();
 	public ArrayList<Player> players = new ArrayList<Player>();
+	
 	public Euchre(){
 		setUpAllCards();
-		//setUpPlayers();
-		//shuffle();
-		//deal();
+		setUpPlayers();
+		shuffle();
+		deal();
 	}
 	
 	/*Shuffles the deck, refilling it with all 24 cards in a random order*/
@@ -22,15 +23,19 @@ public class Euchre {
 		}
 		for (int x=0; x<24; x++){
 			int y = r.nextInt(24);
-			while (!used[y])
+			while (used[y]){
 				y = r.nextInt(24);
+			}
 			deck.push(allCards.get(y));
+			used[y] = true;
 		}
 	}
 	
 	/*Removes the card off the top of deck and returns it*/
 	public Card draw(){
-		return deck.pop();
+		if(!deck.isEmpty()) 
+			return deck.pop();
+		return new Card(Card.SUIT.SPADES, -1);
 	}
 	
 	/*Deals 5 cards off the top of the deck to each player*/
