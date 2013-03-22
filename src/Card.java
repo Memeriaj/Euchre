@@ -17,4 +17,5 @@ public class Card
 		this.suit = s;
 		this.value = val;
 	}
+
 }
