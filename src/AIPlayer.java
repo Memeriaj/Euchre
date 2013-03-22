@@ -3,6 +3,10 @@ import java.util.ArrayList;
 
 public class AIPlayer extends Player 
 {
+	public AIPlayer(String name) {
+		super(name);
+	}
+
 	// used for leading
 	public Card getCardToPlay()
 	{

@@ -5,6 +5,11 @@ public class Player {
 	public String name;
 	public ArrayList<Card> hand;
 	
+	public Player(String name)
+	{
+		this.name = name;
+	}
+	
 	protected ArrayList<Card> getCardsInHandOfSuit(Card.SUIT suit)
 	{
 		ArrayList<Card> ret = new ArrayList<Card>();
