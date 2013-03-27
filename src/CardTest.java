@@ -46,5 +46,49 @@ public class CardTest {
 		Card c2 = new Card(Card.SUIT.CLUBS, 9);
 		assertFalse(c1.equals(c2));
 	}
+	
+	@Test
+	public void testCardValueNonTrump(){
+		Card c = new Card(Card.SUIT.SPADES, 12);
+		assertEquals(c.cardValue(Card.SUIT.HEARTS),12);
+	}
 
+	@Test
+	public void testCardValueTrumpNonJack(){
+		Card c = new Card(Card.SUIT.SPADES, 12);
+		assertEquals(c.cardValue(Card.SUIT.SPADES),26);
+	}
+	
+	@Test
+	public void testCardValueTrumpJack(){
+		Card c = new Card(Card.SUIT.SPADES, 11);
+		assertEquals(c.cardValue(Card.SUIT.SPADES),30);
+	}
+	
+	@Test
+	public void testCardValueSameColorJack(){
+		Card c = new Card(Card.SUIT.CLUBS, 11);
+		assertEquals(c.cardValue(Card.SUIT.SPADES),29);
+	}
+	
+	@Test
+	public void testGreaterNoTrump(){
+		Card c1 = new Card(Card.SUIT.SPADES, 12);
+		Card c2 = new Card(Card.SUIT.SPADES, 10);
+		assert(c1.greater(c2, Card.SUIT.HEARTS));
+	}
+	
+	@Test
+	public void testGreaterTrump(){
+		Card c1 = new Card(Card.SUIT.SPADES, 12);
+		Card c2 = new Card(Card.SUIT.SPADES, 10);
+		assert(c1.greater(c2, Card.SUIT.SPADES));
+	}
+	
+	@Test
+	public void testGreaterTrumpAndNoTrump(){
+		Card c1 = new Card(Card.SUIT.SPADES, 10);
+		Card c2 = new Card(Card.SUIT.HEARTS, 12);
+		assert(c1.greater(c2, Card.SUIT.SPADES));
+	}
 }
