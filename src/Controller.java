@@ -19,13 +19,6 @@ public class Controller {
 	 */
 	public ArrayList<ArrayList<Card>> getAllHands() {
 		ArrayList<ArrayList<Card>> out = new ArrayList<ArrayList<Card>>();
-//		for (int q = 0; q < 4; q++) {
-//			ArrayList<Card> hand = new ArrayList<Card>();
-//			for (int w = 0; w < 5; w++) {
-//				hand.add(new Card(Card.SUIT.CLUBS, 9 + w));
-//			}
-//			out.add(hand);
-//		}
 		for(Player p : euchre.players)
 			out.add(p.hand);
 		return out;
@@ -39,6 +32,7 @@ public class Controller {
 	 *            The JButton that was pressed.
 	 */
 	public void cardPlayed(JButton source) {
+		text += "\n";
 		text += "\nHuman: "+source.getText();
 		for(int q=0; q<euchre.players.get(0).hand.size(); q++){
 			if(euchre.players.get(0).hand.get(q).toString().equals(source.getText())){
@@ -53,7 +47,7 @@ public class Controller {
 		}
 		System.out.println(text);
 		applicationWindow.updateHands(getAllHands());
-		applicationWindow.setMiddleTextArea(text);
+		applicationWindow.setMiddleTextArea(Utils.convertStringToHTML(text));
 	}
 
 	/**

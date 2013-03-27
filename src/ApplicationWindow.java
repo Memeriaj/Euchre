@@ -85,9 +85,7 @@ public class ApplicationWindow {
 	 *            The string to be placed in the center of window.
 	 */
 	public void setMiddleTextArea(String textForMiddle) {
-		String changedToHTML = "<html>"
-				+ textForMiddle.replaceAll("\n", "<br>") + "</html>";
-		middleText.setText(changedToHTML);
+		middleText.setText(textForMiddle);
 	}
 
 	/**
@@ -115,12 +113,6 @@ public class ApplicationWindow {
 							controller.cardPlayed(buttonPressed);
 							frame.revalidate();
 							frame.repaint();
-//							SwingUtilities.invokeLater(new Runnable(){
-//						        @Override public void run() {
-//						          //updateUI(); // <----- repaint? revalidate? what?
-//						        	frame.revalidate();
-//						        }
-//						      });
 						}
 					});
 					playerPanels.get(0).add(toAdd);
