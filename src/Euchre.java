@@ -7,7 +7,7 @@ public class Euchre {
 	public ArrayList<Card> allCards = new ArrayList<Card>();
 	public ArrayList<Player> players = new ArrayList<Player>();
 	public int currPlayer = -1; 
-	public ArrayList<Card> currTrick = new ArrayList<Card>();
+	public ArrayList<Card> currTrick = new ArrayList<Card>(4);
 	public Card.SUIT trump = Card.SUIT.SPADES;
 	public int[] trickCount = new int[2];
 	
@@ -74,14 +74,29 @@ public class Euchre {
 	public int scoreTrick(){
 		int winner = 0;
 		int high = currTrick.get(0).cardValue(trump);
+		currTrick.set(0, null);
 		for(int x=1; x<4; x++){
 			if(currTrick.get(x).cardValue(trump) > high){
 				winner = x;
 				high = currTrick.get(x).cardValue(trump);
 			}
-			
+			currTrick.set(x, null);
 		}
 		trickCount[winner % 2] ++;
 		return winner;
+	}
+	
+	public void playCard(String cardBeingPlayed){
+		players.get(0).removeCardFromHand(cardBeingPlayed);
+		currPlayer = 1;
+	}
+
+	public void makeAIPlay() {
+		// TODO Auto-generated method stub
+		currTrick = new ArrayList<Card>();
+		currTrick.add(null);
+		currTrick.add(new Card(Card.SUIT.CLUBS, 9));
+		currTrick.add(null);
+		currTrick.add(new Card(Card.SUIT.CLUBS, 13));
 	}
 }

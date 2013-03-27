@@ -110,40 +110,42 @@ public class PlayerTest {
 	}
 	
 	@Test
-	public void getCardFromString_emptyHand_null(){
+	public void removeCardFromHand_emptyHand_noError(){
 		Player testPlayer = new Player("test");
-		assertNull(testPlayer.getCardFromString("Ace of Spades"));
+		testPlayer.removeCardFromHand("Ace of Spades");
+		assertTrue(true);
 	}
 	
 	@Test
-	public void getCardFromString_cardNotInHand_null(){
+	public void removeCardFromHand_cardNotInHand_fiveCardsRemaining(){
 		Player testPlayer = new Player("test");
 		testPlayer.hand.add(new Card(Card.SUIT.HEARTS, 10));
 		testPlayer.hand.add(new Card(Card.SUIT.DIAMONDS, 11));
 		testPlayer.hand.add(new Card(Card.SUIT.SPADES, 9));
 		testPlayer.hand.add(new Card(Card.SUIT.SPADES, 13));
 		testPlayer.hand.add(new Card(Card.SUIT.DIAMONDS, 14));
-		assertNull(testPlayer.getCardFromString("Ace of Spades"));
+		testPlayer.removeCardFromHand("Ace of Spades");
+		assertEquals(5, testPlayer.hand.size());
 	}
 	
 	@Test
-	public void getCardFromString_onlyCardInHand_card(){
+	public void removeCardFromHand_onlyCardInHand_noCardsLeft(){
 		Player testPlayer = new Player("test");
 		testPlayer.hand.add(new Card(Card.SUIT.SPADES, 14));
-		Card output = testPlayer.getCardFromString("Ace of Spades");
-		assertSame(testPlayer.hand.get(0), output);
+		testPlayer.removeCardFromHand("Ace of Spades");
+		assertEquals(0, testPlayer.hand.size());
 	}
 	
 	@Test
-	public void getCardFromString_multipleCardsInHand_card(){
+	public void removeCardFromHand_multipleCardsInHand_fourCardsLeft(){
 		Player testPlayer = new Player("test");
 		testPlayer.hand.add(new Card(Card.SUIT.HEARTS, 10));
 		testPlayer.hand.add(new Card(Card.SUIT.DIAMONDS, 11));
 		testPlayer.hand.add(new Card(Card.SUIT.SPADES, 14));
 		testPlayer.hand.add(new Card(Card.SUIT.SPADES, 9));
 		testPlayer.hand.add(new Card(Card.SUIT.SPADES, 13));
-		Card output = testPlayer.getCardFromString("Ace of Spades");
-		assertSame(testPlayer.hand.get(2), output);
+		testPlayer.removeCardFromHand("Ace of Spades");
+		assertEquals(4, testPlayer.hand.size());
 	}
 
 }

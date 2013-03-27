@@ -32,18 +32,12 @@ public class Controller {
 	 *            The JButton that was pressed.
 	 */
 	public void cardPlayed(String cardText) {
-		text += "\n";
-		text += "\nHuman: "+source.getText();
-		for(int q=0; q<euchre.players.get(0).hand.size(); q++){
-			if(euchre.players.get(0).hand.get(q).toString().equals(source.getText())){
-				euchre.players.get(0).hand.remove(q);
-				break;
-			}
-		}
-		for(int q=1; q<euchre.players.size(); q++){
-			Card cardPlayed = euchre.players.get(q).getLowestValueCard();
-			text += "\nPlayer "+q+": "+cardPlayed;
-			euchre.players.get(q).hand.remove(cardPlayed);
+		euchre.playCard(cardText);
+		euchre.makeAIPlay();
+		text = "Your score: "+euchre.trickCount[0]+"   Opponent's score: "+euchre.trickCount[0]+"\n";
+		for(int q=0; q<euchre.currTrick.size(); q++){
+			if(euchre.currTrick.get(q) != null)
+				text += "Player "+q+": "+euchre.currTrick.get(q).toString()+"\n";
 		}
 		System.out.println(text);
 		applicationWindow.updateHands(getAllHands());

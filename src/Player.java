@@ -93,14 +93,13 @@ public class Player {
 		hand.remove(cardToRemove);
 	}
 	
-	protected Card getCardFromString(String cardString){
+	protected void removeCardFromHand(String cardString){
 		Card cardToReturn = null;
 		for(int q=0; q<hand.size(); q++){
 			if(hand.get(q).toString().equals(cardString)){
-				cardToReturn = hand.get(q);
+				hand.remove(q);
 				break;
 			}
 		}
-		return cardToReturn;
 	}
 }
