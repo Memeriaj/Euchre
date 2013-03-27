@@ -70,4 +70,41 @@ public class Card
 		Card otherCard = (Card) obj;
 		return this.value == otherCard.value && this.suit == otherCard.suit;
 	}
+	
+	public int cardValue (SUIT trump)
+	{
+		SUIT sameColor;
+		switch (trump)
+		{
+		case CLUBS:
+			sameColor = SUIT.SPADES;
+			break;
+		case SPADES:
+			sameColor = SUIT.CLUBS;
+			break;
+		case HEARTS:
+			sameColor = SUIT.DIAMONDS;
+			break;
+		case DIAMONDS:
+			sameColor = SUIT.HEARTS;
+			break;
+		default:
+			sameColor = SUIT.HEARTS;
+		}
+		if (this.suit == trump){
+			if(this.value == 11) /*Jack of trump suit*/
+				return 30;
+			return this.value + 14;
+		}
+		if ((this.suit == sameColor) && (this.value == 11)) /*Jack of same color*/
+		{
+			return 29;
+		}
+		return this.value;
+	}
+	
+	public boolean greater(Card other, SUIT trump)
+	{
+		return this.cardValue(trump) > other.cardValue(trump);	
+	}
 }
