@@ -31,7 +31,7 @@ public class Controller {
 	 * @param source
 	 *            The JButton that was pressed.
 	 */
-	public void cardPlayed(JButton source) {
+	public void cardPlayed(String cardText) {
 		text += "\n";
 		text += "\nHuman: "+source.getText();
 		for(int q=0; q<euchre.players.get(0).hand.size(); q++){

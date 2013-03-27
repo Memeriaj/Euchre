@@ -108,5 +108,42 @@ public class PlayerTest {
 		assertEquals(false, p.hasCardOfSuit(Card.SUIT.DIAMONDS));
 		assertEquals(0,p.hand.size());
 	}
+	
+	@Test
+	public void getCardFromString_emptyHand_null(){
+		Player testPlayer = new Player("test");
+		assertNull(testPlayer.getCardFromString("Ace of Spades"));
+	}
+	
+	@Test
+	public void getCardFromString_cardNotInHand_null(){
+		Player testPlayer = new Player("test");
+		testPlayer.hand.add(new Card(Card.SUIT.HEARTS, 10));
+		testPlayer.hand.add(new Card(Card.SUIT.DIAMONDS, 11));
+		testPlayer.hand.add(new Card(Card.SUIT.SPADES, 9));
+		testPlayer.hand.add(new Card(Card.SUIT.SPADES, 13));
+		testPlayer.hand.add(new Card(Card.SUIT.DIAMONDS, 14));
+		assertNull(testPlayer.getCardFromString("Ace of Spades"));
+	}
+	
+	@Test
+	public void getCardFromString_onlyCardInHand_card(){
+		Player testPlayer = new Player("test");
+		testPlayer.hand.add(new Card(Card.SUIT.SPADES, 14));
+		Card output = testPlayer.getCardFromString("Ace of Spades");
+		assertSame(testPlayer.hand.get(0), output);
+	}
+	
+	@Test
+	public void getCardFromString_multipleCardsInHand_card(){
+		Player testPlayer = new Player("test");
+		testPlayer.hand.add(new Card(Card.SUIT.HEARTS, 10));
+		testPlayer.hand.add(new Card(Card.SUIT.DIAMONDS, 11));
+		testPlayer.hand.add(new Card(Card.SUIT.SPADES, 14));
+		testPlayer.hand.add(new Card(Card.SUIT.SPADES, 9));
+		testPlayer.hand.add(new Card(Card.SUIT.SPADES, 13));
+		Card output = testPlayer.getCardFromString("Ace of Spades");
+		assertSame(testPlayer.hand.get(2), output);
+	}
 
 }

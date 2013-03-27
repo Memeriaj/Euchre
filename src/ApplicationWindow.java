@@ -61,8 +61,7 @@ public class ApplicationWindow {
 
 		updateHands(controller.getAllHands());
 		setMiddleTextArea(controller.getTextForMiddle());
-		
-		
+
 	}
 
 	/**
@@ -110,7 +109,7 @@ public class ApplicationWindow {
 						@Override
 						public void actionPerformed(ActionEvent arg0) {
 							JButton buttonPressed = (JButton) arg0.getSource();
-							controller.cardPlayed(buttonPressed);
+							controller.cardPlayed(buttonPressed.getText());
 							frame.revalidate();
 							frame.repaint();
 						}
@@ -144,9 +143,8 @@ public class ApplicationWindow {
 			if (pos == 0)
 				((JButton) playerPanels.get(pos).getComponent(q))
 						.setText(toSet);
-			else {
+			else
 				((JLabel) playerPanels.get(pos).getComponent(q)).setText(toSet);
-			}
 			playerPanels.get(pos).getComponent(q).setVisible(true);
 		}
 		for (int q = currentHand.size(); q < 5; q++)
