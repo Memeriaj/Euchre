@@ -6,12 +6,16 @@ public class Euchre {
 	public LinkedList<Card> deck = new LinkedList<Card>();
 	public ArrayList<Card> allCards = new ArrayList<Card>();
 	public ArrayList<Player> players = new ArrayList<Player>();
+	public int currPlayer = -1; 
+	public ArrayList<Card> currTrick = new ArrayList<Card>();
+	public Card.SUIT trump = Card.SUIT.SPADES;
 	
 	public Euchre(){
 		setUpAllCards();
 		setUpPlayers();
 		shuffle();
 		deal();
+		currPlayer = 1;
 	}
 	
 	/*Shuffles the deck, refilling it with all 24 cards in a random order*/
@@ -63,5 +67,19 @@ public class Euchre {
 		players.add(new Player("AI 1"));
 		players.add(new Player("AI 2"));
 		players.add(new Player("AI 3"));
+	}
+	
+	/*returns the player index of the player who won the trick*/
+	public int scoreTrick(){
+		int winner = 0;
+		int high = currTrick.get(0).cardValue(trump);
+		for(int x=1; x<4; x++){
+			if(currTrick.get(x).cardValue(trump) > high){
+				winner = x;
+				high = currTrick.get(x).cardValue(trump);
+			}
+			
+		}
+		return winner;
 	}
 }
