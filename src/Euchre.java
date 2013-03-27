@@ -9,6 +9,7 @@ public class Euchre {
 	public int currPlayer = -1; 
 	public ArrayList<Card> currTrick = new ArrayList<Card>();
 	public Card.SUIT trump = Card.SUIT.SPADES;
+	public int[] trickCount = new int[2];
 	
 	public Euchre(){
 		setUpAllCards();
@@ -69,7 +70,7 @@ public class Euchre {
 		players.add(new Player("AI 3"));
 	}
 	
-	/*returns the player index of the player who won the trick*/
+	/*returns the player index of the player who won the trick and update the trick count*/
 	public int scoreTrick(){
 		int winner = 0;
 		int high = currTrick.get(0).cardValue(trump);
@@ -80,6 +81,7 @@ public class Euchre {
 			}
 			
 		}
+		trickCount[winner % 2] ++;
 		return winner;
 	}
 }
