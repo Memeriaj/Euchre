@@ -71,7 +71,7 @@ public class Card
 		return this.value == otherCard.value && this.suit == otherCard.suit;
 	}
 	
-	public int cardValue (SUIT trump)
+	public int cardValue (SUIT trump, SUIT leading)
 	{
 		SUIT sameColor;
 		switch (trump)
@@ -93,18 +93,22 @@ public class Card
 		}
 		if (this.suit == trump){
 			if(this.value == 11) /*Jack of trump suit*/
-				return 30;
-			return this.value + 14;
+				return 44;
+			return this.value + 28;
 		}
 		if ((this.suit == sameColor) && (this.value == 11)) /*Jack of same color*/
 		{
-			return 29;
+			return 43;
+		}
+		if (this.suit == leading)
+		{
+			return this.value+14;
 		}
 		return this.value;
 	}
 	
-	public boolean greater(Card other, SUIT trump)
+	public boolean greater(Card other, SUIT trump, SUIT leading)
 	{
-		return this.cardValue(trump) > other.cardValue(trump);	
+		return this.cardValue(trump,leading) > other.cardValue(trump, leading);	
 	}
 }

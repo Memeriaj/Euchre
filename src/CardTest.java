@@ -48,47 +48,59 @@ public class CardTest {
 	}
 	
 	@Test
-	public void testCardValueNonTrump(){
+	public void testCardValueNonTrumpNonLead(){
 		Card c = new Card(Card.SUIT.SPADES, 12);
-		assertEquals(c.cardValue(Card.SUIT.HEARTS),12);
+		assertEquals(c.cardValue(Card.SUIT.HEARTS,Card.SUIT.DIAMONDS),12);
 	}
-
+	@Test
+	public void testCardValueNonTrumpLead(){
+		Card c = new Card(Card.SUIT.SPADES, 12);
+		assertEquals(c.cardValue(Card.SUIT.HEARTS,Card.SUIT.SPADES),26);
+	}
+	
 	@Test
 	public void testCardValueTrumpNonJack(){
 		Card c = new Card(Card.SUIT.SPADES, 12);
-		assertEquals(c.cardValue(Card.SUIT.SPADES),26);
+		assertEquals(c.cardValue(Card.SUIT.SPADES,Card.SUIT.DIAMONDS),40);
 	}
 	
 	@Test
 	public void testCardValueTrumpJack(){
 		Card c = new Card(Card.SUIT.SPADES, 11);
-		assertEquals(c.cardValue(Card.SUIT.SPADES),30);
+		assertEquals(c.cardValue(Card.SUIT.SPADES,Card.SUIT.DIAMONDS),44);
 	}
 	
 	@Test
 	public void testCardValueSameColorJack(){
 		Card c = new Card(Card.SUIT.CLUBS, 11);
-		assertEquals(c.cardValue(Card.SUIT.SPADES),29);
+		assertEquals(c.cardValue(Card.SUIT.SPADES,Card.SUIT.DIAMONDS),43);
 	}
 	
 	@Test
 	public void testGreaterNoTrump(){
 		Card c1 = new Card(Card.SUIT.SPADES, 12);
 		Card c2 = new Card(Card.SUIT.SPADES, 10);
-		assert(c1.greater(c2, Card.SUIT.HEARTS));
+		assert(c1.greater(c2, Card.SUIT.HEARTS,Card.SUIT.SPADES));
 	}
 	
 	@Test
 	public void testGreaterTrump(){
-		Card c1 = new Card(Card.SUIT.SPADES, 12);
-		Card c2 = new Card(Card.SUIT.SPADES, 10);
-		assert(c1.greater(c2, Card.SUIT.SPADES));
+		Card c1 = new Card(Card.SUIT.SPADES, 10);
+		Card c2 = new Card(Card.SUIT.SPADES, 12);
+		assert(c1.greater(c2, Card.SUIT.SPADES,Card.SUIT.SPADES));
 	}
 	
 	@Test
 	public void testGreaterTrumpAndNoTrump(){
 		Card c1 = new Card(Card.SUIT.SPADES, 10);
 		Card c2 = new Card(Card.SUIT.HEARTS, 12);
-		assert(c1.greater(c2, Card.SUIT.SPADES));
+		assert(c1.greater(c2, Card.SUIT.SPADES,Card.SUIT.HEARTS));
+	}
+	
+	@Test
+	public void testGreaterLeadAndNoLead(){
+		Card c1 = new Card(Card.SUIT.DIAMONDS, 10);
+		Card c2 = new Card(Card.SUIT.HEARTS, 12);
+		assert(c1.greater(c2, Card.SUIT.SPADES,Card.SUIT.DIAMONDS));
 	}
 }
