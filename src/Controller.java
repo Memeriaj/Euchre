@@ -43,11 +43,15 @@ public class Controller {
 	
 	private void updateGUI()
 	{
-		text = "Your score: "+euchre.trickCount[0]+"   Opponent's score: "+euchre.trickCount[1]+"\n";
-		ArrayList<Card> cardList = euchre.currentTrick.cardsPlayed;
-		for(int q=0; q < cardList.size(); q++){
-			text += "Player "+q+": "+cardList.get(q).toString()+"\n";
-		}
+		ArrayList<Trick> tricks = euchre.trickHistory;
+		text = "";
+		if(!tricks.isEmpty())
+			text += "Previous Trick played:\n";
+		text += stringOFTrickPlayed(tricks.get(tricks.size()-1));
+		text += "\nYour score: "+euchre.trickCount[0]+"   Opponent's score: "+euchre.trickCount[1]+"\n";
+		text += "\nCurrent Trick:\n";
+		text += stringOFTrickPlayed(euchre.currentTrick);
+		
 		System.out.println(text);
 		
 		applicationWindow.updateHands(getAllHands());
@@ -64,6 +68,20 @@ public class Controller {
 
 	public void setAppWindow(ApplicationWindow appWin) {
 		applicationWindow = appWin;
+	}
+	
+	public String stringOFTrickPlayed(Trick trick){
+		String out = "";
+		int currentPlayer = trick.leadingPlayer;
+		for(Card card : trick.cardsPlayed){
+			if(currentPlayer == 0)
+				out += "You: ";
+			else
+				out += "Player " + currentPlayer + ": ";
+			out += card + "\n";
+			currentPlayer = (currentPlayer + 1) % 4;
+		}
+		return out;
 	}
 
 }
