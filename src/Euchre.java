@@ -6,8 +6,7 @@ public class Euchre {
 	public LinkedList<Card> deck = new LinkedList<Card>();
 	public ArrayList<Card> allCards = new ArrayList<Card>();
 	public ArrayList<Player> players = new ArrayList<Player>();
-	public int currPlayer = -1; 
-	public ArrayList<Card> currTrick = new ArrayList<Card>(4);
+	public Trick currentTrick;
 	public Card.SUIT trump = Card.SUIT.SPADES;
 	public int[] trickCount = new int[2];
 	
@@ -16,7 +15,9 @@ public class Euchre {
 		setUpPlayers();
 		shuffle();
 		deal();
-		currPlayer = 1;
+		currentTrick = new Trick(0,trump);
+		trickCount[0] = 0;
+		trickCount[1] = 0;
 	}
 	
 	/*Shuffles the deck, refilling it with all 24 cards in a random order*/
@@ -65,38 +66,36 @@ public class Euchre {
 	/*Adds each player to the list of players. Can edit later to allow input*/
 	private void setUpPlayers(){
 		players.add(new Player("Human"));
-		players.add(new Player("AI 1"));
-		players.add(new Player("AI 2"));
-		players.add(new Player("AI 3"));
+		players.add(new AIPlayer("AI 1"));
+		players.add(new AIPlayer("AI 2"));
+		players.add(new AIPlayer("AI 3"));
 	}
 	
-	/*returns the player index of the player who won the trick and update the trick count*/
-	public int scoreTrick(){
-		int winner = 0;
-		int high = currTrick.get(0).cardValue(trump);
-		currTrick.set(0, null);
-		for(int x=1; x<4; x++){
-			if(currTrick.get(x).cardValue(trump) > high){
-				winner = x;
-				high = currTrick.get(x).cardValue(trump);
-			}
-			currTrick.set(x, null);
-		}
-		trickCount[winner % 2] ++;
-		return winner;
+	public void humanPlayCard(String cardBeingPlayed){
+		Card playedCard = players.get(currentTrick.currentPlayer).removeCardFromHand(cardBeingPlayed);
+		playCard(playedCard);
 	}
 	
-	public void playCard(String cardBeingPlayed){
-		players.get(0).removeCardFromHand(cardBeingPlayed);
-		currPlayer = 1;
+	public boolean isCurrentPlayerAI()
+	{
+		return (players.get(currentTrick.currentPlayer) instanceof AIPlayer); 
 	}
 
 	public void makeAIPlay() {
-		// TODO Auto-generated method stub
-		currTrick = new ArrayList<Card>();
-		currTrick.add(null);
-		currTrick.add(new Card(Card.SUIT.CLUBS, 9));
-		currTrick.add(null);
-		currTrick.add(new Card(Card.SUIT.CLUBS, 13));
+		AIPlayer aiPlayer = ((AIPlayer) players.get(currentTrick.currentPlayer));
+		Card cardToPlay = aiPlayer.getCardToPlay(currentTrick);
+		playCard(cardToPlay);
+	}
+	
+	private void playCard(Card c)
+	{
+		if (c == null)
+			return;
+		currentTrick.playCardForCurrentPlayer(c);
+		if (currentTrick.isOver())
+		{
+			trickCount[currentTrick.currentWinner % 2] ++;
+			currentTrick = currentTrick.getNextTrick();
+		}
 	}
 }

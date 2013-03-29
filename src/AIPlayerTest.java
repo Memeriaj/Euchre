@@ -1,9 +1,24 @@
 import static org.junit.Assert.*;
 
+import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 
 public class AIPlayerTest {
+	
+	Trick leadingSuitClubsTrick;
+	Trick leadingSuitHeartsTrick;
+	
+	@Before
+	public void oneTimeSetUp()
+	{
+		leadingSuitClubsTrick = new Trick(0,Card.SUIT.CLUBS);
+		leadingSuitClubsTrick.playCardForCurrentPlayer(new Card(Card.SUIT.CLUBS,9));
+		
+		leadingSuitHeartsTrick = new Trick(0,Card.SUIT.CLUBS);
+		leadingSuitHeartsTrick.playCardForCurrentPlayer(new Card(Card.SUIT.HEARTS,9));
+	}
 
 	@Test
 	public void testAIPlayer() {
@@ -23,8 +38,11 @@ public class AIPlayerTest {
 		aip.hand.add(new Card(Card.SUIT.CLUBS, 12));
 		aip.hand.add(new Card(Card.SUIT.CLUBS, 13));
 		aip.hand.add(new Card(Card.SUIT.CLUBS, 14));
-		assertEquals(new Card(Card.SUIT.CLUBS, 14), aip.getCardToPlay());
+		
+		assertEquals(new Card(Card.SUIT.CLUBS, 14), aip.getCardToPlay(new Trick(0,Card.SUIT.CLUBS)));
 	}
+	
+	
 
 	@Test
 	public void testGetCardToPlaySUITIntHasOneOfSuit() {
@@ -36,7 +54,8 @@ public class AIPlayerTest {
 		aip.hand.add(new Card(Card.SUIT.CLUBS, 12));
 		aip.hand.add(new Card(Card.SUIT.CLUBS, 13));
 		aip.hand.add(new Card(Card.SUIT.CLUBS, 14));
-		assertEquals(new Card(Card.SUIT.CLUBS, 14), aip.getCardToPlay(Card.SUIT.CLUBS,0));
+		
+		assertEquals(new Card(Card.SUIT.CLUBS, 14), aip.getCardToPlay(leadingSuitClubsTrick));
 	}
 	
 	@Test
@@ -49,7 +68,7 @@ public class AIPlayerTest {
 		aip.hand.add(new Card(Card.SUIT.CLUBS, 12));
 		aip.hand.add(new Card(Card.SUIT.CLUBS, 13));
 		aip.hand.add(new Card(Card.SUIT.CLUBS, 14));
-		assertEquals(new Card(Card.SUIT.CLUBS, 9), aip.getCardToPlay(Card.SUIT.HEARTS,0));
+		assertEquals(new Card(Card.SUIT.CLUBS, 9), aip.getCardToPlay(leadingSuitHeartsTrick));
 	}
 
 }

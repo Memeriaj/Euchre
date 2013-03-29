@@ -46,9 +46,9 @@ public class EuchreTest {
 		Euchre euchreTest = new Euchre();
 		euchreTest.players.get(0).hand = new ArrayList<Card>();
 		euchreTest.players.get(0).hand.add(new Card(Card.SUIT.CLUBS, 9));
-		euchreTest.playCard("Nine of Clubs");
+		euchreTest.humanPlayCard("Nine of Clubs");
 		assertTrue(euchreTest.players.get(0).hand.isEmpty());
-		assertEquals(1, euchreTest.currPlayer);
+		assertEquals(1, euchreTest.currentTrick.currentPlayer);
 	}
 	
 	@Test
@@ -60,8 +60,8 @@ public class EuchreTest {
 		euchreTest.players.get(0).hand.add(new Card(Card.SUIT.CLUBS, 11));
 		euchreTest.players.get(0).hand.add(new Card(Card.SUIT.CLUBS, 12));
 		euchreTest.players.get(0).hand.add(new Card(Card.SUIT.CLUBS, 13));
-		euchreTest.playCard("Nine of Clubs");
+		euchreTest.humanPlayCard("Nine of Clubs");
 		assertEquals(4, euchreTest.players.get(0).hand.size());
-		assertEquals(1, euchreTest.currPlayer);
+		assertEquals(1, euchreTest.currentTrick.currentPlayer);
 	}
 }

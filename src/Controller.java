@@ -30,16 +30,26 @@ public class Controller {
 	 * 
 	 * @param source
 	 *            The JButton that was pressed.
+	 * @throws InterruptedException 
 	 */
 	public void cardPlayed(String cardText) {
-		euchre.playCard(cardText);
-		euchre.makeAIPlay();
-		text = "Your score: "+euchre.trickCount[0]+"   Opponent's score: "+euchre.trickCount[0]+"\n";
-		for(int q=0; q<euchre.currTrick.size(); q++){
-			if(euchre.currTrick.get(q) != null)
-				text += "Player "+q+": "+euchre.currTrick.get(q).toString()+"\n";
+		euchre.humanPlayCard(cardText);
+		while (euchre.isCurrentPlayerAI())
+		{
+			euchre.makeAIPlay();
+		}
+		updateGUI();
+	}
+	
+	private void updateGUI()
+	{
+		text = "Your score: "+euchre.trickCount[0]+"   Opponent's score: "+euchre.trickCount[1]+"\n";
+		ArrayList<Card> cardList = euchre.currentTrick.cardsPlayed;
+		for(int q=0; q < cardList.size(); q++){
+			text += "Player "+q+": "+cardList.get(q).toString()+"\n";
 		}
 		System.out.println(text);
+		
 		applicationWindow.updateHands(getAllHands());
 		applicationWindow.setMiddleTextArea(Utils.convertStringToHTML(text));
 	}
