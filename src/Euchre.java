@@ -9,6 +9,7 @@ public class Euchre {
 	public Trick currentTrick;
 	public Card.SUIT trump = Card.SUIT.SPADES;
 	public int[] trickCount = new int[2];
+	ArrayList<Trick> trickHistory = new ArrayList<Trick>();
 	
 	public Euchre(){
 		setUpAllCards();
@@ -95,6 +96,7 @@ public class Euchre {
 		if (currentTrick.isOver())
 		{
 			trickCount[currentTrick.currentWinner % 2] ++;
+			trickHistory.add(currentTrick);
 			currentTrick = currentTrick.getNextTrick();
 		}
 	}
