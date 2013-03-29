@@ -82,11 +82,14 @@ public class EuchreTest {
 	public void testEndOfTrick()
 	{
 		Euchre e = new Euchre();
+		Trick oldTrick = e.currentTrick;
 		e.humanPlayCard(e.players.get(0).hand.get(0).toString());
 		e.makeAIPlay();
 		e.makeAIPlay();
 		e.makeAIPlay();
-		assertTrue(e.trickCount[0] > 0 || e.trickCount[1] > 1);
+		assertTrue(oldTrick.isOver());
+		assertTrue(e.currentTrick != oldTrick);
+		assertTrue(e.trickCount[0] > 0 || e.trickCount[1] > 0);
 		assertTrue(e.trickHistory.size()>0);
 	}
 }
