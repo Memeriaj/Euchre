@@ -73,7 +73,7 @@ public class Card
 	
 	public int cardValue (SUIT trump, SUIT leading)
 	{
-		SUIT sameColor;
+		SUIT sameColor= SUIT.HEARTS;
 		switch (trump)
 		{
 		case CLUBS:
@@ -88,8 +88,6 @@ public class Card
 		case DIAMONDS:
 			sameColor = SUIT.HEARTS;
 			break;
-		default:
-			sameColor = SUIT.HEARTS;
 		}
 		if (this.suit == trump){
 			if(this.value == 11) /*Jack of trump suit*/
