@@ -103,4 +103,40 @@ public class CardTest {
 		Card c2 = new Card(Card.SUIT.HEARTS, 12);
 		assert(c1.greater(c2, Card.SUIT.SPADES,Card.SUIT.DIAMONDS));
 	}
+	
+	@Test
+	public void toString_9D_NineOfDiamonds(){
+		Card card = new Card(Card.SUIT.DIAMONDS, 9);
+		assertTrue(card.toString().equals("Nine of Diamonds"));
+	}
+	
+	@Test
+	public void toString_10H_TenOfHearts(){
+		Card card = new Card(Card.SUIT.HEARTS, 10);
+		assertTrue(card.toString().equals("Ten of Hearts"));
+	}
+	
+	@Test
+	public void toString_11C_JackOfClubs(){
+		Card card = new Card(Card.SUIT.CLUBS, 11);
+		assertTrue(card.toString().equals("Jack of Clubs"));
+	}
+	
+	@Test
+	public void toString_12D_QueenOfSpades(){
+		Card card = new Card(Card.SUIT.SPADES, 12);
+		assertTrue(card.toString().equals("Queen of Spades"));
+	}
+	
+	@Test
+	public void toString_13D_KingOfDiamonds(){
+		Card card = new Card(Card.SUIT.DIAMONDS, 13);
+		assertTrue(card.toString().equals("King of Diamonds"));
+	}
+	
+	@Test
+	public void toString_14D_AceOfDiamonds(){
+		Card card = new Card(Card.SUIT.DIAMONDS, 14);
+		assertTrue(card.toString().equals("Ace of Diamonds"));
+	}
 }
