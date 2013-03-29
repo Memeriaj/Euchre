@@ -26,7 +26,7 @@ class Trick {
 			currentWinner = currentPlayer;
 			currentWinningCard = c;
 		}
-		else if (c.greater(currentWinningCard, trump))
+		else if (c.greater(currentWinningCard, trump, leadingSuit))
 		{
 			currentWinner = currentPlayer;
 			currentWinningCard = c;
