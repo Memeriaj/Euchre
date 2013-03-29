@@ -64,4 +64,29 @@ public class EuchreTest {
 		assertEquals(4, euchreTest.players.get(0).hand.size());
 		assertEquals(1, euchreTest.currentTrick.currentPlayer);
 	}
+	
+	@Test
+	public void testIsCurrentPlayerAI()
+	{
+		Euchre e = new Euchre();
+		assertFalse(e.isCurrentPlayerAI());
+		e.humanPlayCard(e.players.get(0).hand.get(0).toString());
+		assertTrue(e.isCurrentPlayerAI());
+		e.makeAIPlay();
+		assertTrue(e.isCurrentPlayerAI());
+		e.makeAIPlay();
+		assertTrue(e.isCurrentPlayerAI());
+	}
+	
+	@Test
+	public void testEndOfTrick()
+	{
+		Euchre e = new Euchre();
+		e.humanPlayCard(e.players.get(0).hand.get(0).toString());
+		e.makeAIPlay();
+		e.makeAIPlay();
+		e.makeAIPlay();
+		assertTrue(e.trickCount[0] > 0 || e.trickCount[1] > 1);
+		assertTrue(e.trickHistory.size()>0);
+	}
 }
