@@ -44,12 +44,15 @@ public class Controller {
 	
 	private void updateGUI()
 	{
-		ArrayList<Trick> tricks = euchre.trickHistory;
+		ArrayList<Trick> tricks = euchre.currentRound.trickHistory;
 		text = "";
 		if(!tricks.isEmpty())
 			text += "Previous Trick played:\n";
 		text += stringOFTrickPlayed(tricks.get(tricks.size()-1));
-		text += "\nYour score: "+euchre.trickCount[0]+"   Opponent's score: "+euchre.trickCount[1]+"\n";
+		text += "\nYour score: "+euchre.score[0]+
+				"   Opponent's score: "+euchre.score[1]+"\n";
+		text += "\nYour Trick score: "+euchre.currentRound.trickCount[0]+
+				"   Opponent's score: "+euchre.currentRound.trickCount[1]+"\n";
 		text += "\nCurrent Trick:\n";
 		text += stringOFTrickPlayed(euchre.currentTrick);
 		

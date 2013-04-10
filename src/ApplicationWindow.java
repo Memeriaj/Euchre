@@ -1,7 +1,9 @@
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.EventQueue;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
+import java.awt.Label;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -18,6 +20,8 @@ public class ApplicationWindow {
 	private JFrame frame;
 	private ArrayList<JPanel> playerPanels;
 	private JLabel middleText;
+	private JLabel[] scoreLabels;
+	private JPanel extraButtonsPanel;
 
 	/**
 	 * Launch the application.
@@ -56,20 +60,72 @@ public class ApplicationWindow {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(new BorderLayout(0, 0));
 
-		createPlayerPanels();
-		createMiddleTextArea();
+		frame.getContentPane().add(createMainDisplayPanel(),
+				BorderLayout.CENTER);
+		frame.getContentPane().add(createExtraButtonsPanel(),
+				BorderLayout.SOUTH);
+		frame.getContentPane().add(createScoreDisplayPanel(),
+				BorderLayout.NORTH);
 
 		updateHands(controller.getAllHands());
 		setMiddleTextArea(controller.getTextForMiddle());
 
+		setPlayersCardsEnabled(false);
+	}
+
+	private Component createScoreDisplayPanel() {
+		JPanel out = new JPanel();
+		out.setLayout(new BorderLayout(0, 0));
+		scoreLabels = new JLabel[2];
+		scoreLabels[0] = new JLabel();
+		scoreLabels[1] = new JLabel();
+		out.add(scoreLabels[0], BorderLayout.WEST);
+		out.add(scoreLabels[1], BorderLayout.EAST);
+		out.add(new JPanel(), BorderLayout.SOUTH);
+		setScoreDisplay(0, 0, 0, 0);
+		return out;
+	}
+
+	public void setScoreDisplay(int playerOverallScore,
+			int opponentOverallScore, int playerTrickScore,
+			int opponentTrickScore) {
+		String left = Utils.convertStringToHTML("Overall Score\nYours: "
+				+ playerOverallScore + "  Opponent: " + opponentOverallScore);
+		String right = Utils.convertStringToHTML("Trick Score\nYours: "
+				+ playerTrickScore + "  Opponent: " + opponentTrickScore);
+		scoreLabels[0].setText(left);
+		scoreLabels[1].setText(right);
+		frame.revalidate();
+		frame.repaint();
+	}
+
+	private Component createExtraButtonsPanel() {
+		extraButtonsPanel = new JPanel();
+		setExtraButtonDisplay();
+		return extraButtonsPanel;
+	}
+
+	public void setExtraButtonDisplay() {
+
+	}
+
+	private JPanel createMainDisplayPanel() {
+		JPanel mainDisplay = new JPanel();
+		mainDisplay.setLayout(new BorderLayout(0, 0));
+
+		createPlayerPanels(mainDisplay);
+		createMiddleTextArea(mainDisplay);
+		return mainDisplay;
 	}
 
 	/**
 	 * Creates the label that goes in the center of the window.
+	 * 
+	 * @param mainDisplay
 	 */
-	private void createMiddleTextArea() {
+	private void createMiddleTextArea(JPanel mainDisplay) {
 		JPanel panel = new JPanel();
-		frame.getContentPane().add(panel, BorderLayout.CENTER);
+		mainDisplay.add(panel, BorderLayout.CENTER);
 		panel.setLayout(new GridBagLayout());
 		middleText = new JLabel();
 		panel.add(middleText);
@@ -89,15 +145,17 @@ public class ApplicationWindow {
 
 	/**
 	 * Creates all of the panels that will display the players cards.
+	 * 
+	 * @param mainDisplay
 	 */
-	private void createPlayerPanels() {
+	private void createPlayerPanels(JPanel mainDisplay) {
 		playerPanels = new ArrayList<JPanel>();
 		for (int q = 0; q < 4; q++)
 			playerPanels.add(new JPanel());
-		frame.getContentPane().add(playerPanels.get(0), BorderLayout.SOUTH);
-		frame.getContentPane().add(playerPanels.get(1), BorderLayout.WEST);
-		frame.getContentPane().add(playerPanels.get(2), BorderLayout.NORTH);
-		frame.getContentPane().add(playerPanels.get(3), BorderLayout.EAST);
+		mainDisplay.add(playerPanels.get(0), BorderLayout.SOUTH);
+		mainDisplay.add(playerPanels.get(1), BorderLayout.WEST);
+		mainDisplay.add(playerPanels.get(2), BorderLayout.NORTH);
+		mainDisplay.add(playerPanels.get(3), BorderLayout.EAST);
 
 		for (int q = 0; q < 4; q++) {
 			if (q == 0) {
@@ -161,5 +219,13 @@ public class ApplicationWindow {
 	public void updateHands(ArrayList<ArrayList<Card>> currentHands) {
 		for (int q = 0; q < currentHands.size(); q++)
 			updateHands(q, currentHands.get(q));
+	}
+	
+	public void setPlayersCardsEnabled(boolean enabled){
+		for(Component button : playerPanels.get(0).getComponents()){
+			button.setEnabled(enabled);
+		}
+		frame.revalidate();
+		frame.repaint();
 	}
 }

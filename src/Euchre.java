@@ -7,6 +7,8 @@ public class Euchre {
 	public ArrayList<Card> allCards = new ArrayList<Card>();
 	public ArrayList<Player> players = new ArrayList<Player>();
 	public Trick currentTrick;
+	public Round currentRound;
+	public int[] score = {5, 5};
 	public Card.SUIT trump = Card.SUIT.SPADES;
 	public int[] trickCount = new int[2];
 	ArrayList<Trick> trickHistory = new ArrayList<Trick>();
