@@ -19,7 +19,7 @@ public class Round {
 		shuffle();
 		deal();
 		trump = getTrump(dealer);
-		currentTrick = new Trick(0,trump);
+		currentTrick = new Trick(leadPlayer,trump);
 		trickCount[0] = 0;
 		trickCount[1] = 0;
 	}
@@ -31,12 +31,10 @@ public class Round {
 	}
 	
 	public void playNext(String s){
-		Card c = null;
 		if (s == "AI")
-			c=makeAIPlay();
+			makeAIPlay();
 		else
-			c=humanPlayCard(s);
-		currentTrick.playCardForCurrentPlayer(c);
+			humanPlayCard(s);
 		if(currentTrick.isOver()){
 				trickCount[currentTrick.currentWinner%2]++;
 				trickHistory.add(currentTrick);
@@ -97,10 +95,9 @@ public class Round {
 		}
 	}
 	
-	public Card humanPlayCard(String cardBeingPlayed){
+	public void humanPlayCard(String cardBeingPlayed){
 		Card playedCard = players.get(currentTrick.currentPlayer).removeCardFromHand(cardBeingPlayed);
 		playCard(playedCard);
-		return playedCard;
 	}
 	
 	public boolean isCurrentPlayerAI()
@@ -108,11 +105,10 @@ public class Round {
 		return (players.get(currentTrick.currentPlayer) instanceof AIPlayer); 
 	}
 
-	public Card makeAIPlay() {
+	public void makeAIPlay() {
 		AIPlayer aiPlayer = ((AIPlayer) players.get(currentTrick.currentPlayer));
 		Card cardToPlay = aiPlayer.getCardToPlay(currentTrick);
 		playCard(cardToPlay);
-		return cardToPlay;
 	}
 	
 	private void playCard(Card c)
