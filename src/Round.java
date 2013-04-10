@@ -12,21 +12,21 @@ public class Round {
 	public ArrayList<Trick> trickHistory = new ArrayList<Trick>();
 	public int leadPlayer;
 	
-	public Round(LinkedList<Card> deckIn, ArrayList<Card> allCardsIn, ArrayList<Player> playersIn){
+	public Round(LinkedList<Card> deckIn, ArrayList<Card> allCardsIn, ArrayList<Player> playersIn, int dealer){
 		deck = deckIn;
 		allCards = allCardsIn;
 		players = playersIn;
 		shuffle();
 		deal();
-		trump = getTrump();
+		trump = getTrump(dealer);
 		currentTrick = new Trick(0,trump);
 		trickCount[0] = 0;
 		trickCount[1] = 0;
 	}
 	
 	/*To be edited later*/
-	public Card.SUIT getTrump(){
-		leadPlayer = 0;
+	public Card.SUIT getTrump(int dealer){
+		leadPlayer = (dealer+1)%4;
 		return Card.SUIT.SPADES;
 	}
 	
