@@ -6,53 +6,50 @@ public class Euchre {
 	public LinkedList<Card> deck = new LinkedList<Card>();
 	public ArrayList<Card> allCards = new ArrayList<Card>();
 	public ArrayList<Player> players = new ArrayList<Player>();
-	public Trick currentTrick;
-	public Card.SUIT trump = Card.SUIT.SPADES;
-	public int[] trickCount = new int[2];
-	ArrayList<Trick> trickHistory = new ArrayList<Trick>();
+//	public Trick currentRound.currentTrick;
+//	public int[] trickCount = new int[2];
+//	ArrayList<Trick> trickHistory = new ArrayList<Trick>();
+	public Round currentRound;
+	ArrayList<Round> roundHistory = new ArrayList<Round>();
 	
 	public Euchre(){
 		setUpAllCards();
 		setUpPlayers();
-		shuffle();
-		deal();
-		currentTrick = new Trick(0,trump);
-		trickCount[0] = 0;
-		trickCount[1] = 0;
+		currentRound = new Round(deck, allCards, players, 0);
 	}
 	
 	/*Shuffles the deck, refilling it with all 24 cards in a random order*/
-	public void shuffle(){
-		Random r = new Random();
-		boolean[] used = new boolean[24];
-		for (int x=0; x<24; x++){
-			used[x] = false;
-		}
-		for (int x=0; x<24; x++){
-			int y = r.nextInt(24);
-			while (used[y]){
-				y = r.nextInt(24);
-			}
-			deck.push(allCards.get(y));
-			used[y] = true;
-		}
-	}
+//	public void shuffle(){
+//		Random r = new Random();
+//		boolean[] used = new boolean[24];
+//		for (int x=0; x<24; x++){
+//			used[x] = false;
+//		}
+//		for (int x=0; x<24; x++){
+//			int y = r.nextInt(24);
+//			while (used[y]){
+//				y = r.nextInt(24);
+//			}
+//			deck.push(allCards.get(y));
+//			used[y] = true;
+//		}
+//	}
 	
 	/*Removes the card off the top of deck and returns it*/
-	public Card draw(){
-		if(!deck.isEmpty()) 
-			return deck.pop();
-		return new Card(Card.SUIT.SPADES, -1);
-	}
+//	public Card draw(){
+//		if(!deck.isEmpty()) 
+//			return deck.pop();
+//		return new Card(Card.SUIT.SPADES, -1);
+//	}
 	
 	/*Deals 5 cards off the top of the deck to each player*/
-	public void deal(){
-		for (int x=0; x<5; x++){
-			for(int y=0; y<4; y++){
-				players.get(y).hand.add(draw());
-			}
-		}
-	}
+//	public void deal(){
+//		for (int x=0; x<5; x++){
+//			for(int y=0; y<4; y++){
+//				players.get(y).hand.add(draw());
+//			}
+//		}
+//	}
 	
 	/*Sets up the list of cards, should only be called when Euchre is initialized*/
 	private void setUpAllCards(){
@@ -73,18 +70,18 @@ public class Euchre {
 	}
 	
 	public void humanPlayCard(String cardBeingPlayed){
-		Card playedCard = players.get(currentTrick.currentPlayer).removeCardFromHand(cardBeingPlayed);
+		Card playedCard = players.get(currentRound.currentTrick.currentPlayer).removeCardFromHand(cardBeingPlayed);
 		playCard(playedCard);
 	}
 	
 	public boolean isCurrentPlayerAI()
 	{
-		return (players.get(currentTrick.currentPlayer) instanceof AIPlayer); 
+		return (players.get(currentRound.currentTrick.currentPlayer) instanceof AIPlayer); 
 	}
 
 	public void makeAIPlay() {
-		AIPlayer aiPlayer = ((AIPlayer) players.get(currentTrick.currentPlayer));
-		Card cardToPlay = aiPlayer.getCardToPlay(currentTrick);
+		AIPlayer aiPlayer = ((AIPlayer) players.get(currentRound.currentTrick.currentPlayer));
+		Card cardToPlay = aiPlayer.getCardToPlay(currentRound.currentTrick);
 		playCard(cardToPlay);
 	}
 	
@@ -92,12 +89,13 @@ public class Euchre {
 	{
 		if (c == null)
 			return;
-		currentTrick.playCardForCurrentPlayer(c);
-		if (currentTrick.isOver())
+		currentRound.currentTrick.playCardForCurrentPlayer(c);
+		if (currentRound.isOver())
 		{
-			trickCount[currentTrick.currentWinner % 2] ++;
-			trickHistory.add(currentTrick);
-			currentTrick = currentTrick.getNextTrick();
+			// modify game score somehow
+			
+			roundHistory.add(currentRound);
+			currentRound = currentRound.getNextRound();
 		}
 	}
 }
