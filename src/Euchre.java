@@ -1,55 +1,20 @@
-import java.util.LinkedList;
 import java.util.ArrayList;
-import java.util.Random;
 
 public class Euchre {
-	public LinkedList<Card> deck = new LinkedList<Card>();
 	public ArrayList<Card> allCards = new ArrayList<Card>();
 	public ArrayList<Player> players = new ArrayList<Player>();
-//	public Trick currentRound.currentTrick;
-//	public int[] trickCount = new int[2];
-//	ArrayList<Trick> trickHistory = new ArrayList<Trick>();
 	public Round currentRound;
 	ArrayList<Round> roundHistory = new ArrayList<Round>();
+	public int[] score = new int[2];
 	
 	public Euchre(){
 		setUpAllCards();
 		setUpPlayers();
-		currentRound = new Round(deck, allCards, players, 0);
+		currentRound = new Round(allCards, players, 0);
+		score[0] = 0;
+		score[1] = 0;
 	}
 	
-	/*Shuffles the deck, refilling it with all 24 cards in a random order*/
-//	public void shuffle(){
-//		Random r = new Random();
-//		boolean[] used = new boolean[24];
-//		for (int x=0; x<24; x++){
-//			used[x] = false;
-//		}
-//		for (int x=0; x<24; x++){
-//			int y = r.nextInt(24);
-//			while (used[y]){
-//				y = r.nextInt(24);
-//			}
-//			deck.push(allCards.get(y));
-//			used[y] = true;
-//		}
-//	}
-	
-	/*Removes the card off the top of deck and returns it*/
-//	public Card draw(){
-//		if(!deck.isEmpty()) 
-//			return deck.pop();
-//		return new Card(Card.SUIT.SPADES, -1);
-//	}
-	
-	/*Deals 5 cards off the top of the deck to each player*/
-//	public void deal(){
-//		for (int x=0; x<5; x++){
-//			for(int y=0; y<4; y++){
-//				players.get(y).hand.add(draw());
-//			}
-//		}
-//	}
 	
 	/*Sets up the list of cards, should only be called when Euchre is initialized*/
 	private void setUpAllCards(){
@@ -87,13 +52,12 @@ public class Euchre {
 	
 	private void playCard(Card c)
 	{
-		if (c == null)
-			return;
-		currentRound.currentTrick.playCardForCurrentPlayer(c);
+		currentRound.playCard(c);
 		if (currentRound.isOver())
 		{
-			// modify game score somehow
-			
+			int[] roundScore = currentRound.scoreRound();
+			score[0] += roundScore[0];
+			score[1] += roundScore[1];
 			roundHistory.add(currentRound);
 			currentRound = currentRound.getNextRound();
 		}

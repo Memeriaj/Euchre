@@ -1,10 +1,6 @@
 
 import java.util.ArrayList;
 
-import javax.swing.JButton;
-
-import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils.Text;
-
 public class Controller {
 
 	private Euchre euchre = new Euchre();
@@ -54,7 +50,7 @@ public class Controller {
 		text += "\nYour Trick score: "+euchre.currentRound.trickCount[0]+
 				"   Opponent's score: "+euchre.currentRound.trickCount[1]+"\n";
 		text += "\nCurrent Trick:\n";
-		text += stringOFTrickPlayed(euchre.currentTrick);
+		text += stringOFTrickPlayed(euchre.currentRound.currentTrick);
 		
 		System.out.println(text);
 		

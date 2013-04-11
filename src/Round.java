@@ -4,46 +4,27 @@ import java.util.Random;
 
 public class Round {
 	public LinkedList<Card> deck = new LinkedList<Card>();
-	public ArrayList<Card> allCards = new ArrayList<Card>();
-	public ArrayList<Player> players = new ArrayList<Player>();
+	public ArrayList<Card> allCards;
+	public ArrayList<Player> players;
 	public Trick currentTrick;
 	public Card.SUIT trump = Card.SUIT.SPADES;
 	public int[] trickCount = new int[2];
 	public ArrayList<Trick> trickHistory = new ArrayList<Trick>();
-	public int leadPlayer;
+	public int dealer;
 	
-	public Round(LinkedList<Card> deckIn, ArrayList<Card> allCardsIn, ArrayList<Player> playersIn, int dealer){
-		deck = deckIn;
+	public Round(ArrayList<Card> allCardsIn, ArrayList<Player> playersIn, int dealer){
 		allCards = allCardsIn;
 		players = playersIn;
 		shuffle();
 		deal();
-		trump = getTrump(dealer);
-		currentTrick = new Trick(leadPlayer,trump);
+		currentTrick = new Trick(dealer,trump);
 		trickCount[0] = 0;
 		trickCount[1] = 0;
 	}
 	
-	/*To be edited later*/
-	public Card.SUIT getTrump(int dealer){
-		leadPlayer = (dealer+1)%4;
-		return Card.SUIT.SPADES;
-	}
-	
-	public void playNext(String s){
-		if (s == "AI")
-			makeAIPlay();
-		else
-			humanPlayCard(s);
-		if(currentTrick.isOver()){
-				trickCount[currentTrick.currentWinner%2]++;
-				trickHistory.add(currentTrick);
-				currentTrick = currentTrick.getNextTrick();
-		}
-	}
 	
 	public boolean isOver(){
-		return (trickHistory.size() >= 5);
+		return trickHistory.size() == 5;
 	}
 	
 	/*
@@ -53,12 +34,14 @@ public class Round {
 	 */
 	public int[] scoreRound(){
 		int[] ans = new int[2];
-		if(trickCount[leadPlayer] == 3 ||trickCount[leadPlayer] == 4 )
-			ans[leadPlayer] = 1;
-		if(trickCount[leadPlayer] == 5)
-			ans[leadPlayer] = 2;
-		if(trickCount[(leadPlayer+1)%2] >= 3)
-			ans[(leadPlayer+1)%2] = 2;
+		
+		if(trickCount[dealer] < 3)
+			ans[(dealer+1)%2] = 2;
+		else if(trickCount[dealer] < 5 )
+			ans[dealer] = 1;
+		else //trickCount[dealer] == 5)
+			ans[dealer] = 2;
+		
 		return ans;
 	}
 	
@@ -81,9 +64,7 @@ public class Round {
 	
 	/*Removes the card off the top of deck and returns it*/
 	public Card draw(){
-		if(!deck.isEmpty()) 
-			return deck.pop();
-		return new Card(Card.SUIT.SPADES, -1);
+		return deck.pop();
 	}
 	
 	/*Deals 5 cards off the top of the deck to each player*/
@@ -95,26 +76,9 @@ public class Round {
 		}
 	}
 	
-	public void humanPlayCard(String cardBeingPlayed){
-		Card playedCard = players.get(currentTrick.currentPlayer).removeCardFromHand(cardBeingPlayed);
-		playCard(playedCard);
-	}
 	
-	public boolean isCurrentPlayerAI()
+	public void playCard(Card c)
 	{
-		return (players.get(currentTrick.currentPlayer) instanceof AIPlayer); 
-	}
-
-	public void makeAIPlay() {
-		AIPlayer aiPlayer = ((AIPlayer) players.get(currentTrick.currentPlayer));
-		Card cardToPlay = aiPlayer.getCardToPlay(currentTrick);
-		playCard(cardToPlay);
-	}
-	
-	private void playCard(Card c)
-	{
-		if (c == null)
-			return;
 		currentTrick.playCardForCurrentPlayer(c);
 		if (currentTrick.isOver())
 		{
@@ -122,5 +86,9 @@ public class Round {
 			trickHistory.add(currentTrick);
 			currentTrick = currentTrick.getNextTrick();
 		}
+	}
+
+	public Round getNextRound() {
+		return new Round(allCards, players, (dealer+1) % 4);
 	}
 }

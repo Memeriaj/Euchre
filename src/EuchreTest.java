@@ -1,10 +1,6 @@
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
-
 import org.junit.Test;
 
 public class EuchreTest {
@@ -12,13 +8,7 @@ public class EuchreTest {
 	@Test
 	public void initialize(){
 		Euchre e = new Euchre();
-		assert(true);
-	}
-	
-	@Test
-	public void deckNotNull(){
-		Euchre e = new Euchre();
-		assertFalse(e.deck == new LinkedList<Card>());
+		assertNotNull(e);
 	}
 	
 	@Test
@@ -34,21 +24,15 @@ public class EuchreTest {
 	}
 	
 	@Test
-	public void deckRandom(){
-		Euchre e = new Euchre();
-		for(int x=0; x<5; x++)
-			System.out.println(e.draw().toString());
-		assert(true);
-	}
-	
-	@Test
 	public void playCard_oneCard_emptyHand(){
 		Euchre euchreTest = new Euchre();
 		euchreTest.players.get(0).hand = new ArrayList<Card>();
 		euchreTest.players.get(0).hand.add(new Card(Card.SUIT.CLUBS, 9));
+		while (euchreTest.isCurrentPlayerAI())
+			euchreTest.makeAIPlay();
 		euchreTest.humanPlayCard("Nine of Clubs");
 		assertTrue(euchreTest.players.get(0).hand.isEmpty());
-		assertEquals(1, euchreTest.currentTrick.currentPlayer);
+		assertEquals(1, euchreTest.currentRound.currentTrick.currentPlayer);
 	}
 	
 	@Test
@@ -62,7 +46,7 @@ public class EuchreTest {
 		euchreTest.players.get(0).hand.add(new Card(Card.SUIT.CLUBS, 13));
 		euchreTest.humanPlayCard("Nine of Clubs");
 		assertEquals(4, euchreTest.players.get(0).hand.size());
-		assertEquals(1, euchreTest.currentTrick.currentPlayer);
+		assertEquals(1, euchreTest.currentRound.currentTrick.currentPlayer);
 	}
 	
 	@Test
@@ -82,14 +66,14 @@ public class EuchreTest {
 	public void testEndOfTrick()
 	{
 		Euchre e = new Euchre();
-		Trick oldTrick = e.currentTrick;
+		Trick oldTrick = e.currentRound.currentTrick;
 		e.humanPlayCard(e.players.get(0).hand.get(0).toString());
 		e.makeAIPlay();
 		e.makeAIPlay();
 		e.makeAIPlay();
 		assertTrue(oldTrick.isOver());
-		assertTrue(e.currentTrick != oldTrick);
-		assertTrue(e.trickCount[0] > 0 || e.trickCount[1] > 0);
-		assertTrue(e.trickHistory.size()>0);
+		assertTrue(e.currentRound.currentTrick != oldTrick);
+		assertTrue(e.currentRound.trickCount[0] > 0 || e.currentRound.trickCount[1] > 0);
+		assertTrue(e.currentRound.trickHistory.size()>0);
 	}
 }
