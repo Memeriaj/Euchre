@@ -27,6 +27,13 @@ public class CardTest {
 	}
 	
 	@Test
+	public void testNotEqualsRandomObject()
+	{
+		Card c = new Card(Card.SUIT.CLUBS, 9);
+		assertFalse(c.equals("Hello"));
+	}
+	
+	@Test
 	public void testNotEqualsObjectSameNumber() {
 		Card c1 = new Card(Card.SUIT.CLUBS, 9);
 		Card c2 = new Card(Card.SUIT.HEARTS, 9);

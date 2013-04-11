@@ -11,15 +11,19 @@ public class Round {
 	public int[] trickCount = new int[2];
 	public ArrayList<Trick> trickHistory = new ArrayList<Trick>();
 	public int dealer;
+	public int callingTeam;
 	
-	public Round(ArrayList<Card> allCardsIn, ArrayList<Player> playersIn, int dealer){
+	public Round(ArrayList<Card> allCardsIn, ArrayList<Player> playersIn, int dealerIn){
 		allCards = allCardsIn;
 		players = playersIn;
 		shuffle();
 		deal();
+		dealer = dealerIn;
 		currentTrick = new Trick(dealer,trump);
 		trickCount[0] = 0;
 		trickCount[1] = 0;
+		
+		callingTeam = dealer % 2; // to be figured out in a pre-round
 	}
 	
 	
@@ -35,12 +39,12 @@ public class Round {
 	public int[] scoreRound(){
 		int[] ans = new int[2];
 		
-		if(trickCount[dealer] < 3)
-			ans[(dealer+1)%2] = 2;
-		else if(trickCount[dealer] < 5 )
-			ans[dealer] = 1;
+		if(trickCount[callingTeam] < 3)
+			ans[(callingTeam+1)%2] = 2;
+		else if(trickCount[callingTeam] < 5 )
+			ans[callingTeam] = 1;
 		else //trickCount[dealer] == 5)
-			ans[dealer] = 2;
+			ans[callingTeam] = 2;
 		
 		return ans;
 	}

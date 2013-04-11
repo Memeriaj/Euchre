@@ -63,17 +63,23 @@ public class EuchreTest {
 	}
 	
 	@Test
-	public void testEndOfTrick()
+	public void testEndOfRound()
 	{
 		Euchre e = new Euchre();
-		Trick oldTrick = e.currentRound.currentTrick;
-		e.humanPlayCard(e.players.get(0).hand.get(0).toString());
-		e.makeAIPlay();
-		e.makeAIPlay();
-		e.makeAIPlay();
-		assertTrue(oldTrick.isOver());
-		assertTrue(e.currentRound.currentTrick != oldTrick);
-		assertTrue(e.currentRound.trickCount[0] > 0 || e.currentRound.trickCount[1] > 0);
-		assertTrue(e.currentRound.trickHistory.size()>0);
+		Round oldRound = e.currentRound;
+		for (int i = 0; i<5; i++)
+		{
+			for (int j = 0; j<4; j++)
+			{
+				if (e.isCurrentPlayerAI())
+					e.makeAIPlay();
+				else
+					e.humanPlayCard(e.players.get(0).hand.get(0).toString());
+			}
+		}
+		assertTrue(oldRound.isOver());
+		assertTrue(e.currentRound != oldRound);
+		assertTrue(e.score[0] > 0 || e.score[1] > 0);
+		assertTrue(e.roundHistory.size()>0);
 	}
 }
