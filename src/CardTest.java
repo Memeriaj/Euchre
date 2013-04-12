@@ -84,31 +84,43 @@ public class CardTest {
 	}
 	
 	@Test
+	public void testCardValue_clubsTrumpHeartsLead_normalValue(){
+		Card c = new Card(Card.SUIT.DIAMONDS, 9);
+		assertEquals(c.cardValue(Card.SUIT.CLUBS,Card.SUIT.HEARTS),9);
+	}
+	
+	@Test
+	public void testCardValue_diamondTrumpHeartsLead_normalValue(){
+		Card c = new Card(Card.SUIT.CLUBS, 9);
+		assertEquals(c.cardValue(Card.SUIT.DIAMONDS,Card.SUIT.HEARTS),9);
+	}
+	
+	@Test
 	public void testGreaterNoTrump(){
 		Card c1 = new Card(Card.SUIT.SPADES, 12);
 		Card c2 = new Card(Card.SUIT.SPADES, 10);
-		assert(c1.greater(c2, Card.SUIT.HEARTS,Card.SUIT.SPADES));
+		assertTrue(c1.greater(c2, Card.SUIT.HEARTS,Card.SUIT.SPADES));
 	}
 	
 	@Test
 	public void testGreaterTrump(){
 		Card c1 = new Card(Card.SUIT.SPADES, 10);
 		Card c2 = new Card(Card.SUIT.SPADES, 12);
-		assert(c1.greater(c2, Card.SUIT.SPADES,Card.SUIT.SPADES));
+		assertFalse(c1.greater(c2, Card.SUIT.SPADES,Card.SUIT.SPADES));
 	}
 	
 	@Test
 	public void testGreaterTrumpAndNoTrump(){
 		Card c1 = new Card(Card.SUIT.SPADES, 10);
 		Card c2 = new Card(Card.SUIT.HEARTS, 12);
-		assert(c1.greater(c2, Card.SUIT.SPADES,Card.SUIT.HEARTS));
+		assertTrue(c1.greater(c2, Card.SUIT.SPADES,Card.SUIT.HEARTS));
 	}
 	
 	@Test
 	public void testGreaterLeadAndNoLead(){
 		Card c1 = new Card(Card.SUIT.DIAMONDS, 10);
 		Card c2 = new Card(Card.SUIT.HEARTS, 12);
-		assert(c1.greater(c2, Card.SUIT.SPADES,Card.SUIT.DIAMONDS));
+		assertTrue(c1.greater(c2, Card.SUIT.SPADES,Card.SUIT.DIAMONDS));
 	}
 	
 	@Test

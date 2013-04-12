@@ -42,13 +42,10 @@ public class Controller {
 	{
 		ArrayList<Trick> tricks = euchre.currentRound.trickHistory;
 		text = "";
-		if(!tricks.isEmpty())
+		if(!tricks.isEmpty()){
 			text += "Previous Trick played:\n";
-		text += stringOFTrickPlayed(tricks.get(tricks.size()-1));
-		text += "\nYour score: "+euchre.score[0]+
-				"   Opponent's score: "+euchre.score[1]+"\n";
-		text += "\nYour Trick score: "+euchre.currentRound.trickCount[0]+
-				"   Opponent's score: "+euchre.currentRound.trickCount[1]+"\n";
+			text += stringOFTrickPlayed(tricks.get(tricks.size()-1));
+		}
 		text += "\nCurrent Trick:\n";
 		text += stringOFTrickPlayed(euchre.currentRound.currentTrick);
 		
@@ -56,6 +53,8 @@ public class Controller {
 		
 		applicationWindow.updateHands(getAllHands());
 		applicationWindow.setMiddleTextArea(Utils.convertStringToHTML(text));
+		applicationWindow.setScoreDisplay(euchre.score[0], euchre.score[1], euchre.currentRound.trickCount[0],
+				euchre.currentRound.trickCount[1], euchre.currentRound.trump.toString());
 	}
 
 	/**

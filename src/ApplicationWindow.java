@@ -68,31 +68,35 @@ public class ApplicationWindow {
 		updateHands(controller.getAllHands());
 		setMiddleTextArea(controller.getTextForMiddle());
 
-		setPlayersCardsEnabled(false);
+		setPlayersCardsEnabled(true);
 	}
 
 	private Component createScoreDisplayPanel() {
 		JPanel out = new JPanel();
 		out.setLayout(new BorderLayout(0, 0));
-		scoreLabels = new JLabel[2];
-		scoreLabels[0] = new JLabel();
-		scoreLabels[1] = new JLabel();
+		scoreLabels = new JLabel[3];
+		for(int q=0; q<3; q++)
+			scoreLabels[q] = new JLabel();
 		out.add(scoreLabels[0], BorderLayout.WEST);
 		out.add(scoreLabels[1], BorderLayout.EAST);
+		scoreLabels[2].setHorizontalAlignment(JLabel.CENTER);
+		out.add(scoreLabels[2], BorderLayout.CENTER);
 		out.add(new JPanel(), BorderLayout.SOUTH);
-		setScoreDisplay(0, 0, 0, 0);
+		setScoreDisplay(0, 0, 0, 0, "");
 		return out;
 	}
 
 	public void setScoreDisplay(int playerOverallScore,
 			int opponentOverallScore, int playerTrickScore,
-			int opponentTrickScore) {
+			int opponentTrickScore, String suit) {
 		String left = Utils.convertStringToHTML("Overall Score\nYours: "
 				+ playerOverallScore + "  Opponent: " + opponentOverallScore);
 		String right = Utils.convertStringToHTML("Trick Score\nYours: "
 				+ playerTrickScore + "  Opponent: " + opponentTrickScore);
+		String trump = Utils.convertStringToHTML("Trump: "+suit);
 		scoreLabels[0].setText(left);
 		scoreLabels[1].setText(right);
+		scoreLabels[2].setText(trump);
 		frame.revalidate();
 		frame.repaint();
 	}
