@@ -42,6 +42,8 @@ public class Card
 		case 14:
 			ret = "Ace";
 			break;
+		default:
+			ret = "NOT VALID";
 		}
 		ret += " of ";
 		switch (this.suit)

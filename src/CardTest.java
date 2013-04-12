@@ -91,8 +91,8 @@ public class CardTest {
 	
 	@Test
 	public void testCardValue_diamondTrumpHeartsLead_normalValue(){
-		Card c = new Card(Card.SUIT.CLUBS, 9);
-		assertEquals(c.cardValue(Card.SUIT.DIAMONDS,Card.SUIT.HEARTS),9);
+		Card c = new Card(Card.SUIT.HEARTS, 9);
+		assertEquals(c.cardValue(Card.SUIT.DIAMONDS,Card.SUIT.HEARTS),23);
 	}
 	
 	@Test
@@ -157,5 +157,11 @@ public class CardTest {
 	public void toString_14D_AceOfDiamonds(){
 		Card card = new Card(Card.SUIT.DIAMONDS, 14);
 		assertTrue(card.toString().equals("Ace of Diamonds"));
+	}
+	
+	@Test
+	public void toString_7D_notValid(){
+		Card card = new Card(Card.SUIT.DIAMONDS, 7);
+		assertTrue(card.toString().equals("NOT VALID of Diamonds"));
 	}
 }
