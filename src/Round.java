@@ -38,7 +38,11 @@ public class Round {
 	 */
 	public int[] scoreRound(){
 		int[] ans = new int[2];
-		
+		if(trickCount[callingTeam]+trickCount[(callingTeam+1)%2]<5){
+			ans[0]=0;
+			ans[1]=0;
+			return ans;
+		}
 		if(trickCount[callingTeam] < 3)
 			ans[(callingTeam+1)%2] = 2;
 		else if(trickCount[callingTeam] < 5 )
