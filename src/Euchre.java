@@ -39,6 +39,11 @@ public class Euchre {
 		playCard(playedCard);
 	}
 	
+	public boolean[] getPlayableCardsForHuman()
+	{
+		return players.get(0).getPlayableCards(currentRound.currentTrick.leadingSuit, currentRound.trump);
+	}
+	
 	public boolean isCurrentPlayerAI()
 	{
 		return (players.get(currentRound.currentTrick.currentPlayer) instanceof AIPlayer); 
