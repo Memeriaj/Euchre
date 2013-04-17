@@ -11,7 +11,7 @@ public class Player {
 		hand = new ArrayList<Card>();
 	}
 	
-	protected ArrayList<Card> getCardsInHandOfSuit(Card.SUIT suit)
+	public ArrayList<Card> getCardsInHandOfSuit(Card.SUIT suit)
 	{
 		ArrayList<Card> ret = new ArrayList<Card>();
 		for (Card c: hand)
@@ -22,7 +22,7 @@ public class Player {
 		return ret;
 	}
 	
-	protected Card getHighestValueCardOfSuit(Card.SUIT suit)
+	public Card getHighestValueCardOfSuit(Card.SUIT suit)
 	{
 		Card highestCard = null;
 		for (Card c: hand)
@@ -35,7 +35,7 @@ public class Player {
 		return highestCard;
 	}
 	
-	protected Card getLowestValueCardOfSuit(Card.SUIT suit)
+	public Card getLowestValueCardOfSuit(Card.SUIT suit)
 	{
 		Card lowestCard = null;
 		for (Card c: hand)
@@ -49,7 +49,7 @@ public class Player {
 	}
 	
 	// ignores suit, used for leading
-	protected Card getHighestValueCard()
+	public Card getHighestValueCard()
 	{
 		Card highestCard = null;
 		for (Card c: hand)
@@ -63,7 +63,7 @@ public class Player {
 	}
 	
 	// ignores suit, used for playing off
-	protected Card getLowestValueCard()
+	public Card getLowestValueCard()
 	{
 		Card lowestCard = null;
 		for (Card c: hand)
@@ -76,7 +76,7 @@ public class Player {
 		return lowestCard;
 	}
 	
-	protected boolean hasCardOfSuit(Card.SUIT suit)
+	public boolean hasCardOfSuit(Card.SUIT suit)
 	{
 		for (Card c: hand)
 		{
@@ -88,12 +88,41 @@ public class Player {
 		return false;
 	}
 	
-	protected void removeCardFromHand(Card cardToRemove)
+	public boolean[] getPlayableCards(Card.SUIT leadingSuit, Card.SUIT trumpSuit)
+	{
+		boolean[] toReturn = new boolean[hand.size()];
+		boolean hasAtLeastOneOfSuit = false;
+		Card.SUIT sameColorAsTrump = Card.getSameColorSuit(trumpSuit);
+		Card c;
+		for (int i = 0; i< hand.size() ; i++)
+		{
+			c=hand.get(i);
+			if (c.suit == leadingSuit || (c.suit == sameColorAsTrump && c.value == 11)) // if they have a card to follow suit or the left
+			{
+				hasAtLeastOneOfSuit = true;
+				toReturn[i]=true;
+			}
+			else
+			{
+				toReturn[i] = false;
+			}
+		}
+		if (!hasAtLeastOneOfSuit) // If they can't follow suit, they can lay anything off
+		{
+			for (int i = 0;i<hand.size();i++)
+			{
+				toReturn[i]=true;
+			}
+		}
+		return toReturn;
+	}
+	
+	public void removeCardFromHand(Card cardToRemove)
 	{
 		hand.remove(cardToRemove);
 	}
 	
-	protected Card removeCardFromHand(String cardString){
+	public Card removeCardFromHand(String cardString){
 		Card cardToReturn = null;
 		for(int q=0; q<hand.size(); q++){
 			cardToReturn = hand.get(q);

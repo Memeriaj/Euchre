@@ -73,7 +73,7 @@ public class Card
 		return this.value == otherCard.value && this.suit == otherCard.suit;
 	}
 	
-	public int cardValue (SUIT trump, SUIT leading)
+	public static SUIT getSameColorSuit(SUIT trump)
 	{
 		SUIT sameColor= SUIT.HEARTS;
 		switch (trump)
@@ -91,6 +91,13 @@ public class Card
 			sameColor = SUIT.HEARTS;
 			break;
 		}
+		return sameColor;
+	}
+	
+	public int cardValue (SUIT trump, SUIT leading)
+	{
+		SUIT sameColor= getSameColorSuit(trump);
+		
 		if (this.suit == trump){
 			if(this.value == 11) /*Jack of trump suit*/
 				return 44;
