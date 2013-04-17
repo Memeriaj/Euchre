@@ -12,6 +12,7 @@ public class Round {
 	public ArrayList<Trick> trickHistory = new ArrayList<Trick>();
 	public int dealer;
 	public int callingTeam;
+	public boolean isInPreGameState = true;
 	
 	public Round(ArrayList<Card> allCardsIn, ArrayList<Player> playersIn, int dealerIn){
 		allCards = allCardsIn;
