@@ -99,4 +99,16 @@ public class Round {
 	public Round getNextRound() {
 		return new Round(allCards, players, (dealer+1) % 4);
 	}
+
+
+	String produceTrickHistoryText() {
+		String text = "";
+		if(!trickHistory.isEmpty()){
+			text += "Previous Trick played:\n";
+			text += trickHistory.get(trickHistory.size()-1).stringOfTrickPlayed();
+		}
+		text += "\nCurrent Trick:\n";
+		text += currentTrick.stringOfTrickPlayed();
+		return text;
+	}
 }

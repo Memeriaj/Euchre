@@ -54,4 +54,18 @@ class Trick {
 	{
 		return new Trick(currentWinner,trump);
 	}
+
+	public String stringOfTrickPlayed(){
+		String out = "";
+		int currentPlayer = leadingPlayer;
+		for(Card card : cardsPlayed){
+			if(currentPlayer == 0)
+				out += "You: ";
+			else
+				out += "Player " + currentPlayer + ": ";
+			out += card + "\n";
+			currentPlayer = (currentPlayer + 1) % 4;
+		}
+		return out;
+	}
 }

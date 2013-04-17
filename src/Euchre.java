@@ -67,4 +67,11 @@ public class Euchre {
 			currentRound = currentRound.getNextRound();
 		}
 	}
+
+	public ArrayList<ArrayList<Card>> getAllHands() {
+		ArrayList<ArrayList<Card>> out = new ArrayList<ArrayList<Card>>();
+		for(Player p : players)
+			out.add(p.hand);
+		return out;
+	}
 }

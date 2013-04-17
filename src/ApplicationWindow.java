@@ -44,8 +44,8 @@ public class ApplicationWindow {
 	 */
 	public ApplicationWindow(Controller cont) {
 		this.controller = cont;
-		cont.setAppWindow(this);
 		initialize();
+		cont.setAppWindow(this);
 	}
 
 	/**
@@ -65,10 +65,6 @@ public class ApplicationWindow {
 		frame.getContentPane().add(createScoreDisplayPanel(),
 				BorderLayout.NORTH);
 
-		updateHands(controller.getAllHands());
-		setMiddleTextArea(controller.getTextForMiddle());
-
-		setPlayersCardsEnabled(true);
 	}
 
 	private Component createScoreDisplayPanel() {
@@ -97,6 +93,9 @@ public class ApplicationWindow {
 		scoreLabels[0].setText(left);
 		scoreLabels[1].setText(right);
 		scoreLabels[2].setText(trump);
+	}
+
+	public void refreshWindow() {
 		frame.revalidate();
 		frame.repaint();
 	}
@@ -170,8 +169,6 @@ public class ApplicationWindow {
 						public void actionPerformed(ActionEvent arg0) {
 							JButton buttonPressed = (JButton) arg0.getSource();
 							controller.cardPlayed(buttonPressed.getText());
-							frame.revalidate();
-							frame.repaint();
 						}
 					});
 					playerPanels.get(0).add(toAdd);
@@ -223,11 +220,11 @@ public class ApplicationWindow {
 			updateHands(q, currentHands.get(q));
 	}
 	
-	public void setPlayersCardsEnabled(boolean enabled){
-		for(Component button : playerPanels.get(0).getComponents()){
-			button.setEnabled(enabled);
+	public void setPlayersCardsEnabled(boolean[] enabled){
+		JPanel humanButtons = playerPanels.get(0);
+		for(int q=0; q<enabled.length; q++){
+			JButton button = (JButton) humanButtons.getComponents()[q];
+			button.setEnabled(enabled[q]);
 		}
-		frame.revalidate();
-		frame.repaint();
 	}
 }
