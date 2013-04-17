@@ -82,4 +82,20 @@ public class EuchreTest {
 		assertTrue(e.score[0] > 0 || e.score[1] > 0);
 		assertTrue(e.roundHistory.size()>0);
 	}
+	
+	@Test
+	public void getAllHands_oneCardEach_fourListswithOneCard(){
+		Euchre e = new Euchre();
+		Card testCard = new Card(Card.SUIT.CLUBS, 9);
+		ArrayList<ArrayList<Card>> expected = new ArrayList<ArrayList<Card>>();
+		for(Player p : e.players){
+			p.hand = new ArrayList<Card>();
+			p.hand.add(testCard);
+			
+			ArrayList<Card> subExpected = new ArrayList<Card>();
+			subExpected.add(testCard);
+			expected.add(subExpected);
+		}
+		assertEquals(expected, e.getAllHands());
+	}
 }
