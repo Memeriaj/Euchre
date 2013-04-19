@@ -68,6 +68,18 @@ public class Euchre {
 		playCard(cardToPlay);
 	}
 	
+	public void makeAIPlayPreRound() 
+	{
+		if (((AIPlayer) players.get(currentRound.currentTrick.currentPlayer)).pickUp(currentRound.turnedUpCard))
+		{
+			currentRound.preRoundCall();
+		}
+		else
+		{
+			currentRound.preRoundPass();
+		}
+	}
+	
 	private void playCard(Card c)
 	{
 		currentRound.playCard(c);

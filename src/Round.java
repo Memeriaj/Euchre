@@ -64,40 +64,49 @@ public class Round {
 	{
 		if (currentTrick.currentPlayer == dealer)
 		{
-			if (isCardTurnedUp)
-			{
-				isCardTurnedUp = false;
-			}
-			else // stick the dealer
-			{
-				isStickTheDealer = true;
-			}
+			// currently, just default to spades
+			trump = Card.SUIT.SPADES;
+			prepareRoundForStart();
+			
+			// to be used later
+//			if (isCardTurnedUp)
+//			{
+//				isCardTurnedUp = false;
+//			}
+//			else // stick the dealer
+//			{
+//				isStickTheDealer = true;
+//			}
 		}
-		currentTrick.incrementTurn();
+		else
+		{
+			currentTrick.incrementTurn();
+		}
 	}
 	
-	// for when the player calls
-	public void preRoundCall()
-	{
-		// get card to discard from AI if dealer 
-		Card c = new Card(Card.SUIT.SPADES, 9);
-		
-		preRoundCall(c);
-	}
-	
-	// for when a card is turned up
-	public void preRoundCall(Card c)
-	{
-		trump = turnedUpCard.suit;
-		players.get(dealer).removeCardFromHand(c);
-		players.get(dealer).hand.add(turnedUpCard);
-		prepareRoundForStart();
-	}
+//	// for when the player calls
+//	public void preRoundCall()
+//	{
+//		// get card to discard from AI if dealer 
+//		Card c = new Card(Card.SUIT.SPADES, 9);
+//		
+//		preRoundCall(c);
+//	}
+//	To be implemented with more complicated pre-rounds
+//	// for when a card is turned up
+//	public void preRoundCall(Card c)
+//	{
+//		trump = turnedUpCard.suit;
+//		players.get(dealer).removeCardFromHand(c);
+//		players.get(dealer).hand.add(turnedUpCard);
+//		prepareRoundForStart();
+//	}
 	
 	// for when a card isn't turned up
-	public void preRoundCall(Card.SUIT tr)
+	
+	public void preRoundCall()
 	{
-		trump = tr;
+		trump = turnedUpCard.suit;
 		prepareRoundForStart();
 	}
 	
