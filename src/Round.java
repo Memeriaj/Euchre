@@ -113,7 +113,7 @@ public class Round {
 	
 	private void prepareRoundForStart()
 	{
-		callingTeam = currentTrick.leadingPlayer % 2;
+		callingTeam = currentTrick.currentPlayer % 2;
 		isInPreGameState = false;
 		currentTrick.currentPlayer = currentTrick.leadingPlayer;
 		currentTrick.trump = trump;
