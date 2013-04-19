@@ -37,13 +37,6 @@ public class RoundTest {
 	}
 	
 	@Test
-	public void newRoundDefaultTrump(){
-		Euchre e = new Euchre();
-		Round r = new Round( e.allCards, e.players,0);
-		assertEquals(r.trump, Card.SUIT.SPADES);
-	}
-	
-	@Test
 	public void newRoundDefaultLeadPlayer(){
 		Euchre e = new Euchre();
 		Round r = new Round( e.allCards, e.players,0);
@@ -102,21 +95,6 @@ public class RoundTest {
 			r.trickHistory.add(new Trick(0,Card.SUIT.SPADES));
 		}
 		assertFalse(r.isOver());
-	}
-
-	@Test
-	public void testEndOfTrick()
-	{
-		Euchre e = new Euchre();
-		Trick oldTrick = e.currentRound.currentTrick;
-		e.humanPlayCard(e.players.get(0).hand.get(0).toString());
-		e.makeAIPlay();
-		e.makeAIPlay();
-		e.makeAIPlay();
-		assertTrue(oldTrick.isOver());
-		assertTrue(e.currentRound.currentTrick != oldTrick);
-		assertTrue(e.currentRound.trickCount[0] > 0 || e.currentRound.trickCount[1] > 0);
-		assertTrue(e.currentRound.trickHistory.size()>0);
 	}
 	
 	@Test
