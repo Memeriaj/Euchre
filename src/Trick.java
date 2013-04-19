@@ -12,8 +12,8 @@ class Trick {
 	
 	public Trick(int leadPlayer, Card.SUIT tr)
 	{
-		leadingPlayer = leadPlayer;
-		currentPlayer = leadPlayer;
+		leadingPlayer = leadPlayer % 4;
+		currentPlayer = leadPlayer % 4;
 		trump = tr;
 		cardsPlayed = new ArrayList<Card>();
 	}

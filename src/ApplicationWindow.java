@@ -107,6 +107,7 @@ public class ApplicationWindow {
 	}
 
 	public void setExtraButtonDisplay(String[] buttonsText) {
+		extraButtonsPanel.removeAll();
 		extraButtonsPanel.setLayout(new GridLayout());
 		for(String s : buttonsText){
 			JButton button = new JButton();

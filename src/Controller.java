@@ -20,7 +20,7 @@ public class Controller {
 			
 		}
 		euchre.humanPlayCard(cardText);
-		while (euchre.isCurrentPlayerAI())
+		while (euchre.isCurrentPlayerAI() && !euchre.currentRound.isInPreGameState)
 		{
 			euchre.makeAIPlay();
 		}
@@ -31,6 +31,14 @@ public class Controller {
 	}
 	
 	private void setUpIntitalRound() {
+		while(euchre.isCurrentPlayerAI() && euchre.currentRound.isInPreGameState)
+			euchre.makeAIPlayPreRound();
+		while(euchre.isCurrentPlayerAI())
+			euchre.makeAIPlay();
+		if(!euchre.currentRound.isInPreGameState){
+			updateGUI();
+			return;
+		}
 		boolean[] disabled = {false,false,false,false};
 		applicationWindow.setPlayersCardsEnabled(disabled);
 		String[] buttonsText = {"Pass", "Pick it up"};
@@ -62,18 +70,29 @@ public class Controller {
 	public void setAppWindow(ApplicationWindow appWin) {
 		applicationWindow = appWin;
 		updateGUI();
-		setUpIntitalRound();
+		if(euchre.currentRound.isInPreGameState)
+			setUpIntitalRound();
 	}
 
 	public void extraButtonSelected(String text) {
+		System.out.println(text);
 		if(euchre.currentRound.isCardTurnedUp){
 			if(text == "Pass")
 				euchre.currentRound.preRoundPass();
-			else if(euchre.currentRound.dealer == 0)
-				setUpDiscard();
+//			else if(euchre.currentRound.dealer == 0)
+//				setUpDiscard();
 			else
 				euchre.currentRound.preRoundCall();
 		}
+		String[] buttons = new String[0];
+		applicationWindow.setExtraButtonDisplay(buttons);
+		applicationWindow.refreshWindow();
+		while(euchre.isCurrentPlayerAI() && euchre.currentRound.isInPreGameState)
+			euchre.makeAIPlayPreRound();
+		while(euchre.isCurrentPlayerAI())
+			euchre.makeAIPlay();
+		if(!euchre.currentRound.isInPreGameState)
+			updateGUI();
 	}
 
 	private void setUpDiscard() {

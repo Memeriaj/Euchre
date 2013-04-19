@@ -48,7 +48,9 @@ public class Euchre {
 	}
 	
 	public void humanPlayCard(String cardBeingPlayed){
+		System.out.println(cardBeingPlayed);
 		Card playedCard = players.get(currentRound.currentTrick.currentPlayer).removeCardFromHand(cardBeingPlayed);
+		System.out.println(playedCard.toString());
 		playCard(playedCard);
 	}
 	
