@@ -181,4 +181,15 @@ public class RoundTest {
 		assertEquals(turnedUpSuit,r.trump);
 		assertEquals(callingPlayer %2,r.callingTeam );
 	}
+	
+	@Test
+	public void testNextRound(){
+		Euchre e = new Euchre();
+		Round firstRound = e.currentRound;
+		firstRound.dealer = 0;
+		Round secondRound = firstRound.getNextRound();
+		assertEquals(firstRound.allCards, secondRound.allCards);
+		assertEquals(firstRound.players, secondRound.players);
+		assertEquals(1, secondRound.dealer);
+	}
 }
