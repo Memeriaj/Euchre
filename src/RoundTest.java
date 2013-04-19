@@ -6,6 +6,7 @@ import java.util.LinkedList;
 import org.junit.Test;
 
 
+
 public class RoundTest {
 
 	@Test
@@ -147,5 +148,37 @@ public class RoundTest {
 		int[] target = r.scoreRound();
 		assertEquals(2, target[0]);
 		assertEquals(0, target[1]);
+	}
+	
+	@Test
+	public void testPreRoundPassIncrementingCurrentPlayer()
+	{
+		Euchre e = new Euchre();
+		Round r = e.currentRound;
+		int startingPlayer = r.currentTrick.currentPlayer;
+		r.preRoundPass();
+		assertEquals(startingPlayer+1,r.currentTrick.currentPlayer);
+	}
+	
+	@Test
+	public void testPreRoundPassStartingRound()
+	{
+		Euchre e = new Euchre();
+		Round r = e.currentRound;
+		r.currentTrick.currentPlayer = r.dealer;
+		r.preRoundPass();
+		assertFalse(r.isInPreGameState);
+	}
+	
+	@Test
+	public void testPreRoundCall()
+	{
+		Euchre e = new Euchre();
+		Round r = e.currentRound;
+		Card.SUIT turnedUpSuit = r.turnedUpCard.suit;
+		int callingPlayer = r.currentTrick.currentPlayer;
+		r.preRoundCall();
+		assertEquals(turnedUpSuit,r.trump);
+		assertEquals(callingPlayer %2,r.callingTeam );
 	}
 }
