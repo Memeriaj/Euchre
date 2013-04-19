@@ -76,8 +76,17 @@ public class Round {
 		currentTrick.incrementTurn();
 	}
 	
+	// for when the player calls
+	public void preRoundCall()
+	{
+		// get card to discard from AI if dealer 
+		Card c = new Card(Card.SUIT.SPADES, 9);
+		
+		preRoundCall(c);
+	}
+	
 	// for when a card is turned up
-	public void preRoundCall(String c)
+	public void preRoundCall(Card c)
 	{
 		trump = turnedUpCard.suit;
 		players.get(dealer).removeCardFromHand(c);
@@ -95,6 +104,7 @@ public class Round {
 	
 	private void prepareRoundForStart()
 	{
+		callingTeam = currentTrick.leadingPlayer % 2;
 		isInPreGameState = false;
 		currentTrick.currentPlayer = currentTrick.leadingPlayer;
 		currentTrick.trump = trump;
