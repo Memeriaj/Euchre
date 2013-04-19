@@ -98,4 +98,64 @@ public class EuchreTest {
 		}
 		assertEquals(expected, e.getAllHands());
 	}
+	
+	@Test
+	public void testRoundOverHuman(){
+		Euchre e = new Euchre();
+		int[] s = new int[2];
+		s[0]=10;
+		s[1]=2;
+		e.score = s;
+		assertTrue(e.isOver());
+	}
+	
+	@Test
+	public void testRoundOverAI(){
+		Euchre e = new Euchre();
+		int[] s = new int[2];
+		s[0]=3;
+		s[1]=10;
+		e.score = s;
+		assertTrue(e.isOver());
+	}
+	
+	@Test
+	public void testRoundOverFalse(){
+		Euchre e = new Euchre();
+		int[] s = new int[2];
+		s[0]=3;
+		s[1]=7;
+		e.score = s;
+		assertFalse(e.isOver());
+	}
+	
+	@Test
+	public void testWinnerHuman(){
+		Euchre e = new Euchre();
+		int[] s = new int[2];
+		s[0]=10;
+		s[1]=2;
+		e.score = s;
+		assertEquals(e.getWinner(),0);
+	}
+	
+	@Test
+	public void testWinnerAI(){
+		Euchre e = new Euchre();
+		int[] s = new int[2];
+		s[0]=3;
+		s[1]=10;
+		e.score = s;
+		assertEquals(e.getWinner(),1);
+	}
+	
+	@Test
+	public void testWinnerFalse(){
+		Euchre e = new Euchre();
+		int[] s = new int[2];
+		s[0]=3;
+		s[1]=7;
+		e.score = s;
+		assertEquals(e.getWinner(),-1);
+	}
 }

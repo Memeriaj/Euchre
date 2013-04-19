@@ -16,6 +16,19 @@ public class Euchre {
 	}
 	
 	
+	public boolean isOver(){
+		return (score[0] >= 10) || (score[1] >= 10);
+	}
+
+	/*Returns 0 if the human team won, 1 if the AI team won, -1 if no one won*/
+	public int getWinner(){
+		if(score[0] >= 10)
+			return 0;
+		if(score[1] >= 10)
+			return 1;
+		return -1;
+	}
+	
 	/*Sets up the list of cards, should only be called when Euchre is initialized*/
 	private void setUpAllCards(){
 		for(int x=9; x<15; x++){
