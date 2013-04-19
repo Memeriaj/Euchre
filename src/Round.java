@@ -7,24 +7,97 @@ public class Round {
 	public ArrayList<Card> allCards;
 	public ArrayList<Player> players;
 	public Trick currentTrick;
-	public Card.SUIT trump = Card.SUIT.SPADES;
+	public Card.SUIT trump;
 	public int[] trickCount = new int[2];
 	public ArrayList<Trick> trickHistory = new ArrayList<Trick>();
 	public int dealer;
 	public int callingTeam;
 	public boolean isInPreGameState = true;
+	public boolean isCardTurnedUp;
+	public boolean isStickTheDealer = false;
+	public Card turnedUpCard;
+	public Card.SUIT[] callableSuits = new Card.SUIT[3];
 	
 	public Round(ArrayList<Card> allCardsIn, ArrayList<Player> playersIn, int dealerIn){
 		allCards = allCardsIn;
 		players = playersIn;
 		shuffle();
 		deal();
+		turnedUpCard = deck.pop();
+		isCardTurnedUp = true;
+		fillCallableSuits();
+		
 		dealer = dealerIn;
-		currentTrick = new Trick(dealer,trump);
+		currentTrick = new Trick(dealer + 1,trump);
 		trickCount[0] = 0;
 		trickCount[1] = 0;
 		
 		callingTeam = dealer % 2; // to be figured out in a pre-round
+	}
+	
+	// fills array of suits that aren't the trump of the turned up card
+	private void fillCallableSuits()
+	{
+		int index = 0; 
+		if (!(trump==Card.SUIT.CLUBS))
+		{
+			callableSuits[index] = Card.SUIT.CLUBS;
+			index++;
+		}
+		if (!(trump==Card.SUIT.DIAMONDS))
+		{
+			callableSuits[index] = Card.SUIT.DIAMONDS;
+			index++;
+		}
+		if (!(trump==Card.SUIT.HEARTS))
+		{
+			callableSuits[index] = Card.SUIT.HEARTS;
+			index++;
+		}
+		if (!(trump==Card.SUIT.SPADES))
+		{
+			callableSuits[index] = Card.SUIT.SPADES;
+		}
+	}
+	
+	public void preRoundPass()
+	{
+		if (currentTrick.currentPlayer == dealer)
+		{
+			if (isCardTurnedUp)
+			{
+				isCardTurnedUp = false;
+			}
+			else // stick the dealer
+			{
+				isStickTheDealer = true;
+			}
+		}
+		currentTrick.incrementTurn();
+	}
+	
+	// for when a card is turned up
+	public void preRoundCall(String c)
+	{
+		trump = turnedUpCard.suit;
+		players.get(dealer).removeCardFromHand(c);
+		players.get(dealer).hand.add(turnedUpCard);
+		prepareRoundForStart();
+	}
+	
+	// for when a card isn't turned up
+	public void preRoundCall(Card.SUIT tr)
+	{
+		trump = tr;
+		prepareRoundForStart();
+	}
+	
+	
+	private void prepareRoundForStart()
+	{
+		isInPreGameState = false;
+		currentTrick.currentPlayer = currentTrick.leadingPlayer;
+		currentTrick.trump = trump;
 	}
 	
 	

@@ -35,7 +35,7 @@ class Trick {
 		incrementTurn();
 	}
 	
-	private void incrementTurn()
+	public void incrementTurn()
 	{
 		currentPlayer = (currentPlayer + 1) % 4;
 	}
