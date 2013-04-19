@@ -114,6 +114,22 @@ public class Card
 		return this.value;
 	}
 	
+	public int cardValueNoLead (SUIT trump)
+	{
+		SUIT sameColor= getSameColorSuit(trump);
+		
+		if (this.suit == trump){
+			if(this.value == 11) /*Jack of trump suit*/
+				return 30;
+			return this.value + 14;
+		}
+		if ((this.suit == sameColor) && (this.value == 11)) /*Jack of same color*/
+		{
+			return 29;
+		}
+		return this.value;
+	}
+	
 	public boolean greater(Card other, SUIT trump, SUIT leading)
 	{
 		return this.cardValue(trump,leading) > other.cardValue(trump, leading);	

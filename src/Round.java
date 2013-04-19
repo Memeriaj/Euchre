@@ -39,22 +39,22 @@ public class Round {
 	private void fillCallableSuits()
 	{
 		int index = 0; 
-		if (!(trump==Card.SUIT.CLUBS))
+		if (!(turnedUpCard.suit==Card.SUIT.CLUBS))
 		{
 			callableSuits[index] = Card.SUIT.CLUBS;
 			index++;
 		}
-		if (!(trump==Card.SUIT.DIAMONDS))
+		if (!(turnedUpCard.suit==Card.SUIT.DIAMONDS))
 		{
 			callableSuits[index] = Card.SUIT.DIAMONDS;
 			index++;
 		}
-		if (!(trump==Card.SUIT.HEARTS))
+		if (!(turnedUpCard.suit==Card.SUIT.HEARTS))
 		{
 			callableSuits[index] = Card.SUIT.HEARTS;
 			index++;
 		}
-		if (!(trump==Card.SUIT.SPADES))
+		if (!(turnedUpCard.suit==Card.SUIT.SPADES))
 		{
 			callableSuits[index] = Card.SUIT.SPADES;
 		}
