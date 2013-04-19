@@ -102,12 +102,25 @@ public class ApplicationWindow {
 
 	private Component createExtraButtonsPanel() {
 		extraButtonsPanel = new JPanel();
-		setExtraButtonDisplay();
+		setExtraButtonDisplay(new String[0]);
 		return extraButtonsPanel;
 	}
 
-	public void setExtraButtonDisplay() {
+	public void setExtraButtonDisplay(String[] buttonsText) {
+		extraButtonsPanel.setLayout(new GridLayout());
+		for(String s : buttonsText){
+			JButton button = new JButton();
+			button.setText(s);
+			button.addActionListener(new ActionListener() {
 
+				@Override
+				public void actionPerformed(ActionEvent arg0) {
+					JButton buttonPressed = (JButton) arg0.getSource();
+					controller.extraButtonSelected(buttonPressed.getText());
+				}
+			});
+			extraButtonsPanel.add(button);
+		}
 	}
 
 	private JPanel createMainDisplayPanel() {
