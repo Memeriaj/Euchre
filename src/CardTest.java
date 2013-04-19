@@ -164,4 +164,28 @@ public class CardTest {
 		Card card = new Card(Card.SUIT.DIAMONDS, 7);
 		assertTrue(card.toString().equals("NOT VALID of Diamonds"));
 	}
+	
+	@Test
+	public void testCardValueNoLeadNonTrump(){
+		Card c = new Card(Card.SUIT.SPADES, 12);
+		assertEquals(c.cardValueNoLead(Card.SUIT.HEARTS),12);
+	}
+	
+	@Test
+	public void testCardValueNoLeadTrumpNonJack(){
+		Card c = new Card(Card.SUIT.SPADES, 12);
+		assertEquals(c.cardValueNoLead(Card.SUIT.SPADES),26);
+	}
+	
+	@Test
+	public void testCardValueNoLeadTrumpJack(){
+		Card c = new Card(Card.SUIT.SPADES, 11);
+		assertEquals(c.cardValueNoLead(Card.SUIT.SPADES),30);
+	}
+	
+	@Test
+	public void testCardValueNoLeadSameColorJack(){
+		Card c = new Card(Card.SUIT.CLUBS, 11);
+		assertEquals(c.cardValueNoLead(Card.SUIT.SPADES),29);
+	}
 }
