@@ -2,208 +2,116 @@
 <diagram program="umlet" version="12.0">
   <zoom_level>10</zoom_level>
   <element>
-    <type>com.umlet.element.Class</type>
-    <coordinates>
-      <x>750</x>
-      <y>540</y>
-      <w>330</w>
-      <h>120</h>
-    </coordinates>
-    <panel_attributes>Controller
---
---
-+getAllHands(): ArrayList&lt;ArrayList&lt;Card&gt;&gt;
-+cardPlayed(String cardText): void
-+getTextForMiddle(): String
-+setAppWindow(ApplicationWindow appWin): void
-+stringOFTrickPlayed(Trick trick): String
-</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>240</x>
-      <y>430</y>
+      <x>200</x>
+      <y>210</y>
       <w>50</w>
-      <h>140</h>
+      <h>150</h>
     </coordinates>
-    <panel_attributes>lt=&lt;.</panel_attributes>
-    <additional_attributes>30;120;30;30</additional_attributes>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>30;30;30;130</additional_attributes>
   </element>
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>400</x>
-      <y>180</y>
-      <w>90</w>
-      <h>390</h>
+      <x>670</x>
+      <y>270</y>
+      <w>190</w>
+      <h>50</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
-m1=0..4
-r1=cardsPlayed
-m2=1</panel_attributes>
-    <additional_attributes>50;30;50;370</additional_attributes>
-  </element>
-  <element>
-    <type>com.umlet.element.Relation</type>
-    <coordinates>
-      <x>240</x>
-      <y>260</y>
-      <w>260</w>
-      <h>110</h>
-    </coordinates>
-    <panel_attributes>lt=-&gt;
 m1=1
-m2=4
-r2=players</panel_attributes>
-    <additional_attributes>240;90;40;90;40;30</additional_attributes>
-  </element>
-  <element>
-    <type>com.umlet.element.Relation</type>
-    <coordinates>
-      <x>570</x>
-      <y>180</y>
-      <w>54</w>
-      <h>140</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;-
-m1=0..24
-r1=deck
+r1=currentRound
 m2=1</panel_attributes>
-    <additional_attributes>30;30;30;120</additional_attributes>
+    <additional_attributes>30;30;170;30</additional_attributes>
   </element>
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
       <x>730</x>
-      <y>180</y>
+      <y>130</y>
       <w>50</w>
-      <h>380</h>
+      <h>420</h>
     </coordinates>
     <panel_attributes>lt=&lt;.</panel_attributes>
-    <additional_attributes>30;30;30;360</additional_attributes>
-  </element>
-  <element>
-    <type>com.umlet.element.Relation</type>
-    <coordinates>
-      <x>680</x>
-      <y>180</y>
-      <w>50</w>
-      <h>550</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;.</panel_attributes>
-    <additional_attributes>30;30;30;530</additional_attributes>
-  </element>
-  <element>
-    <type>com.umlet.element.Class</type>
-    <coordinates>
-      <x>80</x>
-      <y>220</y>
-      <w>230</w>
-      <h>70</h>
-    </coordinates>
-    <panel_attributes>Player
---
-+name: String
-
---
-+Player(String name): Player</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <type>com.umlet.element.Class</type>
-    <coordinates>
-      <x>870</x>
-      <y>250</y>
-      <w>350</w>
-      <h>110</h>
-    </coordinates>
-    <panel_attributes>Euchre
---
---
-+Euchre(): Euchre
-+humanPlayCard(String cardBeingPlayed): void
-+isCurrentPlayerAI(): boolean
-+makeAIPlay(): void</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <type>com.umlet.element.Relation</type>
-    <coordinates>
-      <x>220</x>
-      <y>140</y>
-      <w>190</w>
-      <h>430</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;-
-m1=1
-r1=currentWinningCard
-m2=1</panel_attributes>
-    <additional_attributes>170;30;120;30;120;410</additional_attributes>
-  </element>
-  <element>
-    <type>com.umlet.element.Class</type>
-    <coordinates>
-      <x>480</x>
-      <y>300</y>
-      <w>220</w>
-      <h>230</h>
-    </coordinates>
-    <panel_attributes>Round
---
-+trump: Card.SUIT
-+trickCount: int[]
-+dealer: int
-+callingTeam: int
---
-
-+isOver(): boolean
-+scoreRound(): int[]
-+shuffle(): void
-+draw(): Card
-+deal(): void
-+playCard(Card c): void
-+getNextRound(): Round</panel_attributes>
-    <additional_attributes/>
+    <additional_attributes>30;30;30;400</additional_attributes>
   </element>
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
       <x>280</x>
-      <y>250</y>
-      <w>610</w>
-      <h>50</h>
+      <y>90</y>
+      <w>146</w>
+      <h>520</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+m1=1
+r1=currentWinningCard
+m2=1</panel_attributes>
+    <additional_attributes>110;30;80;30;80;500</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>380</x>
+      <y>130</y>
+      <w>90</w>
+      <h>480</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+m1=0..4
+r1=cardsPlayed
+m2=1</panel_attributes>
+    <additional_attributes>50;30;50;460</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>410</x>
+      <y>560</y>
+      <w>290</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+m1=1
+r1=currentTrick
+m2=1</panel_attributes>
+    <additional_attributes>30;50;270;50;270;30</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>190</x>
+      <y>40</y>
+      <w>220</w>
+      <h>150</h>
     </coordinates>
     <panel_attributes>lt=-&gt;
 m1=1
-m2=4
-r2=players</panel_attributes>
-    <additional_attributes>590;30;30;30</additional_attributes>
+m2=0..5
+r2=hand</panel_attributes>
+    <additional_attributes>30;130;30;30;200;30</additional_attributes>
   </element>
   <element>
-    <type>com.umlet.element.Class</type>
+    <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>650</x>
-      <y>710</y>
-      <w>410</w>
-      <h>110</h>
+      <x>950</x>
+      <y>280</y>
+      <w>66</w>
+      <h>270</h>
     </coordinates>
-    <panel_attributes>ApplicationWindow
---
---
-+ApplicationWindow(Controller cont): ApplicationWindow
-+main(String[] args): void
-+setMiddleTextArea(String textForMiddle): void
-+updateHands(ArrayList&lt;ArrayList&lt;Card&gt;&gt; currentHands): void
-</panel_attributes>
-    <additional_attributes/>
+    <panel_attributes>lt=&lt;-
+m1=1
+r1=euchre
+m2=1</panel_attributes>
+    <additional_attributes>40;30;40;250</additional_attributes>
   </element>
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>240</x>
-      <y>550</y>
+      <x>170</x>
+      <y>590</y>
       <w>270</w>
       <h>210</h>
     </coordinates>
@@ -227,47 +135,49 @@ r2=players</panel_attributes>
     <type>com.umlet.element.Relation</type>
     <coordinates>
       <x>890</x>
-      <y>630</y>
+      <y>620</y>
       <w>50</w>
-      <h>100</h>
+      <h>90</h>
     </coordinates>
     <panel_attributes>lt=&lt;.&gt;
 </panel_attributes>
-    <additional_attributes>30;30;30;80</additional_attributes>
+    <additional_attributes>30;30;30;70</additional_attributes>
   </element>
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>670</x>
-      <y>320</y>
-      <w>220</w>
-      <h>50</h>
+      <x>170</x>
+      <y>430</y>
+      <w>50</w>
+      <h>180</h>
     </coordinates>
-    <panel_attributes>lt=&lt;-
-m1=1
-r1=currentRound
-m2=1</panel_attributes>
-    <additional_attributes>30;30;200;30</additional_attributes>
+    <panel_attributes>lt=&lt;.</panel_attributes>
+    <additional_attributes>30;160;30;30</additional_attributes>
   </element>
   <element>
-    <type>com.umlet.element.Relation</type>
+    <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>160</x>
-      <y>90</y>
-      <w>250</w>
-      <h>150</h>
+      <x>40</x>
+      <y>340</y>
+      <w>300</w>
+      <h>120</h>
     </coordinates>
-    <panel_attributes>lt=-&gt;
-m1=1
-m2=0..5
-r2=hand</panel_attributes>
-    <additional_attributes>30;130;30;30;230;30</additional_attributes>
+    <panel_attributes>AIPlayer
+--
+--
++AIPlayer(String name): AIPlayer
++getCardToPlay(Trick trick): Card
++pickUp(Card kitty): boolean
++discardDecider(Card kitty): Card
++trumpDecider(Card.SUIT invalid): Card.SUIT
+</panel_attributes>
+    <additional_attributes/>
   </element>
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
       <x>390</x>
-      <y>50</y>
+      <y>0</y>
       <w>370</w>
       <h>160</h>
     </coordinates>
@@ -284,69 +194,168 @@ r2=hand</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
-    <type>com.umlet.element.Relation</type>
-    <coordinates>
-      <x>980</x>
-      <y>330</y>
-      <w>66</w>
-      <h>230</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;-
-m1=1
-r1=euchre
-m2=1</panel_attributes>
-    <additional_attributes>40;30;40;210</additional_attributes>
-  </element>
-  <element>
-    <type>com.umlet.element.Relation</type>
-    <coordinates>
-      <x>480</x>
-      <y>500</y>
-      <w>220</w>
-      <h>90</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;-
-m1=1
-r1=currentTrick
-m2=1</panel_attributes>
-    <additional_attributes>30;70;200;70;200;30</additional_attributes>
-  </element>
-  <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>80</x>
-      <y>390</y>
-      <w>230</w>
-      <h>70</h>
+      <x>750</x>
+      <y>530</y>
+      <w>330</w>
+      <h>120</h>
     </coordinates>
-    <panel_attributes>AIPlayer
+    <panel_attributes>Controller
 --
 --
-+AIPlayer(String name): AIPlayer
-+getCardToPlay(Trick trick): Card
++getAllHands(): ArrayList&lt;ArrayList&lt;Card&gt;&gt;
++cardPlayed(String cardText): void
++getTextForMiddle(): String
++setAppWindow(ApplicationWindow appWin): void
++stringOFTrickPlayed(Trick trick): String
 </panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>170</x>
-      <y>260</y>
-      <w>50</w>
-      <h>150</h>
+      <x>570</x>
+      <y>130</y>
+      <w>54</w>
+      <h>140</h>
     </coordinates>
-    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
-    <additional_attributes>30;30;30;130</additional_attributes>
+    <panel_attributes>lt=&lt;-
+m1=0..24
+r1=deck
+m2=1</panel_attributes>
+    <additional_attributes>30;30;30;120</additional_attributes>
   </element>
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>480</x>
-      <y>570</y>
-      <w>290</w>
+      <x>410</x>
+      <y>610</y>
+      <w>360</w>
       <h>50</h>
     </coordinates>
     <panel_attributes>lt=&lt;.</panel_attributes>
-    <additional_attributes>30;30;270;30</additional_attributes>
+    <additional_attributes>30;30;340;30</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>650</x>
+      <y>690</y>
+      <w>410</w>
+      <h>110</h>
+    </coordinates>
+    <panel_attributes>ApplicationWindow
+--
+--
++ApplicationWindow(Controller cont): ApplicationWindow
++main(String[] args): void
++setMiddleTextArea(String textForMiddle): void
++updateHands(ArrayList&lt;ArrayList&lt;Card&gt;&gt; currentHands): void
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>110</x>
+      <y>170</y>
+      <w>230</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes>Player
+--
++name: String
+
+--
++Player(String name): Player</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>310</x>
+      <y>200</y>
+      <w>550</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;
+m1=1
+m2=4
+r2=players</panel_attributes>
+    <additional_attributes>530;30;30;30</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>270</x>
+      <y>210</y>
+      <w>230</w>
+      <h>110</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;
+m1=1
+m2=4
+r2=players</panel_attributes>
+    <additional_attributes>210;90;40;90;40;30</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>480</x>
+      <y>250</y>
+      <w>220</w>
+      <h>340</h>
+    </coordinates>
+    <panel_attributes>Round
+--
++trump: Card.SUIT
++trickCount: int[]
++dealer: int
++callingTeam: int
++isInPreGameState = true: boolean
++isCardTurnedUp: boolean
++isStickTheDealer = false: boolean
++turnedUpCard: Card
++callableSuits = new Card.SUIT[3]: Card.SUIT[]
+--
++isOver(): boolean
++scoreRound(): int[]
++shuffle(): void
++draw(): Card
++deal(): void
++playCard(Card c): void
++getNextRound(): Round
++preRoundPass(): void
++preRoundCall(): void</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>680</x>
+      <y>130</y>
+      <w>50</w>
+      <h>580</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.</panel_attributes>
+    <additional_attributes>30;30;30;560</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>840</x>
+      <y>200</y>
+      <w>350</w>
+      <h>110</h>
+    </coordinates>
+    <panel_attributes>Euchre
+--
+--
++Euchre(): Euchre
++humanPlayCard(String cardBeingPlayed): void
++isCurrentPlayerAI(): boolean
++makeAIPlay(): void</panel_attributes>
+    <additional_attributes/>
   </element>
 </diagram>
