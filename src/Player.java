@@ -97,7 +97,8 @@ public class Player {
 		for (int i = 0; i< hand.size() ; i++)
 		{
 			c=hand.get(i);
-			if (c.suit == leadingSuit || (leadingSuit == trumpSuit && c.suit == sameColorAsTrump && c.value == 11)) // if they have a card to follow suit or the left
+			if ((c.suit == leadingSuit && !(c.suit == sameColorAsTrump && c.value == 11)) // if they have a card matching leading suit that's not the left
+					|| (leadingSuit == trumpSuit && c.suit == sameColorAsTrump && c.value == 11)) // or if the leading suit is trump and they have left
 			{
 				hasAtLeastOneOfSuit = true;
 				toReturn[i]=true;
