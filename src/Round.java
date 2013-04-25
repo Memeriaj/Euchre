@@ -97,9 +97,10 @@ public class Round {
 	{
 		trump = turnedUpCard.suit;
 		currentTrick.trump = trump;
-		if (isCurrentPlayerAI())
+		Player p = players.get(dealer);
+		if (p instanceof AIPlayer)
 		{
-			AIPlayer aip = ((AIPlayer) players.get(currentTrick.currentPlayer));
+			AIPlayer aip = ((AIPlayer) p);
 			Card cardToDiscard = aip.discardDecider(turnedUpCard);
 			aip.removeCardFromHand(cardToDiscard);
 			aip.hand.add(turnedUpCard);
@@ -128,11 +129,14 @@ public class Round {
 	}
 	
 	
-	public void dealerDiscardForRoundStart(Card c)
+	public void dealerDiscardForRoundStart(String c)
 	{
 		callingTeam = currentTrick.currentPlayer % 2;
 		isInPreGameState = false;
 		currentTrick.currentPlayer = currentTrick.leadingPlayer;
+		Player p = players.get(dealer);
+		p.removeCardFromHand(c);
+		p.hand.add(turnedUpCard);
 	}
 	
 	public boolean isOver(){
