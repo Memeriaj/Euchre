@@ -67,14 +67,14 @@ public class Round {
 			{
 				isCardTurnedUp = false;
 			}
-			else // stick the dealer
-			{
-				isStickTheDealer = true;
-			}
 		}
 		else
 		{
 			currentTrick.incrementTurn();
+			if (currentTrick.currentPlayer == dealer && !isCardTurnedUp)
+			{
+				isStickTheDealer = true;
+			}
 		}
 	}
 	

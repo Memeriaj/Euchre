@@ -130,6 +130,27 @@ public class Euchre {
 		}
 	}
 	
+	public void humanPreRoundCallSuit(String suit)
+	{
+		if (suit.equals("Diamonds"))
+		{
+			currentRound.preRoundCall(Card.SUIT.DIAMONDS);
+		}
+		else if (suit.equals("Clubs"))
+		{
+			currentRound.preRoundCall(Card.SUIT.CLUBS);
+		}
+		else if (suit.equals("Spades"))
+		{
+			currentRound.preRoundCall(Card.SUIT.SPADES);
+		}
+		else //if (suit.equals("Hearts"))
+		{
+			currentRound.preRoundCall(Card.SUIT.HEARTS);
+		}
+		makeGameReadyForHuman();
+	}
+	
 	// used for both AI and humans
 	private void playCard(Card c)
 	{
