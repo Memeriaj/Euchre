@@ -90,6 +90,35 @@ public class AIPlayer extends Player
 		
 	}
 	
+	public boolean callDecider(Card.SUIT invalid)
+	{
+		ArrayList<Card> h = super.hand;
+		int max = 0;
+		if(invalid != Card.SUIT.CLUBS && (callingHandValue(h,Card.SUIT.CLUBS)>max)){
+			max = callingHandValue(h,Card.SUIT.CLUBS);
+		}
+		if(invalid != Card.SUIT.SPADES && (callingHandValue(h,Card.SUIT.SPADES)>max)){
+			max = callingHandValue(h,Card.SUIT.SPADES);
+		}
+		if(invalid != Card.SUIT.HEARTS && (callingHandValue(h,Card.SUIT.HEARTS)>max)){
+			
+			max = callingHandValue(h,Card.SUIT.HEARTS);
+		}
+		if(invalid != Card.SUIT.DIAMONDS && (callingHandValue(h,Card.SUIT.DIAMONDS)>max)){
+			
+			max = callingHandValue(h,Card.SUIT.DIAMONDS);
+		}
+		System.out.println("MAX: " + max);
+		return max>22;	
+	}
+	public int callingHandValue (ArrayList<Card> h, Card.SUIT trump)
+	{
+		int val = 0;
+		for(int x=0; x<5;x++)
+			val += h.get(x).biddingValue(trump);
+		return val;
+	}
+	
 	private int handValue (ArrayList<Card> h, Card.SUIT trump)
 	{
 		int val = 0;

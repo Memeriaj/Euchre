@@ -188,4 +188,34 @@ public class CardTest {
 		Card c = new Card(Card.SUIT.CLUBS, 11);
 		assertEquals(c.cardValueNoLead(Card.SUIT.SPADES),29);
 	}
+	
+	@Test
+	public void testBiddingValueNoLeadNonTrump(){
+		Card c = new Card(Card.SUIT.SPADES, 12);
+		assertEquals(c.biddingValue(Card.SUIT.HEARTS),0);
+	}
+	
+	@Test
+	public void testBiddingValueNoLeadTrumpNonJack(){
+		Card c = new Card(Card.SUIT.SPADES, 12);
+		assertEquals(c.biddingValue(Card.SUIT.SPADES),6);
+	}
+	
+	@Test
+	public void testBiddingValueNoLeadTrumpJack(){
+		Card c = new Card(Card.SUIT.SPADES, 11);
+		assertEquals(c.biddingValue(Card.SUIT.SPADES),12);
+	}
+	
+	@Test
+	public void testBiddingValueNoLeadSameColorJack(){
+		Card c = new Card(Card.SUIT.CLUBS, 11);
+		assertEquals(c.biddingValue(Card.SUIT.SPADES),11);
+	}
+	
+	@Test
+	public void testBiddingValueNotTrumpAce(){
+		Card c = new Card(Card.SUIT.CLUBS, 14);
+		assertEquals(c.biddingValue(Card.SUIT.SPADES),7);
+	}
 }
