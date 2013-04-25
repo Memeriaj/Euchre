@@ -18,13 +18,10 @@ public class Controller {
 	public void cardPlayed(String cardText) {
 		euchre.humanPlayCard(cardText);
 		updateGUI();
-		if(euchre.currentRound.isInPreGameState){
-			setUpIntitalRound();
-		}
+		setUpIntitalRound();
 	}
 	
 	private void setUpIntitalRound() {
-		
 		if(!euchre.currentRound.isInPreGameState){
 			updateGUI();
 			return;
@@ -49,7 +46,7 @@ public class Controller {
 		else
 			trump = euchre.currentRound.trump.toString();
 		applicationWindow.setScoreDisplay(euchre.score[0], euchre.score[1], euchre.currentRound.trickCount[0],
-				euchre.currentRound.trickCount[1], trump);
+				euchre.currentRound.trickCount[1], trump, printDealer());
 		boolean[] cardsEnabled = {false, false, false, false, false};
 		if(!euchre.currentRound.isInPreGameState)
 			cardsEnabled = euchre.getPlayableCardsForHuman();
@@ -57,11 +54,31 @@ public class Controller {
 		applicationWindow.refreshWindow();
 	}
 
+	private String printDealer() {
+		String out = "";
+		switch(euchre.currentRound.dealer){
+		case 0:
+			out += "You";
+			break;
+		case 1:
+			out += "Left";
+			break;
+		case 2:
+			out += "Top";
+			break;
+		case 3:
+			out += "Right";
+			break;
+		default:
+			System.out.println("Problem with switch for printing dealer!!!!");
+		}
+		return out;
+	}
+
 	public void setAppWindow(ApplicationWindow appWin) {
 		applicationWindow = appWin;
 		updateGUI();
-		if(euchre.currentRound.isInPreGameState)
-			setUpIntitalRound();
+		setUpIntitalRound();
 	}
 
 	public void extraButtonSelected(String text) {
@@ -91,6 +108,22 @@ public class Controller {
 		boolean[] enabled = {true, true, true, true, true, true};
 		applicationWindow.setPlayersCardsEnabled(enabled);
 		applicationWindow.setMiddleTextArea("Please select a card to discard.");
+		applicationWindow.refreshWindow();
+	}
+	
+	private void pickTrump(){
+		if(!euchre.currentRound.isInPreGameState){
+			updateGUI();
+			return;
+		}
+		boolean[] disabled = {false,false,false,false};
+		applicationWindow.setPlayersCardsEnabled(disabled);
+		String[] buttonsText = new String[4];
+		for(int q=0; q<3; q++)
+			buttonsText[q] = euchre.currentRound.callableSuits[q].toString();
+		buttonsText[3] = "Pass";
+		applicationWindow.setExtraButtonDisplay(buttonsText);
+		applicationWindow.setMiddleTextArea("");
 		applicationWindow.refreshWindow();
 	}
 
