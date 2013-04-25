@@ -135,9 +135,12 @@ public class Round {
 		callingTeam = currentTrick.currentPlayer % 2;
 		isInPreGameState = false;
 		currentTrick.currentPlayer = currentTrick.leadingPlayer;
-		Player p = players.get(dealer);
-		p.removeCardFromHand(c);
-		p.hand.add(turnedUpCard);
+		if (!turnedUpCard.toString().equals(c))
+		{
+			Player p = players.get(dealer);
+			p.removeCardFromHand(c);
+			p.hand.add(turnedUpCard);
+		}
 	}
 	
 	public boolean isOver(){
