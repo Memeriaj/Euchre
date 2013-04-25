@@ -96,6 +96,7 @@ public class AIPlayer extends Player
 	
 	public Card.SUIT trumpDecider(Card.SUIT invalid)
 	{
+		//return false;
 		ArrayList<Card> h = super.hand;
 		Card.SUIT choice = null;
 		int max = 0;

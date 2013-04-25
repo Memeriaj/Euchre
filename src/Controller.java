@@ -83,13 +83,18 @@ public class Controller {
 
 	public void extraButtonSelected(String text) {
 		System.out.println(text);
-		if(euchre.currentRound.isCardTurnedUp){			
-			if(text == "Pass")
-				euchre.humanPreRoundPass();
-			else if(text == "Pick it up")
-				euchre.humanPreRoundCall();
-			else
-				euchre.dealerDiscardForRoundStart(text);
+		System.out.println("Pre Current Player: "+euchre.currentRound.currentTrick.currentPlayer);
+		if(text == "Pass"){
+			euchre.humanPreRoundPass();
+			System.out.println("post Current Player: "+euchre.currentRound.currentTrick.currentPlayer);
+		}
+		else if(text == "Pick it up")
+			euchre.humanPreRoundCall();
+		else if(text == "HEARTS" || text == "SPADES" || text == "DIAMONDS" || text == "CLUBS")
+			euchre.humanPreRoundCallSuit(text);
+		else{
+			euchre.dealerDiscardForRoundStart(text);
+			System.out.println("Discarded a card.");
 		}
 		String[] buttons = new String[0];
 		applicationWindow.setExtraButtonDisplay(buttons);
@@ -98,10 +103,10 @@ public class Controller {
 		System.out.println("isinpregamestate: "+euchre.currentRound.isInPreGameState);
 		if(!euchre.currentRound.isInPreGameState)
 			updateGUI();
+		else if(!euchre.currentRound.isCardTurnedUp)
+			pickTrump();
 		else if(euchre.currentRound.dealerNeedsToDiscard)
 			setUpDiscard();
-		else
-			pickTrump();
 	}
 
 	private void setUpDiscard() {
@@ -120,10 +125,6 @@ public class Controller {
 	}
 	
 	private void pickTrump(){
-		if(!euchre.currentRound.isInPreGameState){
-			updateGUI();
-			return;
-		}
 		boolean[] disabled = {false,false,false,false};
 		applicationWindow.setPlayersCardsEnabled(disabled);
 		String[] buttonsText;
@@ -131,7 +132,7 @@ public class Controller {
 			buttonsText = new String[3];
 		else{
 			buttonsText = new String[4];
-			buttonsText[3] = "Pass ";
+			buttonsText[3] = "Pass";
 		}
 		for(int q=0; q<3; q++)
 			buttonsText[q] = euchre.currentRound.callableSuits[q].toString();
