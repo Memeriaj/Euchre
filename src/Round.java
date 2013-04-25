@@ -97,6 +97,7 @@ public class Round {
 	{
 		trump = turnedUpCard.suit;
 		currentTrick.trump = trump;
+		currentTrick.currentPlayer = dealer;
 		Player p = players.get(dealer);
 		if (p instanceof AIPlayer)
 		{
