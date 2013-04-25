@@ -29,6 +29,32 @@ public class AIPlayer extends Player
 	public boolean pickUp(Card kitty)
 	{
 		ArrayList<Card> h = super.hand;
+		Card.SUIT choice = null;
+		int max = 0;
+		if(handValue(h,Card.SUIT.CLUBS)>max){
+			choice = Card.SUIT.CLUBS;
+			max = handValue(h,Card.SUIT.CLUBS);
+		}
+		if(handValue(h,Card.SUIT.SPADES)>max){
+			choice = Card.SUIT.SPADES;
+			max = handValue(h,Card.SUIT.SPADES);
+		}
+		if(handValue(h,Card.SUIT.HEARTS)>max){
+			choice = Card.SUIT.HEARTS;
+			max = handValue(h,Card.SUIT.HEARTS);
+		}
+		if(handValue(h,Card.SUIT.DIAMONDS)>max){
+			choice = Card.SUIT.DIAMONDS;
+			max = handValue(h,Card.SUIT.DIAMONDS);
+		}
+		if(max>22 && (choice == kitty.suit))
+			return true;
+		return false;
+	}
+
+	public boolean pickUpAsDealer(Card kitty)
+	{
+		ArrayList<Card> h = super.hand;
 		int max = Math.max(Math.max(handValue(h,Card.SUIT.CLUBS),handValue(h,Card.SUIT.SPADES)),
 				           Math.max(handValue(h,Card.SUIT.DIAMONDS),handValue(h,Card.SUIT.HEARTS)));
 		h.add(kitty);
@@ -47,7 +73,7 @@ public class AIPlayer extends Player
 			return true;
 		return false;
 	}
-
+	
 	public Card discardDecider(Card kitty)
 	{
 		ArrayList<Card> h = super.hand;
