@@ -26,6 +26,10 @@ public class Controller {
 			updateGUI();
 			return;
 		}
+		else if(euchre.currentRound.dealerNeedsToDiscard){
+			setUpDiscard();
+			return;
+		}
 		boolean[] disabled = {false,false,false,false};
 		applicationWindow.setPlayersCardsEnabled(disabled);
 		String[] buttonsText = {"Pass", "Pick it up"};
