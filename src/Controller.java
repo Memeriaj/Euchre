@@ -83,11 +83,13 @@ public class Controller {
 
 	public void extraButtonSelected(String text) {
 		System.out.println(text);
-		if(euchre.currentRound.isCardTurnedUp){
+		if(euchre.currentRound.isCardTurnedUp){			
 			if(text == "Pass")
 				euchre.humanPreRoundPass();
-			else
+			else if(text == "Pick it up")
 				euchre.humanPreRoundCall();
+			else
+				euchre.dealerDiscardForRoundStart(text);
 		}
 		String[] buttons = new String[0];
 		applicationWindow.setExtraButtonDisplay(buttons);
