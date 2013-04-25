@@ -245,7 +245,6 @@ public class AIPlayerTest {
 		aip.hand.add(new Card(Card.SUIT.CLUBS, 11));
 		aip.hand.add(new Card(Card.SUIT.CLUBS, 12));
 		aip.hand.add(new Card(Card.SUIT.CLUBS, 13));
-		System.out.println(aip.handValue(aip.hand, Card.SUIT.CLUBS));
 		assertTrue(aip.pickUpAsDealer(new Card(Card.SUIT.CLUBS, 9)));
 		assertEquals(new Card(Card.SUIT.CLUBS, 9), aip.discardDecider(new Card(Card.SUIT.CLUBS, 9)));
 	}
