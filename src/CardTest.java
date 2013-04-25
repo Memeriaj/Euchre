@@ -198,7 +198,7 @@ public class CardTest {
 	@Test
 	public void testBiddingValueNoLeadTrumpNonJack(){
 		Card c = new Card(Card.SUIT.SPADES, 12);
-		assertEquals(c.biddingValue(Card.SUIT.SPADES),6);
+		assertEquals(c.biddingValue(Card.SUIT.SPADES),7);
 	}
 	
 	@Test
@@ -216,6 +216,6 @@ public class CardTest {
 	@Test
 	public void testBiddingValueNotTrumpAce(){
 		Card c = new Card(Card.SUIT.CLUBS, 14);
-		assertEquals(c.biddingValue(Card.SUIT.SPADES),7);
+		assertEquals(c.biddingValue(Card.SUIT.SPADES),6);
 	}
 }
