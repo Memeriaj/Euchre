@@ -108,7 +108,6 @@ public class AIPlayer extends Player
 			
 			max = callingHandValue(h,Card.SUIT.DIAMONDS);
 		}
-		System.out.println("MAX: " + max);
 		return max>22;	
 	}
 	public int callingHandValue (ArrayList<Card> h, Card.SUIT trump)
