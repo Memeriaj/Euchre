@@ -106,7 +106,7 @@ public class AIPlayerTest {
 		aip.hand.add(new Card(Card.SUIT.CLUBS, 11));
 		aip.hand.add(new Card(Card.SUIT.CLUBS, 12));
 		aip.hand.add(new Card(Card.SUIT.CLUBS, 13));
-		assertFalse(aip.pickUp(new Card(Card.SUIT.CLUBS, 9)));
+		assertTrue(aip.pickUp(new Card(Card.SUIT.CLUBS, 9)));
 	}
 	
 	@Test
@@ -171,7 +171,7 @@ public class AIPlayerTest {
 		aip.hand.add(new Card(Card.SUIT.HEARTS, 9));
 		aip.hand.add(new Card(Card.SUIT.SPADES, 12));
 		aip.hand.add(new Card(Card.SUIT.CLUBS, 13));
-		assertFalse(aip.pickUp(new Card(Card.SUIT.DIAMONDS, 11)));
+		assertTrue(aip.pickUp(new Card(Card.SUIT.DIAMONDS, 11)));
 	}
 
 	@Test
@@ -225,7 +225,7 @@ public class AIPlayerTest {
 		aip.hand.add(new Card(Card.SUIT.CLUBS, 11));
 		aip.hand.add(new Card(Card.SUIT.CLUBS, 12));
 		aip.hand.add(new Card(Card.SUIT.CLUBS, 13));
-		assertFalse(aip.pickUp(new Card(Card.SUIT.CLUBS, 9)));
+		assertTrue(aip.pickUp(new Card(Card.SUIT.CLUBS, 9)));
 		assertEquals(new Card(Card.SUIT.CLUBS, 9), aip.discardDecider(new Card(Card.SUIT.CLUBS, 9)));
 	}
 	
@@ -239,8 +239,9 @@ public class AIPlayerTest {
 		aip.hand.add(new Card(Card.SUIT.CLUBS, 11));
 		aip.hand.add(new Card(Card.SUIT.CLUBS, 12));
 		aip.hand.add(new Card(Card.SUIT.CLUBS, 13));
+		System.out.println(aip.handValue(aip.hand, Card.SUIT.CLUBS));
 		assertTrue(aip.pickUp(new Card(Card.SUIT.CLUBS, 9)));
-		assertEquals(new Card(Card.SUIT.HEARTS, 14), aip.discardDecider(new Card(Card.SUIT.CLUBS, 9)));
+		assertEquals(new Card(Card.SUIT.CLUBS, 9), aip.discardDecider(new Card(Card.SUIT.CLUBS, 9)));
 	}
 	
 	@Test
@@ -295,8 +296,8 @@ public class AIPlayerTest {
 		aip.hand.add(new Card(Card.SUIT.HEARTS, 9));
 		aip.hand.add(new Card(Card.SUIT.SPADES, 12));
 		aip.hand.add(new Card(Card.SUIT.CLUBS, 13));
-		assertFalse(aip.pickUp(new Card(Card.SUIT.DIAMONDS, 11)));
-		assertEquals(new Card(Card.SUIT.DIAMONDS, 11), aip.discardDecider(new Card(Card.SUIT.DIAMONDS, 11)));
+		assertTrue(aip.pickUp(new Card(Card.SUIT.DIAMONDS, 11)));	
+		assertEquals(new Card(Card.SUIT.HEARTS,9), aip.discardDecider(new Card(Card.SUIT.DIAMONDS, 11)));
 	}
 
 	@Test
@@ -366,58 +367,6 @@ public class AIPlayerTest {
 	}
 	
 	@Test
-	public void testCallingHandValueFullHand() {
-		String name = "TestAIPlayer";
-		AIPlayer aip = new AIPlayer(name);
-		assertEquals(name, aip.name);
-		aip.hand.add(new Card(Card.SUIT.CLUBS, 14));
-		aip.hand.add(new Card(Card.SUIT.CLUBS, 10));
-		aip.hand.add(new Card(Card.SUIT.CLUBS, 11));
-		aip.hand.add(new Card(Card.SUIT.CLUBS, 12));
-		aip.hand.add(new Card(Card.SUIT.CLUBS, 13));
-		assertEquals(41,aip.callingHandValue(aip.hand,Card.SUIT.CLUBS));
-	}
-	
-	@Test
-	public void testCallingHandValueFullHandWrongSuit() {
-		String name = "TestAIPlayer";
-		AIPlayer aip = new AIPlayer(name);
-		assertEquals(name, aip.name);
-		aip.hand.add(new Card(Card.SUIT.CLUBS, 14));
-		aip.hand.add(new Card(Card.SUIT.CLUBS, 10));
-		aip.hand.add(new Card(Card.SUIT.CLUBS, 11));
-		aip.hand.add(new Card(Card.SUIT.CLUBS, 12));
-		aip.hand.add(new Card(Card.SUIT.CLUBS, 13));
-		assertEquals(8,aip.callingHandValue(aip.hand,Card.SUIT.HEARTS));
-	}
-	
-	@Test
-	public void testCallingHandValueMixedLow() {
-		String name = "TestAIPlayer";
-		AIPlayer aip = new AIPlayer(name);
-		assertEquals(name, aip.name);
-		aip.hand.add(new Card(Card.SUIT.CLUBS, 14));
-		aip.hand.add(new Card(Card.SUIT.HEARTS, 10));
-		aip.hand.add(new Card(Card.SUIT.CLUBS, 11));
-		aip.hand.add(new Card(Card.SUIT.HEARTS, 9));
-		aip.hand.add(new Card(Card.SUIT.DIAMONDS, 13));
-		assertEquals(18,aip.callingHandValue(aip.hand,Card.SUIT.HEARTS));
-	}
-	
-	@Test
-	public void testCallingHandValueMixedHigh() {
-		String name = "TestAIPlayer";
-		AIPlayer aip = new AIPlayer(name);
-		assertEquals(name, aip.name);
-		aip.hand.add(new Card(Card.SUIT.CLUBS, 14));
-		aip.hand.add(new Card(Card.SUIT.HEARTS, 10));
-		aip.hand.add(new Card(Card.SUIT.CLUBS, 10));
-		aip.hand.add(new Card(Card.SUIT.HEARTS, 14));
-		aip.hand.add(new Card(Card.SUIT.DIAMONDS, 13));
-		assertEquals(23,aip.callingHandValue(aip.hand,Card.SUIT.HEARTS));
-	}	
-	
-	@Test
 	public void testCallDeciderFullHand() {
 		String name = "TestAIPlayer";
 		AIPlayer aip = new AIPlayer(name);
@@ -427,7 +376,7 @@ public class AIPlayerTest {
 		aip.hand.add(new Card(Card.SUIT.CLUBS, 11));
 		aip.hand.add(new Card(Card.SUIT.CLUBS, 12));
 		aip.hand.add(new Card(Card.SUIT.CLUBS, 13));
-		assertEquals(41,aip.callingHandValue(aip.hand,Card.SUIT.CLUBS));
+		assertEquals(42,aip.handValue(aip.hand,Card.SUIT.CLUBS));
 		assertEquals(true,aip.callDecider(Card.SUIT.HEARTS));
 	}
 	
@@ -454,7 +403,7 @@ public class AIPlayerTest {
 		aip.hand.add(new Card(Card.SUIT.CLUBS, 11));
 		aip.hand.add(new Card(Card.SUIT.HEARTS, 9));
 		aip.hand.add(new Card(Card.SUIT.DIAMONDS, 13));
-		assertEquals(18,aip.callingHandValue(aip.hand,Card.SUIT.HEARTS));
+		assertEquals(17,aip.handValue(aip.hand,Card.SUIT.HEARTS));
 		assertEquals(false,aip.callDecider(Card.SUIT.CLUBS));
 	}
 	
@@ -468,7 +417,7 @@ public class AIPlayerTest {
 		aip.hand.add(new Card(Card.SUIT.CLUBS, 10));
 		aip.hand.add(new Card(Card.SUIT.HEARTS, 14));
 		aip.hand.add(new Card(Card.SUIT.DIAMONDS, 13));
-		assertEquals(23,aip.callingHandValue(aip.hand,Card.SUIT.HEARTS));
+		assertEquals(23,aip.handValue(aip.hand,Card.SUIT.HEARTS));
 		assertEquals(true,aip.callDecider(Card.SUIT.CLUBS));
 	}
 }

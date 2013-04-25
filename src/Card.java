@@ -126,11 +126,11 @@ public class Card
 			if(this.value == 13) /*King of trump suit*/
 				return 8;
 			if(this.value == 12) /*Queen of trump suit*/
-				return 6;
+				return 7;
 			if(this.value == 10) /*Ten of trump suit*/
 				return 5;
 			if(this.value == 9) /*Nine of trump suit*/
-				return 5;
+				return 4;
 		}
 		if ((this.suit == sameColor) && (this.value == 11)) /*Jack of same color*/
 		{

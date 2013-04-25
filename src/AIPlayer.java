@@ -43,6 +43,8 @@ public class AIPlayer extends Player
 			h.add(discard);
 		}
 		h.remove(kitty);
+		if (handValue(h, kitty.suit) > 35)
+			return true;
 		return false;
 	}
 
@@ -94,35 +96,28 @@ public class AIPlayer extends Player
 	{
 		ArrayList<Card> h = super.hand;
 		int max = 0;
-		if(invalid != Card.SUIT.CLUBS && (callingHandValue(h,Card.SUIT.CLUBS)>max)){
-			max = callingHandValue(h,Card.SUIT.CLUBS);
+		if(invalid != Card.SUIT.CLUBS && (handValue(h,Card.SUIT.CLUBS)>max)){
+			max = handValue(h,Card.SUIT.CLUBS);
 		}
-		if(invalid != Card.SUIT.SPADES && (callingHandValue(h,Card.SUIT.SPADES)>max)){
-			max = callingHandValue(h,Card.SUIT.SPADES);
+		if(invalid != Card.SUIT.SPADES && (handValue(h,Card.SUIT.SPADES)>max)){
+			max = handValue(h,Card.SUIT.SPADES);
 		}
-		if(invalid != Card.SUIT.HEARTS && (callingHandValue(h,Card.SUIT.HEARTS)>max)){
+		if(invalid != Card.SUIT.HEARTS && (handValue(h,Card.SUIT.HEARTS)>max)){
 			
-			max = callingHandValue(h,Card.SUIT.HEARTS);
+			max = handValue(h,Card.SUIT.HEARTS);
 		}
-		if(invalid != Card.SUIT.DIAMONDS && (callingHandValue(h,Card.SUIT.DIAMONDS)>max)){
+		if(invalid != Card.SUIT.DIAMONDS && (handValue(h,Card.SUIT.DIAMONDS)>max)){
 			
-			max = callingHandValue(h,Card.SUIT.DIAMONDS);
+			max = handValue(h,Card.SUIT.DIAMONDS);
 		}
 		return max>22;	
 	}
-	public int callingHandValue (ArrayList<Card> h, Card.SUIT trump)
+	
+	public int handValue (ArrayList<Card> h, Card.SUIT trump)
 	{
 		int val = 0;
 		for(int x=0; x<5;x++)
 			val += h.get(x).biddingValue(trump);
-		return val;
-	}
-	
-	private int handValue (ArrayList<Card> h, Card.SUIT trump)
-	{
-		int val = 0;
-		for(int x=0; x<5;x++)
-			val += h.get(x).cardValueNoLead(trump);
 		return val;
 	}
 }
