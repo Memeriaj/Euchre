@@ -13,8 +13,9 @@ public class Round {
 	public int dealer;
 	public int callingTeam;
 	public boolean isInPreGameState = true;
-	public boolean isCardTurnedUp;
+	public boolean isCardTurnedUp = true;
 	public boolean isStickTheDealer = false;
+	public boolean dealerNeedsToDiscard = false;
 	public Card turnedUpCard;
 	public Card.SUIT[] callableSuits = new Card.SUIT[3];
 	
@@ -24,7 +25,6 @@ public class Round {
 		shuffle();
 		deal();
 		turnedUpCard = deck.pop();
-		isCardTurnedUp = true;
 		fillCallableSuits();
 		
 		dealer = dealerIn;
@@ -32,7 +32,6 @@ public class Round {
 		trickCount[0] = 0;
 		trickCount[1] = 0;
 		
-		callingTeam = dealer % 2; // to be figured out in a pre-round
 	}
 	
 	// fills array of suits that aren't the trump of the turned up card
@@ -64,19 +63,14 @@ public class Round {
 	{
 		if (currentTrick.currentPlayer == dealer)
 		{
-			// currently, just default to spades
-			trump = Card.SUIT.SPADES;
-			prepareRoundForStart();
-			
-			// to be used later
-//			if (isCardTurnedUp)
-//			{
-//				isCardTurnedUp = false;
-//			}
-//			else // stick the dealer
-//			{
-//				isStickTheDealer = true;
-//			}
+			if (isCardTurnedUp)
+			{
+				isCardTurnedUp = false;
+			}
+			else // stick the dealer
+			{
+				isStickTheDealer = true;
+			}
 		}
 		else
 		{
@@ -97,33 +91,49 @@ public class Round {
 //		
 //		preRoundCall(c);
 //	}
-//	To be implemented with more complicated pre-rounds
-//	// for when a card is turned up
-//	public void preRoundCall(Card c)
-//	{
-//		trump = turnedUpCard.suit;
-//		players.get(dealer).removeCardFromHand(c);
-//		players.get(dealer).hand.add(turnedUpCard);
-//		prepareRoundForStart();
-//	}
 	
-	// for when a card isn't turned up
-	
+	// used when the card is turned up
 	public void preRoundCall()
 	{
 		trump = turnedUpCard.suit;
-		prepareRoundForStart();
+		currentTrick.trump = trump;
+		if (isCurrentPlayerAI())
+		{
+			AIPlayer aip = ((AIPlayer) players.get(currentTrick.currentPlayer));
+			Card cardToDiscard = aip.discardDecider(turnedUpCard);
+			aip.removeCardFromHand(cardToDiscard);
+			aip.hand.add(turnedUpCard);
+			isInPreGameState = false;
+			prepareForRoundStart();
+		}
+		else
+		{
+			dealerNeedsToDiscard = true;
+		}
 	}
 	
+	// used when the card is turned down
+	public void preRoundCall(Card.SUIT toBeTrump)
+	{
+		trump = toBeTrump;
+		currentTrick.trump = trump;
+		prepareForRoundStart();
+	}
 	
-	private void prepareRoundForStart()
+	private void prepareForRoundStart()
 	{
 		callingTeam = currentTrick.currentPlayer % 2;
 		isInPreGameState = false;
 		currentTrick.currentPlayer = currentTrick.leadingPlayer;
-		currentTrick.trump = trump;
 	}
 	
+	
+	public void dealerDiscardForRoundStart(Card c)
+	{
+		callingTeam = currentTrick.currentPlayer % 2;
+		isInPreGameState = false;
+		currentTrick.currentPlayer = currentTrick.leadingPlayer;
+	}
 	
 	public boolean isOver(){
 		return trickHistory.size() == 5;

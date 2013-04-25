@@ -54,6 +54,8 @@ public class Euchre {
 			makeAIPlayPreRound();
 		while(isCurrentPlayerAI() && !currentRound.isInPreGameState)
 			makeAIPlay();
+		
+		// there is a possible case that AI finished round and need to do pregame now
 		while(isCurrentPlayerAI() && currentRound.isInPreGameState)
 			makeAIPlayPreRound();
 		while(isCurrentPlayerAI() && !currentRound.isInPreGameState)
@@ -98,13 +100,27 @@ public class Euchre {
 	
 	public void makeAIPlayPreRound() 
 	{
-		if (((AIPlayer) players.get(currentRound.currentTrick.currentPlayer)).pickUp(currentRound.turnedUpCard))
+		if (currentRound.isCardTurnedUp)
 		{
-			currentRound.preRoundCall();
+			if (((AIPlayer) players.get(currentRound.currentTrick.currentPlayer)).pickUp(currentRound.turnedUpCard))
+			{
+				currentRound.preRoundCall();
+			}
+			else
+			{
+				currentRound.preRoundPass();
+			}
 		}
 		else
 		{
-			currentRound.preRoundPass();
+			if (currentRound.isStickTheDealer || ((AIPlayer) players.get(currentRound.currentTrick.currentPlayer)).callDecider(currentRound.turnedUpCard.suit))
+			{
+				currentRound.preRoundCall(((AIPlayer) players.get(currentRound.currentTrick.currentPlayer)).trumpDecider(currentRound.turnedUpCard.suit));
+			}
+			else
+			{
+				currentRound.preRoundPass();
+			}
 		}
 	}
 	
