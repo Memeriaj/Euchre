@@ -16,14 +16,7 @@ public class Controller {
 	 * @throws InterruptedException 
 	 */
 	public void cardPlayed(String cardText) {
-		if(euchre.currentRound.isInPreGameState && euchre.currentRound.dealer == 0){
-			
-		}
 		euchre.humanPlayCard(cardText);
-		while (euchre.isCurrentPlayerAI() && !euchre.currentRound.isInPreGameState)
-		{
-			euchre.makeAIPlay();
-		}
 		updateGUI();
 		if(euchre.currentRound.isInPreGameState){
 			setUpIntitalRound();
@@ -31,10 +24,7 @@ public class Controller {
 	}
 	
 	private void setUpIntitalRound() {
-		while(euchre.isCurrentPlayerAI() && euchre.currentRound.isInPreGameState)
-			euchre.makeAIPlayPreRound();
-		while(euchre.isCurrentPlayerAI())
-			euchre.makeAIPlay();
+		
 		if(!euchre.currentRound.isInPreGameState){
 			updateGUI();
 			return;
@@ -78,19 +68,17 @@ public class Controller {
 		System.out.println(text);
 		if(euchre.currentRound.isCardTurnedUp){
 			if(text == "Pass")
-				euchre.currentRound.preRoundPass();
+				euchre.humanPreRoundPass();
 //			else if(euchre.currentRound.dealer == 0)
 //				setUpDiscard();
 			else
-				euchre.currentRound.preRoundCall();
+				euchre.humanPreRoundCall();
 		}
 		String[] buttons = new String[0];
 		applicationWindow.setExtraButtonDisplay(buttons);
 		applicationWindow.refreshWindow();
-		while(euchre.isCurrentPlayerAI() && euchre.currentRound.isInPreGameState)
-			euchre.makeAIPlayPreRound();
-		while(euchre.isCurrentPlayerAI())
-			euchre.makeAIPlay();
+		
+		System.out.println("isinpregamestate: "+euchre.currentRound.isInPreGameState);
 		if(!euchre.currentRound.isInPreGameState)
 			updateGUI();
 	}

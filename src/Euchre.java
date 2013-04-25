@@ -13,6 +13,7 @@ public class Euchre {
 		currentRound = new Round(allCards, players, 0);
 		score[0] = 0;
 		score[1] = 0;
+		makeGameReadyForHuman();
 	}
 	
 	
@@ -47,11 +48,24 @@ public class Euchre {
 		players.add(new AIPlayer("AI 3"));
 	}
 	
+	public void makeGameReadyForHuman()
+	{
+		while(isCurrentPlayerAI() && currentRound.isInPreGameState)
+			makeAIPlayPreRound();
+		while(isCurrentPlayerAI() && !currentRound.isInPreGameState)
+			makeAIPlay();
+		while(isCurrentPlayerAI() && currentRound.isInPreGameState)
+			makeAIPlayPreRound();
+		while(isCurrentPlayerAI() && !currentRound.isInPreGameState)
+			makeAIPlay();
+	}
+	
 	public void humanPlayCard(String cardBeingPlayed){
 		System.out.println(cardBeingPlayed);
 		Card playedCard = players.get(currentRound.currentTrick.currentPlayer).removeCardFromHand(cardBeingPlayed);
 		System.out.println(playedCard.toString());
 		playCard(playedCard);
+		makeGameReadyForHuman();
 	}
 	
 	public boolean[] getPlayableCardsForHuman()
@@ -61,7 +75,19 @@ public class Euchre {
 	
 	public boolean isCurrentPlayerAI()
 	{
-		return (players.get(currentRound.currentTrick.currentPlayer) instanceof AIPlayer); 
+		return currentRound.isCurrentPlayerAI(); 
+	}
+	
+	public void humanPreRoundPass()
+	{
+		currentRound.preRoundPass();
+		makeGameReadyForHuman();
+	}
+	
+	public void humanPreRoundCall()
+	{
+		currentRound.preRoundCall();
+		makeGameReadyForHuman();
 	}
 
 	public void makeAIPlay() {
@@ -82,6 +108,7 @@ public class Euchre {
 		}
 	}
 	
+	// used for both AI and humans
 	private void playCard(Card c)
 	{
 		currentRound.playCard(c);
@@ -92,6 +119,7 @@ public class Euchre {
 			score[1] += roundScore[1];
 			roundHistory.add(currentRound);
 			currentRound = currentRound.getNextRound();
+			System.out.println("NEW DEALER IS "+currentRound.dealer);
 		}
 	}
 

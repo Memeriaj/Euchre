@@ -84,6 +84,11 @@ public class Round {
 		}
 	}
 	
+	public boolean isCurrentPlayerAI()
+	{
+		return (players.get(currentTrick.currentPlayer) instanceof AIPlayer); 
+	}
+	
 //	// for when the player calls
 //	public void preRoundCall()
 //	{
