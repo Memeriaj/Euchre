@@ -78,21 +78,21 @@ public class ApplicationWindow {
 		scoreLabels[2].setHorizontalAlignment(JLabel.CENTER);
 		out.add(scoreLabels[2], BorderLayout.CENTER);
 		out.add(new JPanel(), BorderLayout.SOUTH);
-		setScoreDisplay(0, 0, 0, 0, "");
+		setScoreDisplay(0, 0, 0, 0, "", "");
 		return out;
 	}
 
 	public void setScoreDisplay(int playerOverallScore,
 			int opponentOverallScore, int playerTrickScore,
-			int opponentTrickScore, String suit) {
+			int opponentTrickScore, String suit, String dealer) {
 		String left = Utils.convertStringToHTML("Overall Score\nYours: "
 				+ playerOverallScore + "  Opponent: " + opponentOverallScore);
 		String right = Utils.convertStringToHTML("Trick Score\nYours: "
 				+ playerTrickScore + "  Opponent: " + opponentTrickScore);
-		String trump = Utils.convertStringToHTML("Trump: "+suit);
+		String middle = Utils.convertStringToHTML("Trump: "+suit+ "       "+"Dealer: "+dealer);
 		scoreLabels[0].setText(left);
 		scoreLabels[1].setText(right);
-		scoreLabels[2].setText(trump);
+		scoreLabels[2].setText(middle);
 	}
 
 	public void refreshWindow() {

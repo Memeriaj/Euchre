@@ -37,5 +37,28 @@ public class UtilsTest {
 		String output = Utils.convertStringToHTML(toTest);
 		assertTrue(expected.matches(output));
 	}
-
+	
+	@Test
+	public void convertStringToHTML_twoSpaces_spaceAndExtraSpace(){
+		String toTest = "  ";
+		String expected = "<html> &nbsp</html>";
+		String output = Utils.convertStringToHTML(toTest);
+		assertTrue(expected.matches(output));
+	}
+	
+	@Test
+	public void convertStringToHTML_threeSpaces_spaceExtraSpaceAnotherSpace(){
+		String toTest = "   ";
+		String expected = "<html> &nbsp </html>";
+		String output = Utils.convertStringToHTML(toTest);
+		assertTrue(expected.matches(output));
+	}
+	
+	@Test
+	public void convertStringToHTML_fourSpaces_spaceExtraSpaceAnotherSpaceAndExtraSpace(){
+		String toTest = "    ";
+		String expected = "<html> &nbsp &nbsp</html>";
+		String output = Utils.convertStringToHTML(toTest);
+		assertTrue(expected.matches(output));
+	}
 }
