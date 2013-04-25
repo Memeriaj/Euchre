@@ -103,8 +103,11 @@ public class Round {
 		{
 			AIPlayer aip = ((AIPlayer) p);
 			Card cardToDiscard = aip.discardDecider(turnedUpCard);
-			aip.removeCardFromHand(cardToDiscard);
-			aip.hand.add(turnedUpCard);
+			if (cardToDiscard != turnedUpCard)
+			{
+				aip.removeCardFromHand(cardToDiscard);
+				aip.hand.add(turnedUpCard);
+			}
 			isInPreGameState = false;
 			prepareForRoundStart();
 		}
