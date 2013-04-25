@@ -86,8 +86,6 @@ public class Controller {
 		if(euchre.currentRound.isCardTurnedUp){
 			if(text == "Pass")
 				euchre.humanPreRoundPass();
-//			else if(euchre.currentRound.dealer == 0)
-//				setUpDiscard();
 			else
 				euchre.humanPreRoundCall();
 		}
@@ -98,15 +96,23 @@ public class Controller {
 		System.out.println("isinpregamestate: "+euchre.currentRound.isInPreGameState);
 		if(!euchre.currentRound.isInPreGameState)
 			updateGUI();
+		else if(euchre.currentRound.dealerNeedsToDiscard)
+			setUpDiscard();
+		else
+			pickTrump();
 	}
 
 	private void setUpDiscard() {
 		updateGUI();
 		ArrayList<ArrayList<Card>> hands = euchre.getAllHands();
-		hands.get(0).add(euchre.currentRound.turnedUpCard);
-		applicationWindow.updateHands(hands);
-		boolean[] enabled = {true, true, true, true, true, true};
-		applicationWindow.setPlayersCardsEnabled(enabled);
+		String[] extras = new String[6];
+		for(int q=0; q<5; q++)
+			extras[q] = hands.get(0).get(q).toString();
+		extras[5] = euchre.currentRound.turnedUpCard.toString();
+//		applicationWindow.updateHands(hands);
+//		boolean[] enabled = {true, true, true, true, true, true};
+//		applicationWindow.setPlayersCardsEnabled(enabled);
+		applicationWindow.setExtraButtonDisplay(extras);
 		applicationWindow.setMiddleTextArea("Please select a card to discard.");
 		applicationWindow.refreshWindow();
 	}
@@ -118,10 +124,15 @@ public class Controller {
 		}
 		boolean[] disabled = {false,false,false,false};
 		applicationWindow.setPlayersCardsEnabled(disabled);
-		String[] buttonsText = new String[4];
+		String[] buttonsText;
+		if(euchre.currentRound.isStickTheDealer)
+			buttonsText = new String[3];
+		else{
+			buttonsText = new String[4];
+			buttonsText[3] = "Pass ";
+		}
 		for(int q=0; q<3; q++)
 			buttonsText[q] = euchre.currentRound.callableSuits[q].toString();
-		buttonsText[3] = "Pass";
 		applicationWindow.setExtraButtonDisplay(buttonsText);
 		applicationWindow.setMiddleTextArea("");
 		applicationWindow.refreshWindow();

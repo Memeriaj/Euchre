@@ -86,9 +86,9 @@ public class ApplicationWindow {
 			int opponentOverallScore, int playerTrickScore,
 			int opponentTrickScore, String suit, String dealer) {
 		String left = Utils.convertStringToHTML("Overall Score\nYours: "
-				+ playerOverallScore + "  Opponent: " + opponentOverallScore);
+				+ playerOverallScore + "   Opponent: " + opponentOverallScore);
 		String right = Utils.convertStringToHTML("Trick Score\nYours: "
-				+ playerTrickScore + "  Opponent: " + opponentTrickScore);
+				+ playerTrickScore + "   Opponent: " + opponentTrickScore);
 		String middle = Utils.convertStringToHTML("Trump: "+suit+ "       "+"Dealer: "+dealer);
 		scoreLabels[0].setText(left);
 		scoreLabels[1].setText(right);
@@ -211,9 +211,10 @@ public class ApplicationWindow {
 		for (int q = 0; q < currentHand.size(); q++) {
 			Card currCard = currentHand.get(q);
 			String toSet = currCard.toString();
-			if (pos == 0)
+			if (pos == 0){
 				((JButton) playerPanels.get(pos).getComponent(q))
 						.setText(toSet);
+			}
 			else
 				((JLabel) playerPanels.get(pos).getComponent(q)).setText(toSet);
 			playerPanels.get(pos).getComponent(q).setVisible(true);
