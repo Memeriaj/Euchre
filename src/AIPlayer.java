@@ -64,6 +64,7 @@ public class AIPlayer extends Player
 			}
 			h.add(discard);
 		}
+		h.remove(kitty);
 		return ret;
 	}
 	
