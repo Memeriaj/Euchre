@@ -161,13 +161,13 @@ public class RoundTest {
 	}
 	
 	@Test
-	public void testPreRoundPassStartingRound()
+	public void testPreRoundPassCardTurnedDown()
 	{
 		Euchre e = new Euchre();
 		Round r = e.currentRound;
 		r.currentTrick.currentPlayer = r.dealer;
 		r.preRoundPass();
-		assertFalse(r.isInPreGameState);
+		assertFalse(r.isCardTurnedUp);
 	}
 	
 	@Test
