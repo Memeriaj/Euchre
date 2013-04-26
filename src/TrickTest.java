@@ -71,4 +71,16 @@ public class TrickTest {
 		assertEquals(Card.SUIT.CLUBS,t2.trump);
 	}
 
+	@Test
+	public void testTrickHistory() {
+		Trick t = new Trick(0, Card.SUIT.CLUBS);
+		Card nineOfHearts = new Card(Card.SUIT.HEARTS, 9);
+		t.playCardForCurrentPlayer(nineOfHearts);
+		assertEquals(t.leadingSuit,Card.SUIT.HEARTS);
+		assertEquals(t.currentWinner, 0);
+		assertEquals(t.currentWinningCard, nineOfHearts);
+		assertEquals(t.cardsPlayed.get(0), nineOfHearts);
+		assertEquals("You: Nine of Hearts\n", t.stringOfTrickPlayed());
+	}
+	
 }

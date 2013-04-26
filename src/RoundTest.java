@@ -192,4 +192,41 @@ public class RoundTest {
 		assertEquals(firstRound.players, secondRound.players);
 		assertEquals(1, secondRound.dealer);
 	}
+	
+	@Test
+	public void testTrickHistory()
+	{
+		Euchre e = new Euchre();
+		Round firstRound = e.currentRound;
+		firstRound.dealer = 0;
+		Trick t = new Trick(0, Card.SUIT.CLUBS);
+		Card nineOfHearts = new Card(Card.SUIT.HEARTS, 9);
+		t.playCardForCurrentPlayer(nineOfHearts);
+		Card tenOfHearts = new Card(Card.SUIT.HEARTS, 10);
+		t.playCardForCurrentPlayer(tenOfHearts);
+		Card queenOfHearts = new Card(Card.SUIT.HEARTS, 12);
+		t.playCardForCurrentPlayer(queenOfHearts);
+		Card kingOfHearts = new Card(Card.SUIT.HEARTS, 13);
+		t.playCardForCurrentPlayer(kingOfHearts);
+		firstRound.trickHistory.add(t);
+		
+		Trick t2 = new Trick(0, Card.SUIT.CLUBS);
+		Card nineOfSpades = new Card(Card.SUIT.SPADES, 9);
+		t2.playCardForCurrentPlayer(nineOfSpades);
+		Card tenOfSpades = new Card(Card.SUIT.SPADES, 10);
+		t2.playCardForCurrentPlayer(tenOfSpades);
+		firstRound.currentTrick = t2;
+		//System.out.println(t.stringOfTrickPlayed());
+		//System.out.println(t2.stringOfTrickPlayed());
+		System.out.println(firstRound.produceTrickHistoryText());
+		assertEquals(firstRound.produceTrickHistoryText(), "Previous Trick played:\n" +
+														   "You: Nine of Hearts\n" +
+														   "Player 1: Ten of Hearts\n" +
+														   "Player 2: Queen of Hearts\n" +
+														   "Player 3: King of Hearts\n" +
+														   "\n" +
+														   "Current Trick:\n" +
+														   "You: Nine of Spades\n" +
+														   "Player 1: Ten of Spades\n");
+	}
 }
