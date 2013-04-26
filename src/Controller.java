@@ -24,7 +24,7 @@ public class Controller {
 	private void setUpIntitalRound() {
 		if(!euchre.currentRound.isInPreGameState){
 			updateGUI();
-			return;
+			return;	
 		}
 		else if(euchre.currentRound.dealerNeedsToDiscard){
 			setUpDiscard();
@@ -120,9 +120,6 @@ public class Controller {
 		for(int q=0; q<5; q++)
 			extras[q] = hands.get(0).get(q).toString();
 		extras[5] = euchre.currentRound.turnedUpCard.toString();
-//		applicationWindow.updateHands(hands);
-//		boolean[] enabled = {true, true, true, true, true, true};
-//		applicationWindow.setPlayersCardsEnabled(enabled);
 		applicationWindow.setExtraButtonDisplay(extras);
 		applicationWindow.setMiddleTextArea("Please select a card to discard.");
 		applicationWindow.refreshWindow();
