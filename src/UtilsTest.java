@@ -61,4 +61,14 @@ public class UtilsTest {
 		String output = Utils.convertStringToHTML(toTest);
 		assertTrue(expected.matches(output));
 	}
+	
+	@Test
+	public void testUtilInit(){
+		Utils u = new Utils();
+	}
+	
+	@Test
+	public void testAllTestsInit(){
+		new AllTests();
+	}
 }

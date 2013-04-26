@@ -57,7 +57,7 @@ public class Card
 		case HEARTS:
 			ret+="Hearts";
 			break;
-		case SPADES:
+		default:
 			ret+="Spades";
 			break;
 		}
@@ -87,7 +87,7 @@ public class Card
 		case HEARTS:
 			sameColor = SUIT.DIAMONDS;
 			break;
-		case DIAMONDS:
+		default:
 			sameColor = SUIT.HEARTS;
 			break;
 		}
@@ -121,15 +121,15 @@ public class Card
 		if (this.suit == trump){
 			if(this.value == 11) /*Jack of trump suit*/
 				return 12;
-			if(this.value == 14) /*Ace of trump suit*/
+			else if(this.value == 14) /*Ace of trump suit*/
 				return 10;
-			if(this.value == 13) /*King of trump suit*/
+			else if(this.value == 13) /*King of trump suit*/
 				return 8;
-			if(this.value == 12) /*Queen of trump suit*/
+			else if(this.value == 12) /*Queen of trump suit*/
 				return 7;
-			if(this.value == 10) /*Ten of trump suit*/
+			else if(this.value == 10) /*Ten of trump suit*/
 				return 5;
-			if(this.value == 9) /*Nine of trump suit*/
+			else /*Nine of trump suit*/
 				return 4;
 		}
 		if ((this.suit == sameColor) && (this.value == 11)) /*Jack of same color*/

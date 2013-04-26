@@ -178,6 +178,12 @@ public class CardTest {
 	}
 	
 	@Test
+	public void testCardValueNoLeadOffTrumpNonJack(){
+		Card c = new Card(Card.SUIT.SPADES, 12);
+		assertEquals(c.cardValueNoLead(Card.SUIT.CLUBS),12);
+	}
+	
+	@Test
 	public void testCardValueNoLeadTrumpJack(){
 		Card c = new Card(Card.SUIT.SPADES, 11);
 		assertEquals(c.cardValueNoLead(Card.SUIT.SPADES),30);
@@ -217,5 +223,41 @@ public class CardTest {
 	public void testBiddingValueNotTrumpAce(){
 		Card c = new Card(Card.SUIT.CLUBS, 14);
 		assertEquals(c.biddingValue(Card.SUIT.SPADES),6);
+	}
+	
+	@Test
+	public void testBiddingValueTrumpAce(){
+		Card c = new Card(Card.SUIT.CLUBS, 14);
+		assertEquals(c.biddingValue(Card.SUIT.CLUBS), 10);
+	}
+	
+	@Test
+	public void testBiddingValueTrumpKing(){
+		Card c = new Card(Card.SUIT.CLUBS, 13);
+		assertEquals(c.biddingValue(Card.SUIT.CLUBS),8);
+	}
+	
+	@Test
+	public void testBiddingValueTrumpQueen(){
+		Card c = new Card(Card.SUIT.CLUBS, 12);
+		assertEquals(c.biddingValue(Card.SUIT.CLUBS),7);
+	}
+	
+	@Test
+	public void testBiddingValueTrump10(){
+		Card c = new Card(Card.SUIT.CLUBS, 10);
+		assertEquals(c.biddingValue(Card.SUIT.CLUBS),5);
+	}
+	
+	@Test
+	public void testBiddingValueTrump9(){
+		Card c = new Card(Card.SUIT.CLUBS, 9);
+		assertEquals(c.biddingValue(Card.SUIT.CLUBS),4);
+	}
+	
+	@Test
+	public void testBiddingValueNotTrumpKing(){
+		Card c = new Card(Card.SUIT.HEARTS, 13);
+		assertEquals(c.biddingValue(Card.SUIT.CLUBS),2);
 	}
 }
