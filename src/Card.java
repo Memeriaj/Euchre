@@ -120,7 +120,7 @@ public class Card
 		if(this.suit == trump){
 			switch(this.value){
 			case 14: /*trump ace*/
-					return 12;
+					return 10;
 			case 13: /*trump king*/
 					return 8;
 			case 12: /*trump queen*/

@@ -140,6 +140,11 @@ public class AIPlayer extends Player
 		}
 		return max>22;	
 	}
+
+	public boolean goAloneDecider(Card.SUIT trump)
+	{
+		return handValue(super.hand,trump)>35;	
+	}
 	
 	public int handValue (ArrayList<Card> h, Card.SUIT trump)
 	{
