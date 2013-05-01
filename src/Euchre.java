@@ -130,6 +130,15 @@ public class Euchre {
 		}
 	}
 	
+	public void goAlone(int player)
+	{
+		currentRound.goingAlonePlayer = player;
+		Player p = players.get(player);
+		p.hand.clear();
+		for (int i = 0;i<5;i++)
+			p.hand.add(new NullCard());
+	}
+	
 	public void humanPreRoundCallSuit(String suit)
 	{
 		if (suit.equals("Diamonds"))

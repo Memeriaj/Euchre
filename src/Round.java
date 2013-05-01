@@ -18,6 +18,7 @@ public class Round {
 	public boolean dealerNeedsToDiscard = false;
 	public Card turnedUpCard;
 	public Card.SUIT[] callableSuits = new Card.SUIT[3];
+	public int goingAlonePlayer = -1;
 	
 	public Round(ArrayList<Card> allCardsIn, ArrayList<Player> playersIn, int dealerIn){
 		allCards = allCardsIn;
