@@ -1,10 +1,10 @@
 
 public class NullCard extends Card {
 
-	public final int value;
-	public NullCard(SUIT s, int val) {
-		super(s, val);
-		this.value = Integer.MIN_VALUE;
+	
+	public NullCard()
+	{
+		super(Card.SUIT.CLUBS, Integer.MIN_VALUE);
 	}
 	
 	@Override
