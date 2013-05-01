@@ -485,4 +485,48 @@ public class AIPlayerTest {
 		assertEquals(23,aip.handValue(aip.hand,Card.SUIT.HEARTS));
 		assertFalse(aip.pickUp(new Card(Card.SUIT.HEARTS, 9)));
 	}
+	
+	@Test
+	public void testGoAloneDeciderFullHand() {
+		String name = "TestAIPlayer";
+		AIPlayer aip = new AIPlayer(name);
+		assertEquals(name, aip.name);
+		aip.hand.add(new Card(Card.SUIT.DIAMONDS, 14));
+		aip.hand.add(new Card(Card.SUIT.DIAMONDS, 10));
+		aip.hand.add(new Card(Card.SUIT.DIAMONDS, 11));
+		aip.hand.add(new Card(Card.SUIT.DIAMONDS, 12));
+		aip.hand.add(new Card(Card.SUIT.DIAMONDS, 13));
+		assertEquals(42,aip.handValue(aip.hand,Card.SUIT.DIAMONDS));
+		assertEquals(true,aip.callDecider(Card.SUIT.HEARTS));
+		assertEquals(true,aip.goAloneDecider(Card.SUIT.DIAMONDS));
+	}
+	
+	@Test
+	public void testGoAloneDeciderFullHandWrongSuit() {
+		String name = "TestAIPlayer";
+		AIPlayer aip = new AIPlayer(name);
+		assertEquals(name, aip.name);
+		aip.hand.add(new Card(Card.SUIT.CLUBS, 14));
+		aip.hand.add(new Card(Card.SUIT.CLUBS, 10));
+		aip.hand.add(new Card(Card.SUIT.CLUBS, 11));
+		aip.hand.add(new Card(Card.SUIT.CLUBS, 12));
+		aip.hand.add(new Card(Card.SUIT.CLUBS, 13));
+		assertEquals(false,aip.callDecider(Card.SUIT.CLUBS));
+		assertEquals(false,aip.goAloneDecider(Card.SUIT.DIAMONDS));
+	}
+	
+	@Test
+	public void testGoAloneDeciderMixedLow() {
+		String name = "TestAIPlayer";
+		AIPlayer aip = new AIPlayer(name);
+		assertEquals(name, aip.name);
+		aip.hand.add(new Card(Card.SUIT.CLUBS, 14));
+		aip.hand.add(new Card(Card.SUIT.HEARTS, 10));
+		aip.hand.add(new Card(Card.SUIT.CLUBS, 11));
+		aip.hand.add(new Card(Card.SUIT.HEARTS, 9));
+		aip.hand.add(new Card(Card.SUIT.DIAMONDS, 13));
+		assertEquals(17,aip.handValue(aip.hand,Card.SUIT.HEARTS));
+		assertEquals(false,aip.callDecider(Card.SUIT.CLUBS));
+		assertEquals(false,aip.goAloneDecider(Card.SUIT.HEARTS));
+	}
 }
