@@ -62,16 +62,16 @@ public class Controller {
 		String out = "";
 		switch(euchre.currentRound.dealer){
 		case 0:
-			out += "You";
+			out += Utils.internationalizeString("you");
 			break;
 		case 1:
-			out += "Left";
+			out += Utils.internationalizeString("left");
 			break;
 		case 2:
-			out += "Top";
+			out += Utils.internationalizeString("top");
 			break;
 		case 3:
-			out += "Right";
+			out += Utils.internationalizeString("right");
 			break;
 		default:
 			System.out.println("Problem with switch for printing dealer!!!!");

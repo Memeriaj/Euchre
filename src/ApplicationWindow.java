@@ -85,11 +85,20 @@ public class ApplicationWindow {
 	public void setScoreDisplay(int playerOverallScore,
 			int opponentOverallScore, int playerTrickScore,
 			int opponentTrickScore, String suit, String dealer) {
-		String left = Utils.convertStringToHTML("Overall Score\nYours: "
-				+ playerOverallScore + "   Opponent: " + opponentOverallScore);
-		String right = Utils.convertStringToHTML("Trick Score\nYours: "
-				+ playerTrickScore + "   Opponent: " + opponentTrickScore);
-		String middle = Utils.convertStringToHTML("Trump: "+suit+ "       "+"Dealer: "+dealer);
+		String lConvert = Utils.internationalizeString("overallScore") + "\n" +
+				Utils.internationalizeString("yours") + ": " + playerOverallScore + "   " + 
+				Utils.internationalizeString("opponent") + ": " + opponentOverallScore;
+		String left = Utils.convertStringToHTML(lConvert);
+		
+		String rConvert = Utils.internationalizeString("trickScore") + "\n" +
+				Utils.internationalizeString("yours") + ": " + playerTrickScore + "   " + 
+				Utils.internationalizeString("opponent") + ": " + opponentTrickScore;
+		String right = Utils.convertStringToHTML(rConvert);
+		
+		String mConvert = Utils.internationalizeString("trump") + ": " +
+				Utils.internationalizeString(suit) + "       " + Utils.internationalizeString("dealer") + 
+				": "+dealer;
+		String middle = Utils.convertStringToHTML(mConvert);
 		scoreLabels[0].setText(left);
 		scoreLabels[1].setText(right);
 		scoreLabels[2].setText(middle);
