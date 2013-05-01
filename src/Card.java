@@ -117,29 +117,31 @@ public class Card
 	public int biddingValue (SUIT trump)
 	{
 		SUIT sameColor= getSameColorSuit(trump);
-		
-		if (this.suit == trump){
-			if(this.value == 11) /*Jack of trump suit*/
-				return 12;
-			else if(this.value == 14) /*Ace of trump suit*/
-				return 10;
-			else if(this.value == 13) /*King of trump suit*/
-				return 8;
-			else if(this.value == 12) /*Queen of trump suit*/
-				return 7;
-			else if(this.value == 10) /*Ten of trump suit*/
+		if(this.suit == trump){
+			switch(this.value){
+			case 14: /*trump ace*/
+					return 12;
+			case 13: /*trump king*/
+					return 8;
+			case 12: /*trump queen*/
+					return 7;
+			case 11: /*trump jack*/
+					return 12;
+			case 10: /*trump ten*/
 				return 5;
-			else /*Nine of trump suit*/
+			case 9: /*trump nine*/
 				return 4;
+			}
 		}
-		if ((this.suit == sameColor) && (this.value == 11)) /*Jack of same color*/
-		{
+		else if (this.suit == sameColor && this.value == 11){
 			return 11;
+		}	
+		switch(this.value){
+		case 14: /*random ace*/
+				return 6;
+		case 13: /*random king*/
+				return 2;
 		}
-		if(this.value == 14) /*random ace*/
-			return 6;
-		if(this.value == 13) /*random king*/
-			return 2;		
 		return 0;
 	}
 	
