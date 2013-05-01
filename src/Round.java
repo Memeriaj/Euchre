@@ -18,7 +18,7 @@ public class Round {
 	public boolean dealerNeedsToDiscard = false;
 	public Card turnedUpCard;
 	public Card.SUIT[] callableSuits = new Card.SUIT[3];
-	public int goingAlonePlayer = -1;
+	public int outPlayer = -1;
 	
 	public Round(ArrayList<Card> allCardsIn, ArrayList<Player> playersIn, int dealerIn){
 		allCards = allCardsIn;
@@ -128,6 +128,10 @@ public class Round {
 	{
 		callingTeam = currentTrick.currentPlayer % 2;
 		isInPreGameState = false;
+		
+		if (outPlayer == currentTrick.leadingPlayer)
+			currentTrick.leadingPlayer = (currentTrick.leadingPlayer + 1) % 4;
+		
 		currentTrick.currentPlayer = currentTrick.leadingPlayer;
 	}
 	
@@ -136,6 +140,10 @@ public class Round {
 	{
 		callingTeam = currentTrick.currentPlayer % 2;
 		isInPreGameState = false;
+		
+		if (outPlayer == currentTrick.leadingPlayer)
+			currentTrick.leadingPlayer = (currentTrick.leadingPlayer + 1) % 4;
+		
 		currentTrick.currentPlayer = currentTrick.leadingPlayer;
 		if (!turnedUpCard.toString().equals(c))
 		{

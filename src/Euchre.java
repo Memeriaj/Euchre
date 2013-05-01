@@ -106,11 +106,15 @@ public class Euchre {
 	
 	public void makeAIPlayPreRound() 
 	{
+		int playerIndex = currentRound.currentTrick.currentPlayer;
+		AIPlayer aip = ((AIPlayer) players.get(playerIndex));
 		if (currentRound.isCardTurnedUp)
 		{
-			if (((AIPlayer) players.get(currentRound.currentTrick.currentPlayer)).pickUp(currentRound.turnedUpCard))
+			if (aip.pickUp(currentRound.turnedUpCard))
 			{
 				currentRound.preRoundCall();
+				if (aip.goAloneDecider(currentRound.trump))
+					goAlone(playerIndex);
 			}
 			else
 			{
@@ -119,9 +123,11 @@ public class Euchre {
 		}
 		else
 		{
-			if (currentRound.isStickTheDealer || ((AIPlayer) players.get(currentRound.currentTrick.currentPlayer)).callDecider(currentRound.turnedUpCard.suit))
+			if (currentRound.isStickTheDealer || aip.callDecider(currentRound.turnedUpCard.suit))
 			{
-				currentRound.preRoundCall(((AIPlayer) players.get(currentRound.currentTrick.currentPlayer)).trumpDecider(currentRound.turnedUpCard.suit));
+				currentRound.preRoundCall(aip.trumpDecider(currentRound.turnedUpCard.suit));
+				if (aip.goAloneDecider(currentRound.trump))
+					goAlone(playerIndex);
 			}
 			else
 			{
@@ -130,10 +136,11 @@ public class Euchre {
 		}
 	}
 	
-	public void goAlone(int player)
+	public void goAlone(int goAlonePlayer)
 	{
-		currentRound.goingAlonePlayer = player;
-		Player p = players.get(player);
+		int outPlayer = (goAlonePlayer + 2) % 4;
+		currentRound.outPlayer = outPlayer;
+		Player p = players.get(outPlayer);
 		p.hand.clear();
 		for (int i = 0;i<5;i++)
 			p.hand.add(new NullCard());
