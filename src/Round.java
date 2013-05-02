@@ -214,6 +214,7 @@ public class Round {
 	
 	public void playCard(Card c)
 	{
+		System.out.println("playing...");
 		currentTrick.playCardForCurrentPlayer(c);
 		if (currentTrick.isOver())
 		{

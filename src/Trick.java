@@ -47,6 +47,7 @@ class Trick {
 	
 	public boolean isOver()
 	{
+		System.out.println(cardsPlayed.size() == 4);
 		return cardsPlayed.size() == 4;
 	}
 	
