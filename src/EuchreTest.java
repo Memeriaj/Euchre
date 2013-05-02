@@ -154,7 +154,6 @@ public class EuchreTest {
 	public void testDiscardDealerOutplayer(){
 		Euchre e = new Euchre();
 		e.currentRound.currentTrick=new Trick(0,Card.SUIT.CLUBS);
-		e.currentRound.outPlayer =-1;
 		e.currentRound.turnedUpCard = new Card(Card.SUIT.SPADES, 14);
 		e.currentRound.dealer = 0;
 		e.currentRound.outPlayer = 1;
@@ -175,5 +174,166 @@ public class EuchreTest {
 		assertFalse(p.hand.contains(new Card(Card.SUIT.CLUBS, 14)));
 		assertTrue(p.hand.contains(new Card(Card.SUIT.SPADES, 14)));
 		assertEquals(e.currentRound.currentTrick.leadingPlayer,2);
+	}
+	
+	@Test
+	public void testHumanPlayCard(){
+		Euchre e = new Euchre();
+		e.currentRound.currentTrick=new Trick(0,Card.SUIT.CLUBS);
+		Player p = e.players.get(0);
+		e.currentRound.currentTrick.currentPlayer =0;
+		Player ai1 = e.players.get(1);
+		ai1.hand.clear();
+		ai1.hand.add(new Card(Card.SUIT.CLUBS, 9));
+		ai1.hand.add(new Card(Card.SUIT.CLUBS, 9));
+		ai1.hand.add(new Card(Card.SUIT.CLUBS, 9));
+		ai1.hand.add(new Card(Card.SUIT.CLUBS, 9));
+		ai1.hand.add(new Card(Card.SUIT.CLUBS, 9));
+		assertEquals(ai1.hand.size(), 5);
+		
+		Player ai2 = e.players.get(2);
+		ai2.hand.clear();
+		ai2.hand.add(new Card(Card.SUIT.CLUBS, 9));
+		ai2.hand.add(new Card(Card.SUIT.CLUBS, 9));
+		ai2.hand.add(new Card(Card.SUIT.CLUBS, 9));
+		ai2.hand.add(new Card(Card.SUIT.CLUBS, 9));
+		ai2.hand.add(new Card(Card.SUIT.CLUBS, 9));
+		assertEquals(ai2.hand.size(), 5);
+		
+		Player ai3 = e.players.get(3);
+		ai3.hand.clear();
+		ai3.hand.add(new Card(Card.SUIT.CLUBS, 9));
+		ai3.hand.add(new Card(Card.SUIT.CLUBS, 9));
+		ai3.hand.add(new Card(Card.SUIT.CLUBS, 9));
+		ai3.hand.add(new Card(Card.SUIT.CLUBS, 9));
+		ai3.hand.add(new Card(Card.SUIT.CLUBS, 9));
+		assertEquals(ai3.hand.size(), 5);
+		
+		p.hand.clear();
+		p.hand.add(new Card(Card.SUIT.DIAMONDS, 10));
+		p.hand.add(new Card(Card.SUIT.DIAMONDS, 11));
+		p.hand.add(new Card(Card.SUIT.DIAMONDS, 12));
+		p.hand.add(new Card(Card.SUIT.DIAMONDS, 13));
+		p.hand.add(new Card(Card.SUIT.CLUBS, 14));
+		assertTrue(p.hand.contains(new Card(Card.SUIT.DIAMONDS, 10)));
+		assertTrue(p.hand.contains(new Card(Card.SUIT.DIAMONDS, 11)));
+		assertTrue(p.hand.contains(new Card(Card.SUIT.DIAMONDS, 12)));
+		assertTrue(p.hand.contains(new Card(Card.SUIT.DIAMONDS, 13)));
+		assertTrue(p.hand.contains(new Card(Card.SUIT.CLUBS, 14)));
+		assertEquals(p.hand.size(), 5);
+		System.out.println(p.hand.toString());
+		e.humanPlayCard(new Card(Card.SUIT.CLUBS, 14).toString());
+		assertEquals(p.hand.size(), 4);
+		assertTrue(p.hand.contains(new Card(Card.SUIT.DIAMONDS, 10)));
+		assertTrue(p.hand.contains(new Card(Card.SUIT.DIAMONDS, 11)));
+		assertTrue(p.hand.contains(new Card(Card.SUIT.DIAMONDS, 12)));
+		assertTrue(p.hand.contains(new Card(Card.SUIT.DIAMONDS, 13)));
+		assertFalse(p.hand.contains(new Card(Card.SUIT.CLUBS, 14)));
+	}
+	
+	@Test
+	public void testHumanPlayCardEndOfTrick(){
+		Euchre e = new Euchre();
+		e.currentRound.currentTrick=new Trick(0,Card.SUIT.CLUBS);
+		e.currentRound.isInPreGameState = false;
+		e.currentRound.trump = Card.SUIT.CLUBS;
+		e.currentRound.currentTrick.leadingSuit = Card.SUIT.CLUBS;
+		Player p = e.players.get(0);
+		e.currentRound.currentTrick.leadingPlayer =1;
+		e.currentRound.currentTrick.currentPlayer =1;
+		Player ai1 = e.players.get(1);
+		ai1.hand.clear();
+		ai1.hand.add(new Card(Card.SUIT.CLUBS, 9));
+		ai1.hand.add(new Card(Card.SUIT.CLUBS, 9));
+		ai1.hand.add(new Card(Card.SUIT.CLUBS, 9));
+		ai1.hand.add(new Card(Card.SUIT.CLUBS, 9));
+		ai1.hand.add(new Card(Card.SUIT.CLUBS, 9));
+		assertEquals(ai1.hand.size(), 5);
+		
+		Player ai2 = e.players.get(2);
+		ai2.hand.clear();
+		ai2.hand.add(new Card(Card.SUIT.HEARTS, 10));
+		ai2.hand.add(new Card(Card.SUIT.HEARTS, 10));
+		ai2.hand.add(new Card(Card.SUIT.HEARTS, 10));
+		ai2.hand.add(new Card(Card.SUIT.HEARTS, 10));
+		ai2.hand.add(new Card(Card.SUIT.HEARTS, 10));
+		assertEquals(ai2.hand.size(), 5);
+		
+		Player ai3 = e.players.get(3);
+		ai3.hand.clear();
+		ai3.hand.add(new Card(Card.SUIT.HEARTS, 12));
+		ai3.hand.add(new Card(Card.SUIT.HEARTS, 12));
+		ai3.hand.add(new Card(Card.SUIT.HEARTS, 12));
+		ai3.hand.add(new Card(Card.SUIT.HEARTS, 12));
+		ai3.hand.add(new Card(Card.SUIT.HEARTS, 12));
+		assertEquals(ai3.hand.size(), 5);
+		
+		p.hand.clear();
+		p.hand.add(new Card(Card.SUIT.DIAMONDS, 10));
+		p.hand.add(new Card(Card.SUIT.DIAMONDS, 11));
+		p.hand.add(new Card(Card.SUIT.DIAMONDS, 12));
+		p.hand.add(new Card(Card.SUIT.DIAMONDS, 13));
+		p.hand.add(new Card(Card.SUIT.CLUBS, 14));
+		assertTrue(p.hand.contains(new Card(Card.SUIT.DIAMONDS, 10)));
+		assertTrue(p.hand.contains(new Card(Card.SUIT.DIAMONDS, 11)));
+		assertTrue(p.hand.contains(new Card(Card.SUIT.DIAMONDS, 12)));
+		assertTrue(p.hand.contains(new Card(Card.SUIT.DIAMONDS, 13)));
+		assertTrue(p.hand.contains(new Card(Card.SUIT.CLUBS, 14)));
+		assertEquals(p.hand.size(), 5);
+		System.out.println(p.hand.toString());
+		assertEquals(e.currentRound.trickCount[0],0);
+		assertEquals(e.currentRound.trickCount[1],0);
+		e.makeGameReadyForHuman();
+		e.humanPlayCard(new Card(Card.SUIT.CLUBS, 14).toString());
+		assertEquals(e.currentRound.trickCount[0],1);
+		assertEquals(e.currentRound.trickCount[1],0);
+		assertEquals(p.hand.size(), 4);
+		assertTrue(p.hand.contains(new Card(Card.SUIT.DIAMONDS, 10)));
+		assertTrue(p.hand.contains(new Card(Card.SUIT.DIAMONDS, 11)));
+		assertTrue(p.hand.contains(new Card(Card.SUIT.DIAMONDS, 12)));
+		assertTrue(p.hand.contains(new Card(Card.SUIT.DIAMONDS, 13)));
+		assertFalse(p.hand.contains(new Card(Card.SUIT.CLUBS, 14)));
+	}
+	
+	
+	@Test
+	public void testHumanPlayCardEndOfRound(){
+		Euchre e = new Euchre();
+		e.currentRound.currentTrick=new Trick(0,Card.SUIT.CLUBS);
+		e.currentRound.isInPreGameState = false;
+		e.currentRound.trump = Card.SUIT.CLUBS;
+		e.currentRound.currentTrick.leadingSuit = Card.SUIT.CLUBS;
+		Player p = e.players.get(0);
+		e.currentRound.currentTrick.leadingPlayer =1;
+		e.currentRound.currentTrick.currentPlayer =1;
+		Player ai1 = e.players.get(1);
+		ai1.hand.clear();
+		ai1.hand.add(new Card(Card.SUIT.CLUBS, 9));
+		assertEquals(ai1.hand.size(), 1);
+		
+		Player ai2 = e.players.get(2);
+		ai2.hand.clear();
+		ai2.hand.add(new Card(Card.SUIT.HEARTS, 10));
+		assertEquals(ai2.hand.size(), 1);
+		
+		Player ai3 = e.players.get(3);
+		ai3.hand.clear();
+		ai3.hand.add(new Card(Card.SUIT.HEARTS, 12));
+		assertEquals(ai3.hand.size(), 1);
+		
+		p.hand.clear();
+		p.hand.add(new Card(Card.SUIT.CLUBS, 14));
+		assertTrue(p.hand.contains(new Card(Card.SUIT.CLUBS, 14)));
+		assertEquals(p.hand.size(), 1);
+		System.out.println(p.hand.toString());
+		e.currentRound.trickCount[0] = 4;
+		e.currentRound.trickCount[1] = 0;
+		for(int x=0; x<4; x++)
+			e.currentRound.trickHistory.add(new Trick(0,Card.SUIT.SPADES));
+		e.makeGameReadyForHuman();
+		e.humanPlayCard(new Card(Card.SUIT.CLUBS, 14).toString());
+		assertEquals(e.currentRound.trickCount[0],0);
+		assertEquals(e.currentRound.trickCount[1],0);
+		assertEquals(p.hand.size(), 5);
 	}
 }
