@@ -100,4 +100,80 @@ public class EuchreTest {
 		e.score = s;
 		assertEquals(e.getWinner(),-1);
 	}
+	
+	@Test
+	public void testDiscardDealer(){
+		Euchre e = new Euchre();
+		e.currentRound.currentTrick=new Trick(0,Card.SUIT.CLUBS);
+		e.currentRound.outPlayer =-1;
+		e.currentRound.turnedUpCard = new Card(Card.SUIT.SPADES, 14);
+		e.currentRound.dealer = 0;
+		Player p = e.players.get(0);
+		e.players.add(p);
+		p.hand.clear();
+		p.hand.add(new Card(Card.SUIT.DIAMONDS, 10));
+		p.hand.add(new Card(Card.SUIT.DIAMONDS, 11));
+		p.hand.add(new Card(Card.SUIT.DIAMONDS, 12));
+		p.hand.add(new Card(Card.SUIT.DIAMONDS, 13));
+		p.hand.add(new Card(Card.SUIT.CLUBS, 14));
+		e.dealerDiscardForRoundStart(new Card(Card.SUIT.SPADES, 14).toString());
+		assertTrue(p.hand.contains(new Card(Card.SUIT.DIAMONDS, 10)));
+		assertTrue(p.hand.contains(new Card(Card.SUIT.DIAMONDS, 11)));
+		assertTrue(p.hand.contains(new Card(Card.SUIT.DIAMONDS, 12)));
+		assertTrue(p.hand.contains(new Card(Card.SUIT.DIAMONDS, 13)));
+		assertTrue(p.hand.contains(new Card(Card.SUIT.CLUBS, 14)));
+		assertFalse(p.hand.contains(new Card(Card.SUIT.SPADES, 14)));
+		
+	}
+	
+	@Test
+	public void testDiscardDealer2(){
+		Euchre e = new Euchre();
+		e.currentRound.currentTrick=new Trick(0,Card.SUIT.CLUBS);
+		e.currentRound.outPlayer =-1;
+		e.currentRound.turnedUpCard = new Card(Card.SUIT.SPADES, 14);
+		e.currentRound.dealer = 0;
+		Player p = e.players.get(0);
+		e.players.add(p);
+		p.hand.clear();
+		p.hand.add(new Card(Card.SUIT.DIAMONDS, 10));
+		p.hand.add(new Card(Card.SUIT.DIAMONDS, 11));
+		p.hand.add(new Card(Card.SUIT.DIAMONDS, 12));
+		p.hand.add(new Card(Card.SUIT.DIAMONDS, 13));
+		p.hand.add(new Card(Card.SUIT.CLUBS, 14));
+		e.dealerDiscardForRoundStart(new Card(Card.SUIT.CLUBS, 14).toString());
+		assertTrue(p.hand.contains(new Card(Card.SUIT.DIAMONDS, 10)));
+		assertTrue(p.hand.contains(new Card(Card.SUIT.DIAMONDS, 11)));
+		assertTrue(p.hand.contains(new Card(Card.SUIT.DIAMONDS, 12)));
+		assertTrue(p.hand.contains(new Card(Card.SUIT.DIAMONDS, 13)));
+		assertFalse(p.hand.contains(new Card(Card.SUIT.CLUBS, 14)));
+		assertTrue(p.hand.contains(new Card(Card.SUIT.SPADES, 14)));
+	}
+	
+	@Test
+	public void testDiscardDealerOutplayer(){
+		Euchre e = new Euchre();
+		e.currentRound.currentTrick=new Trick(0,Card.SUIT.CLUBS);
+		e.currentRound.outPlayer =-1;
+		e.currentRound.turnedUpCard = new Card(Card.SUIT.SPADES, 14);
+		e.currentRound.dealer = 0;
+		e.currentRound.outPlayer = 1;
+		e.currentRound.currentTrick.leadingPlayer = 1;
+		Player p = e.players.get(0);
+		e.players.add(p);
+		p.hand.clear();
+		p.hand.add(new Card(Card.SUIT.DIAMONDS, 10));
+		p.hand.add(new Card(Card.SUIT.DIAMONDS, 11));
+		p.hand.add(new Card(Card.SUIT.DIAMONDS, 12));
+		p.hand.add(new Card(Card.SUIT.DIAMONDS, 13));
+		p.hand.add(new Card(Card.SUIT.CLUBS, 14));
+		e.dealerDiscardForRoundStart(new Card(Card.SUIT.CLUBS, 14).toString());
+		assertTrue(p.hand.contains(new Card(Card.SUIT.DIAMONDS, 10)));
+		assertTrue(p.hand.contains(new Card(Card.SUIT.DIAMONDS, 11)));
+		assertTrue(p.hand.contains(new Card(Card.SUIT.DIAMONDS, 12)));
+		assertTrue(p.hand.contains(new Card(Card.SUIT.DIAMONDS, 13)));
+		assertFalse(p.hand.contains(new Card(Card.SUIT.CLUBS, 14)));
+		assertTrue(p.hand.contains(new Card(Card.SUIT.SPADES, 14)));
+		assertEquals(e.currentRound.currentTrick.leadingPlayer,2);
+	}
 }

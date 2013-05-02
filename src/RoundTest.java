@@ -229,4 +229,32 @@ public class RoundTest {
 														   "You: Nine of Spades\n" +
 														   "Player 1: Ten of Spades\n");
 	}
+	
+	@Test
+	public void testDiscardDealerOutplayer(){
+		Euchre e = new Euchre();
+		Round r = e.currentRound;
+		r.currentTrick=new Trick(0,Card.SUIT.CLUBS);
+		r.outPlayer =-1;
+		r.turnedUpCard = new Card(Card.SUIT.SPADES, 14);
+		r.dealer = 0;
+		r.outPlayer = 1;
+		r.currentTrick.leadingPlayer = 1;
+		Player p = e.players.get(0);
+		e.players.add(p);
+		p.hand.clear();
+		p.hand.add(new Card(Card.SUIT.DIAMONDS, 10));
+		p.hand.add(new Card(Card.SUIT.DIAMONDS, 11));
+		p.hand.add(new Card(Card.SUIT.DIAMONDS, 12));
+		p.hand.add(new Card(Card.SUIT.DIAMONDS, 13));
+		p.hand.add(new Card(Card.SUIT.CLUBS, 14));
+		r.dealerDiscardForRoundStart(new Card(Card.SUIT.CLUBS, 14).toString());
+		assertTrue(p.hand.contains(new Card(Card.SUIT.DIAMONDS, 10)));
+		assertTrue(p.hand.contains(new Card(Card.SUIT.DIAMONDS, 11)));
+		assertTrue(p.hand.contains(new Card(Card.SUIT.DIAMONDS, 12)));
+		assertTrue(p.hand.contains(new Card(Card.SUIT.DIAMONDS, 13)));
+		assertFalse(p.hand.contains(new Card(Card.SUIT.CLUBS, 14)));
+		assertTrue(p.hand.contains(new Card(Card.SUIT.SPADES, 14)));
+		assertEquals(r.currentTrick.leadingPlayer,2);
+	}
 }

@@ -151,6 +151,7 @@ public class Round {
 			p.removeCardFromHand(c);
 			p.hand.add(turnedUpCard);
 		}
+		
 	}
 	
 	public boolean isOver(){
