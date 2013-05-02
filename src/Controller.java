@@ -22,18 +22,22 @@ public class Controller {
 	}
 	
 	private void setUpIntitalRound() {
+		System.out.println("INTITAL ROUND");
 		if(!euchre.currentRound.isInPreGameState){
+			System.out.println("UPDATE GUI");
 			updateGUI();
 			return;	
 		}
 		else if(euchre.currentRound.dealerNeedsToDiscard){
+			System.out.println("DISCARD");
 			setUpDiscard();
 			return;
 		}
-		boolean[] disabled = {false,false,false,false};
+		boolean[] disabled = {false,false,false,false,false};
 		applicationWindow.setPlayersCardsEnabled(disabled);
 		String[] buttonsText = {"Pass", "Pick it up"};
 		applicationWindow.setExtraButtonDisplay(buttonsText);
+		System.out.println("SETUP BUTTONS");
 		applicationWindow.setMiddleTextArea("Card Turned up: "+euchre.currentRound.turnedUpCard.toString());
 		applicationWindow.refreshWindow();
 	}
@@ -52,9 +56,13 @@ public class Controller {
 		applicationWindow.setScoreDisplay(euchre.score[0], euchre.score[1], euchre.currentRound.trickCount[0],
 				euchre.currentRound.trickCount[1], trump, printDealer());
 		boolean[] cardsEnabled = {false, false, false, false, false};
-		if(!euchre.currentRound.isInPreGameState)
+		if(!euchre.currentRound.isInPreGameState && euchre.currentRound.outPlayer != 0)
 			cardsEnabled = euchre.getPlayableCardsForHuman();
 		applicationWindow.setPlayersCardsEnabled(cardsEnabled);
+		if(euchre.currentRound.outPlayer == 0){
+			String[] button = {"Continue with Game"};
+			applicationWindow.setExtraButtonDisplay(button);
+		}
 		applicationWindow.refreshWindow();
 	}
 
@@ -88,14 +96,38 @@ public class Controller {
 	public void extraButtonSelected(String text) {
 		System.out.println(text);
 		System.out.println("Pre Current Player: "+euchre.currentRound.currentTrick.currentPlayer);
-		if(text == "Pass"){
+		if(text == "Go Alone" || text == "Nothing"){
+			if(text == "Go Alone"){
+				euchre.goAlone(0);
+			}
+			euchre.makeGameReadyForHuman();
+		}
+		else if(text == "Pass"){
 			euchre.humanPreRoundPass();
 			System.out.println("post Current Player: "+euchre.currentRound.currentTrick.currentPlayer);
 		}
-		else if(text == "Pick it up")
+		else if(text == "Pick it up"){
 			euchre.humanPreRoundCall();
-		else if(text == "HEARTS" || text == "SPADES" || text == "DIAMONDS" || text == "CLUBS")
+			String[] buttons = {"Go Alone", "Nothing"};
+			applicationWindow.setExtraButtonDisplay(buttons);
+			applicationWindow.refreshWindow();
+			return;
+		}
+		else if(text == "HEARTS" || text == "SPADES" || text == "DIAMONDS" || text == "CLUBS"){
 			euchre.humanPreRoundCallSuit(text);
+			String[] buttons = {"Go Alone", "Nothing"};
+			applicationWindow.setExtraButtonDisplay(buttons);
+			applicationWindow.refreshWindow();
+			return;
+		}
+		else if(text == "Continue with Game"){
+			euchre.humanPlayCard("");
+			updateGUI();
+			setUpIntitalRound();
+			if(euchre.currentRound.outPlayer != 0 && !euchre.currentRound.isInPreGameState)
+				applicationWindow.setExtraButtonDisplay(new String[0]);
+			return;
+		}
 		else{
 			euchre.dealerDiscardForRoundStart(text);
 			System.out.println("Discarded a card.");
@@ -114,6 +146,11 @@ public class Controller {
 	}
 
 	private void setUpDiscard() {
+		if(euchre.currentRound.outPlayer == 0){
+			euchre.dealerDiscardForRoundStart(euchre.currentRound.turnedUpCard.toString());
+			updateGUI();
+			return;
+		}
 		updateGUI();
 		ArrayList<ArrayList<Card>> hands = euchre.getAllHands();
 		String[] extras = new String[6];
