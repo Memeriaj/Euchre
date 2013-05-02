@@ -64,7 +64,7 @@ public class UtilsTest {
 	
 	@Test
 	public void testUtilInit(){
-		Utils u = new Utils();
+		assertNotNull(new Utils());
 	}
 	
 	@Test
