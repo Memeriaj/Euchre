@@ -28,17 +28,36 @@ public class AIPlayer extends Player
 	*/
 	public Card getCardToPlay(Trick trick)
 	{
-		Card cardToPlay = new NullCard();
+		Card cardToPlayMax = new NullCard();
+		Card cardToPlayMin = null;
 		ArrayList<Card> choices = new ArrayList<Card>();
 		boolean[] choiceArray = this.getPlayableCards(trick.leadingSuit, trick.trump);
 		for(int x=0; x<this.hand.size();x++)
 			if(choiceArray[x])
 				choices.add(this.hand.get(x));
-		for(int x=0;x<choices.size();x++)
-			if (choices.get(x).cardValue(trick.trump, trick.leadingSuit) > cardToPlay.cardValue(trick.trump, trick.leadingSuit))
-				cardToPlay = choices.get(x);
-		this.removeCardFromHand(cardToPlay);
-		return cardToPlay;
+		System.out.println(choices.toString());
+		if(trick.leadingSuit == null){
+			for(int x=0;x<choices.size();x++){
+				if (choices.get(x).cardValueNoLead(trick.trump) > cardToPlayMax.cardValueNoLead(trick.trump))
+					cardToPlayMax = choices.get(x);	
+			}
+			this.removeCardFromHand(cardToPlayMax);
+			return cardToPlayMax;	
+		}
+		for(int x=0;x<choices.size();x++){
+			if (cardToPlayMin == null)
+				cardToPlayMin = choices.get(x);
+			if (choices.get(x).cardValue(trick.trump, trick.leadingSuit) > cardToPlayMax.cardValue(trick.trump, trick.leadingSuit))
+				cardToPlayMax = choices.get(x);
+			else if (choices.get(x).cardValue(trick.trump, trick.leadingSuit) < cardToPlayMin.cardValue(trick.trump, trick.leadingSuit))
+				cardToPlayMin = choices.get(x);
+		}
+		if(cardToPlayMax.cardValue(trick.trump, trick.leadingSuit) > trick.currentWinningCard.cardValue(trick.trump, trick.leadingSuit)){
+			this.removeCardFromHand(cardToPlayMax);
+			return cardToPlayMax;
+		}
+		this.removeCardFromHand(cardToPlayMin);
+		return cardToPlayMin;		
 	}
 	
 	public boolean pickUp(Card kitty)

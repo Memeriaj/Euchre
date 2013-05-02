@@ -39,7 +39,7 @@ public class AIPlayerTest {
 		aip.hand.add(new Card(Card.SUIT.CLUBS, 13));
 		aip.hand.add(new Card(Card.SUIT.CLUBS, 14));
 		assertEquals(aip.hand.size(),5);
-		assertEquals(new Card(Card.SUIT.CLUBS, 14), aip.getCardToPlay(new Trick(0,Card.SUIT.CLUBS)));
+		assertEquals(new Card(Card.SUIT.CLUBS, 11), aip.getCardToPlay(new Trick(0,Card.SUIT.CLUBS)));
 		assertEquals(aip.hand.size(),4);
 	}
 	
@@ -56,7 +56,7 @@ public class AIPlayerTest {
 		aip.hand.add(new Card(Card.SUIT.CLUBS, 13));
 		aip.hand.add(new Card(Card.SUIT.CLUBS, 14));
 		
-		assertEquals(new Card(Card.SUIT.CLUBS, 14), aip.getCardToPlay(leadingSuitClubsTrick));
+		assertEquals(new Card(Card.SUIT.CLUBS, 11), aip.getCardToPlay(leadingSuitClubsTrick));
 	}
 	
 	@Test
@@ -69,7 +69,7 @@ public class AIPlayerTest {
 		aip.hand.add(new Card(Card.SUIT.CLUBS, 12));
 		aip.hand.add(new Card(Card.SUIT.CLUBS, 13));
 		aip.hand.add(new Card(Card.SUIT.CLUBS, 14));
-		assertEquals(new Card(Card.SUIT.CLUBS, 9), aip.getCardToPlay(leadingSuitHeartsTrick));
+		assertEquals(new Card(Card.SUIT.CLUBS, 11), aip.getCardToPlay(leadingSuitHeartsTrick));
 	}
 
 	@Test
