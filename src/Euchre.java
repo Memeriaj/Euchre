@@ -95,7 +95,6 @@ public class Euchre {
 	public void humanPreRoundCall()
 	{
 		currentRound.preRoundCall();
-		makeGameReadyForHuman();
 	}
 
 	public void makeAIPlay() {
@@ -164,7 +163,6 @@ public class Euchre {
 		{
 			currentRound.preRoundCall(Card.SUIT.HEARTS);
 		}
-		makeGameReadyForHuman();
 	}
 	
 	// used for both AI and humans
