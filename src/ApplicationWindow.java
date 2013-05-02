@@ -95,9 +95,10 @@ public class ApplicationWindow {
 				Utils.internationalizeString("opponent") + ": " + opponentTrickScore;
 		String right = Utils.convertStringToHTML(rConvert);
 		
-		String mConvert = Utils.internationalizeString("trump") + ": " +
-				Utils.internationalizeString(suit) + "       " + Utils.internationalizeString("dealer") + 
-				": "+dealer;
+//		String mConvert = Utils.internationalizeString("trump") + ": " +
+//				Utils.internationalizeString(suit) + "       " + Utils.internationalizeString("dealer") + 
+//				": "+dealer;
+		String mConvert = "Trump: "+suit+"    Dealer: "+dealer;
 		String middle = Utils.convertStringToHTML(mConvert);
 		scoreLabels[0].setText(left);
 		scoreLabels[1].setText(right);
@@ -217,6 +218,7 @@ public class ApplicationWindow {
 	 *            The hand of that player
 	 */
 	private void updateHands(int pos, ArrayList<Card> currentHand) {
+		System.out.println(currentHand);
 		for (int q = 0; q < currentHand.size(); q++) {
 			Card currCard = currentHand.get(q);
 			String toSet = currCard.toString();

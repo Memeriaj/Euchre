@@ -175,7 +175,12 @@ public class Round {
 		else if(trickCount[callingTeam] < 5 )
 			ans[callingTeam] = 1;
 		else //trickCount[dealer] == 5)
-			ans[callingTeam] = 2;
+		{
+			if (outPlayer != -1 && outPlayer % 2 == callingTeam)
+				ans[callingTeam] = 4;
+			else
+				ans[callingTeam] = 2;
+		}
 		
 		return ans;
 	}
