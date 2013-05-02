@@ -6,7 +6,7 @@ public class AIPlayer extends Player
 	public AIPlayer(String name) {
 		super(name);
 	}
-	
+	/*
 	public Card getCardToPlay(Trick trick)
 	{
 		Card cardToPlay;
@@ -25,7 +25,22 @@ public class AIPlayer extends Player
 		this.removeCardFromHand(cardToPlay);
 		return cardToPlay;
 	}
-
+	*/
+	public Card getCardToPlay(Trick trick)
+	{
+		Card cardToPlay = new NullCard();
+		ArrayList<Card> choices = new ArrayList<Card>();
+		boolean[] choiceArray = this.getPlayableCards(trick.leadingSuit, trick.trump);
+		for(int x=0; x<this.hand.size();x++)
+			if(choiceArray[x])
+				choices.add(this.hand.get(x));
+		for(int x=0;x<choices.size();x++)
+			if (choices.get(x).cardValue(trick.trump, trick.leadingSuit) > cardToPlay.cardValue(trick.trump, trick.leadingSuit))
+				cardToPlay = choices.get(x);
+		this.removeCardFromHand(cardToPlay);
+		return cardToPlay;
+	}
+	
 	public boolean pickUp(Card kitty)
 	{
 		ArrayList<Card> h = super.hand;
