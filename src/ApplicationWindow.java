@@ -120,13 +120,14 @@ public class ApplicationWindow {
 		extraButtonsPanel.setLayout(new GridLayout());
 		for(String s : buttonsText){
 			JButton button = new JButton();
-			button.setText(s);
+			button.setText(Utils.internationalizeString(s));
+			button.setName(s);
 			button.addActionListener(new ActionListener() {
 
 				@Override
 				public void actionPerformed(ActionEvent arg0) {
 					JButton buttonPressed = (JButton) arg0.getSource();
-					controller.extraButtonSelected(buttonPressed.getText());
+					controller.extraButtonSelected(buttonPressed.getName());
 				}
 			});
 			extraButtonsPanel.add(button);
@@ -191,7 +192,7 @@ public class ApplicationWindow {
 						@Override
 						public void actionPerformed(ActionEvent arg0) {
 							JButton buttonPressed = (JButton) arg0.getSource();
-							controller.cardPlayed(buttonPressed.getText());
+							controller.cardPlayed(buttonPressed.getName());
 						}
 					});
 					playerPanels.get(0).add(toAdd);
@@ -222,11 +223,13 @@ public class ApplicationWindow {
 			Card currCard = currentHand.get(q);
 			String toSet = currCard.toString();
 			if (pos == 0){
+				((JButton) playerPanels.get(pos).getComponent(q)).setName(toSet);
 				((JButton) playerPanels.get(pos).getComponent(q))
-						.setText(toSet);
+					.setText(Utils.internationalizeString(toSet));
 			}
 			else
-				((JLabel) playerPanels.get(pos).getComponent(q)).setText(toSet);
+				((JLabel) playerPanels.get(pos).getComponent(q))
+					.setText(Utils.internationalizeString(toSet));
 			playerPanels.get(pos).getComponent(q).setVisible(true);
 		}
 		for (int q = currentHand.size(); q < 5; q++)

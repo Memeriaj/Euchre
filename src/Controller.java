@@ -38,7 +38,8 @@ public class Controller {
 		String[] buttonsText = {"Pass", "Pick it up"};
 		applicationWindow.setExtraButtonDisplay(buttonsText);
 		System.out.println("SETUP BUTTONS");
-		applicationWindow.setMiddleTextArea("Card Turned up: "+euchre.currentRound.turnedUpCard.toString());
+		applicationWindow.setMiddleTextArea(Utils.internationalizeString("cardTurnedUp")+": "+
+				Utils.internationalizeString(euchre.currentRound.turnedUpCard.toString()));
 		applicationWindow.refreshWindow();
 	}
 
@@ -60,7 +61,7 @@ public class Controller {
 			cardsEnabled = euchre.getPlayableCardsForHuman();
 		applicationWindow.setPlayersCardsEnabled(cardsEnabled);
 		if(euchre.currentRound.outPlayer == 0){
-			String[] button = {"Continue with Game"};
+			String[] button = {"contWithGame"};
 			applicationWindow.setExtraButtonDisplay(button);
 		}
 		applicationWindow.refreshWindow();
@@ -158,7 +159,7 @@ public class Controller {
 			extras[q] = hands.get(0).get(q).toString();
 		extras[5] = euchre.currentRound.turnedUpCard.toString();
 		applicationWindow.setExtraButtonDisplay(extras);
-		applicationWindow.setMiddleTextArea("Please select a card to discard.");
+		applicationWindow.setMiddleTextArea(Utils.internationalizeString("selectCardDiscard"));
 		applicationWindow.refreshWindow();
 	}
 	

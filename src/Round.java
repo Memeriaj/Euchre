@@ -237,10 +237,10 @@ public class Round {
 	String produceTrickHistoryText() {
 		String text = "";
 		if(!trickHistory.isEmpty()){
-			text += "Previous Trick played:\n";
+			text += Utils.internationalizeString("prevTrickPlayed")+":\n";
 			text += trickHistory.get(trickHistory.size()-1).stringOfTrickPlayed();
 		}
-		text += "\nCurrent Trick:\n";
+		text += "\n"+Utils.internationalizeString("currTrick")+":\n";
 		text += currentTrick.stringOfTrickPlayed();
 		return text;
 	}

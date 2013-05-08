@@ -11,8 +11,14 @@ public class Utils {
 	}
 	
 	static String internationalizeString(String s){
+		if(s.indexOf(' ') != -1){
+			String out = "";
+			for(String sub : s.split(" "))
+				out += internationalizeString(sub)+" ";
+			return out.substring(0, out.length()-1);
+		}
 		System.out.println(s);
-		Locale loc = new Locale("en", "US");
+		Locale loc = new Locale("xx", "YY");
 		ResourceBundle messages = ResourceBundle.getBundle("MessagesBundle", loc);
 		return messages.getString(s);
 	}

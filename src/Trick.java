@@ -61,10 +61,10 @@ class Trick {
 		int currentPlayer = leadingPlayer;
 		for(Card card : cardsPlayed){
 			if(currentPlayer == 0)
-				out += "You: ";
+				out += Utils.internationalizeString("you")+": ";
 			else
-				out += "Player " + currentPlayer + ": ";
-			out += card + "\n";
+				out += Utils.internationalizeString("player")+" " + currentPlayer + ": ";
+			out += Utils.internationalizeString(card.toString()) + "\n";
 			currentPlayer = (currentPlayer + 1) % 4;
 		}
 		return out;
