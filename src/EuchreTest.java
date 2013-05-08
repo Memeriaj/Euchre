@@ -14,13 +14,13 @@ public class EuchreTest {
 	@Test
 	public void playerkNotNull(){
 		Euchre e = new Euchre();
-		assertFalse(e.players == new ArrayList<Player>());
+		assertFalse(e.players.equals(new ArrayList<Player>()));
 	}
 	
 	@Test
 	public void allCardsNotNull(){
 		Euchre e = new Euchre();
-		assertFalse(e.allCards == new ArrayList<Card>());
+		assertFalse(e.allCards.equals(new ArrayList<Card>()));
 	}
 	
 	

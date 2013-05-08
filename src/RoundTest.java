@@ -20,21 +20,21 @@ public class RoundTest {
 	public void deckNotNull(){
 		Euchre e = new Euchre();
 		Round r = new Round( e.allCards, e.players,0);
-		assertFalse(r.deck == new LinkedList<Card>());
+		assertFalse(r.deck.equals(new LinkedList<Card>()));
 	}
 	
 	@Test
 	public void playerkNotNull(){
 		Euchre e = new Euchre();
 		Round r = new Round( e.allCards, e.players,0);
-		assertFalse(r.players == new ArrayList<Player>());
+		assertFalse(r.players.equals(new ArrayList<Player>()));
 	}
 	
 	@Test
 	public void allCardsNotNull(){
 		Euchre e = new Euchre();
 		Round r = new Round( e.allCards, e.players,0);
-		assertFalse(r.allCards == new ArrayList<Card>());
+		assertFalse(r.allCards.equals(new ArrayList<Card>()));
 	}
 	
 	@Test

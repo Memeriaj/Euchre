@@ -82,6 +82,7 @@ public class UtilsTest {
 		assertEquals(Utils.internationalizeString("right"),"Right");
 	}
 	
+	@Test
 	public void testInternationalizeStringWithUSLocale(){
 		Locale loc = new Locale("en", "US");
 		assertEquals(Utils.internationalizeString("overallScore",loc),"Overall Score");
