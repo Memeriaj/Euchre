@@ -50,9 +50,9 @@ public class Controller {
 		applicationWindow.setMiddleTextArea(Utils.convertStringToHTML(text));
 		String trump = "";
 		if(euchre.currentRound.trump == null)
-			trump = "Trump hasn't been set yet";
+			trump = Utils.internationalizeString("trumpNotSet");
 		else
-			trump = euchre.currentRound.trump.toString();
+			trump = Utils.internationalizeString(euchre.currentRound.trump.toString());
 		applicationWindow.setScoreDisplay(euchre.score[0], euchre.score[1], euchre.currentRound.trickCount[0],
 				euchre.currentRound.trickCount[1], trump, printDealer());
 		boolean[] cardsEnabled = {false, false, false, false, false};

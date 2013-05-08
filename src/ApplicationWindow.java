@@ -95,10 +95,9 @@ public class ApplicationWindow {
 				Utils.internationalizeString("opponent") + ": " + opponentTrickScore;
 		String right = Utils.convertStringToHTML(rConvert);
 		
-//		String mConvert = Utils.internationalizeString("trump") + ": " +
-//				Utils.internationalizeString(suit) + "       " + Utils.internationalizeString("dealer") + 
-//				": "+dealer;
-		String mConvert = "Trump: "+suit+"    Dealer: "+dealer;
+		String mConvert = Utils.internationalizeString("trump") + ": " +
+				suit + "       " + Utils.internationalizeString("dealer") + 
+				": "+dealer;
 		String middle = Utils.convertStringToHTML(mConvert);
 		scoreLabels[0].setText(left);
 		scoreLabels[1].setText(right);
