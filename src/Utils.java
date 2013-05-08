@@ -16,4 +16,10 @@ public class Utils {
 		ResourceBundle messages = ResourceBundle.getBundle("MessagesBundle", loc);
 		return messages.getString(s);
 	}
+	
+	static String internationalizeString(String s, Locale l){
+		System.out.println(s);
+		ResourceBundle messages = ResourceBundle.getBundle("MessagesBundle", l);
+		return messages.getString(s);
+	}
 }

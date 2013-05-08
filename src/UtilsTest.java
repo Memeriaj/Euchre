@@ -1,6 +1,8 @@
 
 import static org.junit.Assert.*;
 
+import java.util.Locale;
+
 import org.junit.Test;
 
 
@@ -70,5 +72,21 @@ public class UtilsTest {
 	@Test
 	public void testAllTestsInit(){
 		new AllTests();
+	}
+	
+	@Test
+	public void testInternationalizeString(){
+		assertEquals(Utils.internationalizeString("overallScore"),"Overall Score");
+		assertEquals(Utils.internationalizeString("yours"),"Yours");
+		assertEquals(Utils.internationalizeString("SPADES"),"Spades");
+		assertEquals(Utils.internationalizeString("right"),"Right");
+	}
+	
+	public void testInternationalizeStringWithUSLocale(){
+		Locale loc = new Locale("en", "US");
+		assertEquals(Utils.internationalizeString("overallScore",loc),"Overall Score");
+		assertEquals(Utils.internationalizeString("yours",loc),"Yours");
+		assertEquals(Utils.internationalizeString("SPADES",loc),"Spades");
+		assertEquals(Utils.internationalizeString("right",loc),"Right");
 	}
 }
