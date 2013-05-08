@@ -241,6 +241,7 @@ public class EuchreTest {
 		Player p = e.players.get(0);
 		e.currentRound.currentTrick.leadingPlayer =1;
 		e.currentRound.currentTrick.currentPlayer =1;
+		e.currentRound.currentTrick.currentWinningCard = new Card(Card.SUIT.CLUBS, 1);
 		Player ai1 = e.players.get(1);
 		ai1.hand.clear();
 		ai1.hand.add(new Card(Card.SUIT.CLUBS, 9));
@@ -306,6 +307,7 @@ public class EuchreTest {
 		Player p = e.players.get(0);
 		e.currentRound.currentTrick.leadingPlayer =1;
 		e.currentRound.currentTrick.currentPlayer =1;
+		e.currentRound.currentTrick.currentWinningCard = new Card(Card.SUIT.CLUBS, 1);
 		Player ai1 = e.players.get(1);
 		ai1.hand.clear();
 		ai1.hand.add(new Card(Card.SUIT.CLUBS, 9));

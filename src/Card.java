@@ -1,4 +1,4 @@
-
+ 
 public class Card 
 {
 	public enum SUIT
