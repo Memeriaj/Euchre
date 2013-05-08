@@ -43,17 +43,29 @@ public class AIPlayerTest {
 		assertEquals(aip.hand.size(),4);
 	}
 	
-	
+	@Test
+	public void testGetCardToPlay4Card() {
+		String name = "TestAIPlayer";
+		AIPlayer aip = new AIPlayer(name);
+		assertEquals(name, aip.name);
+		aip.hand.add(new Card(Card.SUIT.CLUBS, 10));
+		aip.hand.add(new Card(Card.SUIT.CLUBS, 11));
+		aip.hand.add(new Card(Card.SUIT.CLUBS, 13));
+		aip.hand.add(new Card(Card.SUIT.CLUBS, 14));
+		assertEquals(aip.hand.size(),4);
+		assertEquals(new Card(Card.SUIT.CLUBS, 11), aip.getCardToPlay(new Trick(0,Card.SUIT.CLUBS)));
+		assertEquals(aip.hand.size(),3);
+	}	
 
 	@Test
 	public void testGetCardToPlaySUITIntHasOneOfSuit() {
 		String name = "TestAIPlayer";
 		AIPlayer aip = new AIPlayer(name);
 		assertEquals(name, aip.name);
-		aip.hand.add(new Card(Card.SUIT.CLUBS, 10));
+		aip.hand.add(new Card(Card.SUIT.CLUBS, 13));
 		aip.hand.add(new Card(Card.SUIT.CLUBS, 11));
 		aip.hand.add(new Card(Card.SUIT.CLUBS, 12));
-		aip.hand.add(new Card(Card.SUIT.CLUBS, 13));
+		aip.hand.add(new Card(Card.SUIT.CLUBS, 10));
 		aip.hand.add(new Card(Card.SUIT.CLUBS, 14));
 		
 		assertEquals(new Card(Card.SUIT.CLUBS, 11), aip.getCardToPlay(leadingSuitClubsTrick));
@@ -71,7 +83,50 @@ public class AIPlayerTest {
 		aip.hand.add(new Card(Card.SUIT.CLUBS, 14));
 		assertEquals(new Card(Card.SUIT.CLUBS, 11), aip.getCardToPlay(leadingSuitHeartsTrick));
 	}
-
+	
+	@Test
+	public void testGetCardToPlaySUITIntDoesHaveOneOfSuit() {
+		String name = "TestAIPlayer";
+		AIPlayer aip = new AIPlayer(name);
+		assertEquals(name, aip.name);
+		aip.hand.add(new Card(Card.SUIT.CLUBS, 9));
+		aip.hand.add(new Card(Card.SUIT.CLUBS, 11));
+		aip.hand.add(new Card(Card.SUIT.HEARTS, 12));
+		aip.hand.add(new Card(Card.SUIT.CLUBS, 13));
+		aip.hand.add(new Card(Card.SUIT.CLUBS, 14));
+		assertEquals(new Card(Card.SUIT.HEARTS, 12), aip.getCardToPlay(leadingSuitHeartsTrick));
+	}
+	
+	@Test
+	public void testGetCardToPlaySUITIntDoesHaveOneOfSuitHighLead() {
+		Trick t = new Trick(0,Card.SUIT.CLUBS);
+		t.playCardForCurrentPlayer(new Card(Card.SUIT.HEARTS,13));
+		String name = "TestAIPlayer";
+		AIPlayer aip = new AIPlayer(name);
+		assertEquals(name, aip.name);
+		aip.hand.add(new Card(Card.SUIT.CLUBS, 9));
+		aip.hand.add(new Card(Card.SUIT.CLUBS, 11));
+		aip.hand.add(new Card(Card.SUIT.HEARTS, 12));
+		aip.hand.add(new Card(Card.SUIT.CLUBS, 13));
+		aip.hand.add(new Card(Card.SUIT.HEARTS, 14));
+		assertEquals(new Card(Card.SUIT.HEARTS, 14), aip.getCardToPlay(t));
+	}
+	
+	@Test
+	public void testGetCardToPlaySUITIntDoesHaveOneOfSuitLowLead() {
+		Trick t = new Trick(0,Card.SUIT.CLUBS);
+		t.playCardForCurrentPlayer(new Card(Card.SUIT.HEARTS,14));
+		String name = "TestAIPlayer";
+		AIPlayer aip = new AIPlayer(name);
+		assertEquals(name, aip.name);
+		aip.hand.add(new Card(Card.SUIT.CLUBS, 9));
+		aip.hand.add(new Card(Card.SUIT.CLUBS, 11));
+		aip.hand.add(new Card(Card.SUIT.HEARTS, 12));
+		aip.hand.add(new Card(Card.SUIT.CLUBS, 13));
+		aip.hand.add(new Card(Card.SUIT.CLUBS, 14));
+		assertEquals(new Card(Card.SUIT.HEARTS, 12), aip.getCardToPlay(t));
+	}
+	
 	@Test
 	public void testPickUpAsDealer() {
 		String name = "TestAIPlayer";
@@ -330,8 +385,21 @@ public class AIPlayerTest {
 		aip.hand.add(new Card(Card.SUIT.DIAMONDS, 12));
 		aip.hand.add(new Card(Card.SUIT.DIAMONDS, 13));
 		assertEquals(aip.hand.size(),5);
-		assertEquals(Card.SUIT.DIAMONDS,aip.trumpDecider(Card.SUIT.HEARTS));
+		assertEquals(Card.SUIT.DIAMONDS,aip.trumpDecider(Card.SUIT.SPADES));
 		assertEquals(aip.hand.size(),5);
+	}
+	
+	@Test
+	public void testTrumpDeciderFullHandInvalid2() {
+		String name = "TestAIPlayer";
+		AIPlayer aip = new AIPlayer(name);
+		assertEquals(name, aip.name);
+		aip.hand.add(new Card(Card.SUIT.DIAMONDS, 14));
+		aip.hand.add(new Card(Card.SUIT.DIAMONDS, 10));
+		aip.hand.add(new Card(Card.SUIT.DIAMONDS, 11));
+		aip.hand.add(new Card(Card.SUIT.DIAMONDS, 12));
+		aip.hand.add(new Card(Card.SUIT.DIAMONDS, 13));
+		assertEquals(Card.SUIT.HEARTS,aip.trumpDecider(Card.SUIT.DIAMONDS));
 	}
 	
 	@Test
@@ -352,12 +420,12 @@ public class AIPlayerTest {
 		String name = "TestAIPlayer";
 		AIPlayer aip = new AIPlayer(name);
 		assertEquals(name, aip.name);
-		aip.hand.add(new Card(Card.SUIT.CLUBS, 14));
+		aip.hand.add(new Card(Card.SUIT.SPADES, 10));
 		aip.hand.add(new Card(Card.SUIT.HEARTS, 10));
-		aip.hand.add(new Card(Card.SUIT.CLUBS, 11));
-		aip.hand.add(new Card(Card.SUIT.HEARTS, 12));
-		aip.hand.add(new Card(Card.SUIT.DIAMONDS, 13));
-		assertEquals(Card.SUIT.CLUBS,aip.trumpDecider(Card.SUIT.SPADES));
+		aip.hand.add(new Card(Card.SUIT.SPADES, 9));
+		aip.hand.add(new Card(Card.SUIT.SPADES, 12));
+		aip.hand.add(new Card(Card.SUIT.DIAMONDS, 12));
+		assertEquals(Card.SUIT.SPADES,aip.trumpDecider(Card.SUIT.HEARTS));
 	}
 	
 	@Test
@@ -371,6 +439,32 @@ public class AIPlayerTest {
 		aip.hand.add(new Card(Card.SUIT.HEARTS, 12));
 		aip.hand.add(new Card(Card.SUIT.DIAMONDS, 13));
 		assertEquals(Card.SUIT.HEARTS,aip.trumpDecider(Card.SUIT.CLUBS));
+	}
+	
+	@Test
+	public void testTrumpDeciderMixedHandInvalid2() {
+		String name = "TestAIPlayer";
+		AIPlayer aip = new AIPlayer(name);
+		assertEquals(name, aip.name);
+		aip.hand.add(new Card(Card.SUIT.SPADES, 14));
+		aip.hand.add(new Card(Card.SUIT.HEARTS, 10));
+		aip.hand.add(new Card(Card.SUIT.SPADES, 11));
+		aip.hand.add(new Card(Card.SUIT.CLUBS, 12));
+		aip.hand.add(new Card(Card.SUIT.SPADES, 13));
+		assertEquals(Card.SUIT.CLUBS,aip.trumpDecider(Card.SUIT.SPADES));
+	}
+	
+	@Test
+	public void testTrumpDeciderMixedHand() {
+		String name = "TestAIPlayer";
+		AIPlayer aip = new AIPlayer(name);
+		assertEquals(name, aip.name);
+		aip.hand.add(new Card(Card.SUIT.CLUBS, 14));
+		aip.hand.add(new Card(Card.SUIT.HEARTS, 10));
+		aip.hand.add(new Card(Card.SUIT.SPADES, 11));
+		aip.hand.add(new Card(Card.SUIT.CLUBS, 12));
+		aip.hand.add(new Card(Card.SUIT.CLUBS, 13));
+		assertEquals(Card.SUIT.CLUBS,aip.trumpDecider(Card.SUIT.SPADES));
 	}
 	
 	@Test
@@ -449,11 +543,11 @@ public class AIPlayerTest {
 		String name = "TestAIPlayer";
 		AIPlayer aip = new AIPlayer(name);
 		assertEquals(name, aip.name);
-		aip.hand.add(new Card(Card.SUIT.CLUBS, 10));
-		aip.hand.add(new Card(Card.SUIT.CLUBS, 11));
-		aip.hand.add(new Card(Card.SUIT.CLUBS, 12));
-		aip.hand.add(new Card(Card.SUIT.CLUBS, 13));
-		aip.hand.add(new Card(Card.SUIT.CLUBS, 14));
+		aip.hand.add(new Card(Card.SUIT.SPADES, 10));
+		aip.hand.add(new Card(Card.SUIT.SPADES, 11));
+		aip.hand.add(new Card(Card.SUIT.SPADES, 12));
+		aip.hand.add(new Card(Card.SUIT.SPADES, 13));
+		aip.hand.add(new Card(Card.SUIT.SPADES, 14));
 		
 		assertFalse(aip.pickUp(new Card(Card.SUIT.HEARTS, 9)));
 	}
@@ -464,12 +558,12 @@ public class AIPlayerTest {
 		AIPlayer aip = new AIPlayer(name);
 		assertEquals(name, aip.name);
 		aip.hand.add(new Card(Card.SUIT.CLUBS, 14));
-		aip.hand.add(new Card(Card.SUIT.HEARTS, 10));
+		aip.hand.add(new Card(Card.SUIT.DIAMONDS, 10));
 		aip.hand.add(new Card(Card.SUIT.CLUBS, 9));
-		aip.hand.add(new Card(Card.SUIT.HEARTS, 14));
-		aip.hand.add(new Card(Card.SUIT.DIAMONDS, 13));
-		assertEquals(23,aip.handValue(aip.hand,Card.SUIT.HEARTS));
-		assertTrue(aip.pickUp(new Card(Card.SUIT.HEARTS, 9)));
+		aip.hand.add(new Card(Card.SUIT.DIAMONDS, 14));
+		aip.hand.add(new Card(Card.SUIT.HEARTS, 13));
+		assertEquals(23,aip.handValue(aip.hand,Card.SUIT.DIAMONDS));
+		assertTrue(aip.pickUp(new Card(Card.SUIT.DIAMONDS, 9)));
 	}
 	
 	@Test
@@ -484,6 +578,19 @@ public class AIPlayerTest {
 		aip.hand.add(new Card(Card.SUIT.DIAMONDS, 13));
 		assertEquals(23,aip.handValue(aip.hand,Card.SUIT.HEARTS));
 		assertFalse(aip.pickUp(new Card(Card.SUIT.HEARTS, 9)));
+	}
+	
+	@Test
+	public void testPickUpMixed3() {
+		String name = "TestAIPlayer";
+		AIPlayer aip = new AIPlayer(name);
+		assertEquals(name, aip.name);
+		aip.hand.add(new Card(Card.SUIT.SPADES, 10));
+		aip.hand.add(new Card(Card.SUIT.HEARTS, 10));
+		aip.hand.add(new Card(Card.SUIT.SPADES, 9));
+		aip.hand.add(new Card(Card.SUIT.HEARTS, 12));
+		aip.hand.add(new Card(Card.SUIT.DIAMONDS, 9));
+		assertFalse(aip.pickUp(new Card(Card.SUIT.CLUBS, 9)));
 	}
 	
 	@Test
