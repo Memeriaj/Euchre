@@ -338,4 +338,29 @@ public class EuchreTest {
 		assertEquals(e.currentRound.trickCount[1],0);
 		assertEquals(p.hand.size(), 5);
 	}
+	
+	@Test
+	public void testGetPlayableCardsForHuman()
+	{
+		Euchre target = new Euchre();
+		Player human = target.players.get(0);
+		human.hand.clear();
+		human.hand.add(new Card(Card.SUIT.CLUBS, 10));
+		human.hand.add(new Card(Card.SUIT.HEARTS, 10));
+		human.hand.add(new Card(Card.SUIT.CLUBS, 12));
+		human.hand.add(new Card(Card.SUIT.DIAMONDS, 10));
+		human.hand.add(new Card(Card.SUIT.SPADES, 11));
+		
+		target.currentRound.currentTrick.leadingSuit = Card.SUIT.CLUBS;
+		target.currentRound.trump = Card.SUIT.CLUBS;
+		
+		boolean[] playable = target.getPlayableCardsForHuman();
+		boolean[] test = {true, false, true, false, true};
+		
+		assertEquals(test[0],playable[0]);
+		assertEquals(test[1],playable[1]);
+		assertEquals(test[2],playable[2]);
+		assertEquals(test[3],playable[3]);
+		assertEquals(test[4],playable[4]);
+	}
 }
