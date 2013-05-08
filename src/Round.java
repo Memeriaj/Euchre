@@ -176,7 +176,7 @@ public class Round {
 			ans[callingTeam] = 1;
 		else //trickCount[dealer] == 5)
 		{
-			if (outPlayer != -1 && outPlayer % 2 == callingTeam)
+			if (outPlayer != -1)
 				ans[callingTeam] = 4;
 			else
 				ans[callingTeam] = 2;

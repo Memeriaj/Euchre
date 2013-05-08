@@ -1,4 +1,4 @@
- 
+
 public class Card 
 {
 	public enum SUIT
@@ -67,7 +67,9 @@ public class Card
 	@Override
 	public boolean equals(Object obj)
 	{
-		if (obj == null || obj.getClass() != this.getClass())
+		if (obj == null)
+			return false;
+		if(obj.getClass() != this.getClass())
 			return false;
 		Card otherCard = (Card) obj;
 		return this.value == otherCard.value && this.suit == otherCard.suit;
@@ -131,6 +133,8 @@ public class Card
 				return 5;
 			case 9: /*trump nine*/
 				return 4;
+			default:
+				return -1;
 			}
 		}
 		else if (this.suit == sameColor && this.value == 11){

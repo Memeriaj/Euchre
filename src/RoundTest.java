@@ -103,12 +103,41 @@ public class RoundTest {
 	{
 		Euchre e = new Euchre();
 		Round r = e.currentRound;
+		r.outPlayer=-1;
 		r.callingTeam = 0;
 		r.trickCount[0] = 2;
 		r.trickCount[1] = 3;
 		int[] target = r.scoreRound();
 		assertEquals(0, target[0]);
 		assertEquals(2, target[1]);
+	}
+	
+	@Test
+	public void testScoreRoundGoAlone5Tricks()
+	{
+		Euchre e = new Euchre();
+		Round r = e.currentRound;
+		r.callingTeam = 0;
+		r.outPlayer = 0;
+		r.trickCount[0] = 5;
+		r.trickCount[1] = 0;
+		int[] target = r.scoreRound();
+		assertEquals(4, target[0]);
+		assertEquals(0, target[1]);
+	}
+	
+	@Test
+	public void testScoreRoundGoAlone4Tricks()
+	{
+		Euchre e = new Euchre();
+		Round r = e.currentRound;
+		r.callingTeam = 0;
+		r.outPlayer = 0;
+		r.trickCount[0] = 4;
+		r.trickCount[1] = 1;
+		int[] target = r.scoreRound();
+		assertEquals(1, target[0]);
+		assertEquals(0, target[1]);
 	}
 	
 	@Test
@@ -142,6 +171,7 @@ public class RoundTest {
 	{
 		Euchre e = new Euchre();
 		Round r = e.currentRound;
+		r.outPlayer=-1;
 		r.callingTeam = 0;
 		r.trickCount[0] = 5;
 		r.trickCount[1] = 0;
@@ -206,6 +236,31 @@ public class RoundTest {
 		assertEquals(callingPlayer %2,r.callingTeam );
 	}
 
+	@Test
+	public void testPreRoundCallDown()
+	{
+		Euchre e = new Euchre();
+		Round r = e.currentRound;
+		int callingPlayer = r.currentTrick.currentPlayer;
+		r.preRoundCall(Card.SUIT.SPADES);
+		assertEquals(Card.SUIT.SPADES,r.trump);
+		assertEquals(callingPlayer %2,r.callingTeam );
+	}
+	
+	@Test
+	public void testPreRoundCallDownOutPlayerLead()
+	{
+		Euchre e = new Euchre();
+		Round r = e.currentRound;
+		r.outPlayer = 0;
+		r.currentTrick.leadingPlayer =0;
+		int callingPlayer = r.currentTrick.currentPlayer;
+		r.preRoundCall(Card.SUIT.SPADES);
+		assertEquals(Card.SUIT.SPADES,r.trump);
+		assertEquals(callingPlayer %2,r.callingTeam );
+	}
+	
+	
 	@Test
 	public void testPreRoundCallAIDiscardKitty()
 	{
@@ -298,6 +353,25 @@ public class RoundTest {
 														   "Player 1: Ten of Spades\n");
 	}
 	
+	@Test
+	public void testTrickHistoryNull()
+	{
+		Euchre e = new Euchre();
+		Round firstRound = e.currentRound;
+		firstRound.dealer = 0;
+		Trick t2 = new Trick(0, Card.SUIT.CLUBS);
+		Card nineOfSpades = new Card(Card.SUIT.SPADES, 9);
+		t2.playCardForCurrentPlayer(nineOfSpades);
+		Card tenOfSpades = new Card(Card.SUIT.SPADES, 10);
+		t2.playCardForCurrentPlayer(tenOfSpades);
+		firstRound.currentTrick = t2;
+		//System.out.println(t.stringOfTrickPlayed());
+		//System.out.println(t2.stringOfTrickPlayed());
+		System.out.println(firstRound.produceTrickHistoryText());
+		assertEquals(firstRound.produceTrickHistoryText(), "\nCurrent Trick:\n" +
+														   "You: Nine of Spades\n" +
+														   "Player 1: Ten of Spades\n");
+	}
 	@Test
 	public void testDiscardDealerOutplayer(){
 		Euchre e = new Euchre();
