@@ -171,10 +171,78 @@ public class RoundTest {
 	}
 	
 	@Test
+	public void testPreRoundPassCardTurnedDownAlreadyDown()
+	{
+		Euchre e = new Euchre();
+		Round r = e.currentRound;
+		r.isCardTurnedUp = false;
+		r.currentTrick.currentPlayer = r.dealer;
+		r.preRoundPass();
+		assertFalse(r.isCardTurnedUp);
+	}
+	
+	@Test
+	public void testPreRoundPassCardTurnedDownStickTheDealer()
+	{
+		Euchre e = new Euchre();
+		Round r = e.currentRound;
+		r.dealer = 0;
+		r.isCardTurnedUp = false;
+		r.currentTrick.currentPlayer = 3;
+		r.preRoundPass();
+		assertFalse(r.isCardTurnedUp);
+		assertTrue(r.isStickTheDealer);
+	}
+	
+	@Test
 	public void testPreRoundCall()
 	{
 		Euchre e = new Euchre();
 		Round r = e.currentRound;
+		Card.SUIT turnedUpSuit = r.turnedUpCard.suit;
+		int callingPlayer = r.currentTrick.currentPlayer;
+		r.preRoundCall();
+		assertEquals(turnedUpSuit,r.trump);
+		assertEquals(callingPlayer %2,r.callingTeam );
+	}
+
+	@Test
+	public void testPreRoundCallAIDiscardKitty()
+	{
+		Euchre e = new Euchre();
+		Round r = e.currentRound;
+		r.currentTrick.currentPlayer = 2;
+		r.dealer = 2;
+		r.turnedUpCard = new Card(Card.SUIT.CLUBS, 9);
+		AIPlayer aip = (AIPlayer)r.players.get(2);
+		aip.hand.clear();
+		aip.hand.add(new Card(Card.SUIT.CLUBS, 14));
+		aip.hand.add(new Card(Card.SUIT.CLUBS, 10));
+		aip.hand.add(new Card(Card.SUIT.CLUBS, 11));
+		aip.hand.add(new Card(Card.SUIT.CLUBS, 12));
+		aip.hand.add(new Card(Card.SUIT.CLUBS, 13));
+		Card.SUIT turnedUpSuit = r.turnedUpCard.suit;
+		int callingPlayer = r.currentTrick.currentPlayer;
+		r.preRoundCall();
+		assertEquals(turnedUpSuit,r.trump);
+		assertEquals(callingPlayer %2,r.callingTeam );
+	}
+
+	@Test
+	public void testPreRoundCallAIDoesntDiscardKitty()
+	{
+		Euchre e = new Euchre();
+		Round r = e.currentRound;
+		r.currentTrick.currentPlayer = 2;
+		r.dealer = 2;
+		r.turnedUpCard = new Card(Card.SUIT.CLUBS, 10);
+		AIPlayer aip = (AIPlayer)r.players.get(2);
+		aip.hand.clear();
+		aip.hand.add(new Card(Card.SUIT.CLUBS, 14));
+		aip.hand.add(new Card(Card.SUIT.CLUBS, 9));
+		aip.hand.add(new Card(Card.SUIT.CLUBS, 11));
+		aip.hand.add(new Card(Card.SUIT.CLUBS, 12));
+		aip.hand.add(new Card(Card.SUIT.CLUBS, 13));
 		Card.SUIT turnedUpSuit = r.turnedUpCard.suit;
 		int callingPlayer = r.currentTrick.currentPlayer;
 		r.preRoundCall();

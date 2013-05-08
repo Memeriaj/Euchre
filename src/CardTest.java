@@ -24,6 +24,7 @@ public class CardTest {
 		Card c7 = new Card(Card.SUIT.DIAMONDS, 14);
 		Card c8 = new Card(Card.SUIT.DIAMONDS, 14);
 		assertEquals(c7,c8);
+		assertFalse(c1.equals(null));
 	}
 	
 	@Test
@@ -259,5 +260,11 @@ public class CardTest {
 	public void testBiddingValueNotTrumpKing(){
 		Card c = new Card(Card.SUIT.HEARTS, 13);
 		assertEquals(c.biddingValue(Card.SUIT.CLUBS),2);
+	}
+	
+	@Test
+	public void testBiddingValueDefaultTrump(){
+		Card c = new Card(Card.SUIT.HEARTS, 1);
+		assertEquals(c.biddingValue(Card.SUIT.HEARTS),-1);
 	}
 }
