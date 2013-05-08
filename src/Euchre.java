@@ -1,6 +1,9 @@
 import java.util.ArrayList;
 
 public class Euchre {
+	public boolean infiniteGame = false; // Used for testing and debugging to make game never end.
+	
+	public boolean gameOver = false;
 	public ArrayList<Card> allCards = new ArrayList<Card>();
 	public ArrayList<Player> players = new ArrayList<Player>();
 	public Round currentRound;
@@ -175,9 +178,11 @@ public class Euchre {
 			int[] roundScore = currentRound.scoreRound();
 			score[0] += roundScore[0];
 			score[1] += roundScore[1];
+			if (score[0] >=10 || score[1] >= 10 && !infiniteGame)
+				gameOver = true;
 			roundHistory.add(currentRound);
 			currentRound = currentRound.getNextRound();
-			System.out.println("NEW DEALER IS "+currentRound.dealer);
+			System.out.println("Number of Rounds passed: "+roundHistory.size());
 		}
 	}
 
