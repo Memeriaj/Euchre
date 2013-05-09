@@ -18,7 +18,7 @@ public class Utils {
 			return out.substring(0, out.length()-1);
 		}
 		System.out.println(s);
-		Locale loc = new Locale("xx", "YY");
+		Locale loc = new Locale("en", "US");
 		ResourceBundle messages = ResourceBundle.getBundle("MessagesBundle", loc);
 		return messages.getString(s);
 	}

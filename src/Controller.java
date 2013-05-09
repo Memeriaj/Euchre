@@ -18,6 +18,15 @@ public class Controller {
 	public void cardPlayed(String cardText) {
 		euchre.humanPlayCard(cardText);
 		updateGUI();
+		if(euchre.gameOver){
+			String endText = Utils.internationalizeString("gameOver")+"\n";
+			if(euchre.score[0] > euchre.score[1])
+				endText += Utils.internationalizeString("won");
+			else
+				endText += Utils.internationalizeString("lost");
+			applicationWindow.setMiddleTextArea(Utils.convertStringToHTML(endText));
+			return;
+		}
 		setUpIntitalRound();
 	}
 	
