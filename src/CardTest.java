@@ -265,6 +265,6 @@ public class CardTest {
 	@Test
 	public void testBiddingValueDefaultTrump(){
 		Card c = new Card(Card.SUIT.HEARTS, 1);
-		assertEquals(c.biddingValue(Card.SUIT.HEARTS),-1);
+		assertEquals(0,c.biddingValue(Card.SUIT.HEARTS));
 	}
 }
