@@ -8,6 +8,7 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -20,6 +21,7 @@ public class ApplicationWindow {
 	private JLabel middleText;
 	private JLabel[] scoreLabels;
 	private JPanel extraButtonsPanel;
+	private JCheckBox showOppCards;
 
 	/**
 	 * Launch the application.
@@ -79,6 +81,10 @@ public class ApplicationWindow {
 		out.add(scoreLabels[2], BorderLayout.CENTER);
 		out.add(new JPanel(), BorderLayout.SOUTH);
 		setScoreDisplay(0, 0, 0, 0, "", "");
+		showOppCards = new JCheckBox();
+		showOppCards.setText(Utils.internationalizeString("showOppCards"));
+		showOppCards.setSelected(false);
+		out.add(showOppCards, BorderLayout.SOUTH);
 		return out;
 	}
 
@@ -227,9 +233,12 @@ public class ApplicationWindow {
 				((JButton) playerPanels.get(pos).getComponent(q))
 					.setText(Utils.internationalizeString(toSet));
 			}
-			else
+			else{
+				if(!showOppCards.isSelected())
+					toSet = "hidden";
 				((JLabel) playerPanels.get(pos).getComponent(q))
 					.setText(Utils.internationalizeString(toSet));
+			}
 			playerPanels.get(pos).getComponent(q).setVisible(true);
 		}
 		for (int q = currentHand.size(); q < 5; q++)
