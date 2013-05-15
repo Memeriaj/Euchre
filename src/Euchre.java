@@ -1,7 +1,14 @@
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class Euchre {
+	
+	/*--OPTIONS--*/
+	public int difficulty = 1;//1 = EASY, 2 = NORMAL
+	public Locale lang = new Locale("en", "US");
 	public boolean infiniteGame = false; // Used for testing and debugging to make game never end.
+	/*-----------*/
+	
 	
 	public boolean gameOver = false;
 	public ArrayList<Card> allCards = new ArrayList<Card>();
@@ -9,7 +16,7 @@ public class Euchre {
 	public Round currentRound;
 	ArrayList<Round> roundHistory = new ArrayList<Round>();
 	public int[] score = new int[2];
-	
+
 	public Euchre(){
 		setUpAllCards();
 		setUpPlayers();
@@ -46,9 +53,16 @@ public class Euchre {
 	/*Adds each player to the list of players. Can edit later to allow input*/
 	private void setUpPlayers(){
 		players.add(new Player("Human"));
-		players.add(new AIPlayer("AI 1"));
-		players.add(new AIPlayer("AI 2"));
-		players.add(new AIPlayer("AI 3"));
+		if(difficulty == 1){
+			players.add(new EasyAIPlayer("AI 1"));
+			players.add(new EasyAIPlayer("AI 2"));
+			players.add(new EasyAIPlayer("AI 3"));
+		}
+		else if(difficulty == 2){
+			players.add(new AIPlayer("AI 1"));
+			players.add(new AIPlayer("AI 2"));
+			players.add(new AIPlayer("AI 3"));
+		}
 	}
 	
 	public void makeGameReadyForHuman()

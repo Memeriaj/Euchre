@@ -19,7 +19,10 @@ public class EasyAIPlayer extends AIPlayer {
 				playableIndices.add(i);
 		}
 		Random random = new Random();
-		return this.hand.get(playableIndices.get(random.nextInt(playableIndices.size())));
+		int r = random.nextInt(playableIndices.size());
+		Card c = hand.get(playableIndices.get(r));
+		this.removeCardFromHand(c);
+		return c;
 	}
 	
 	public boolean pickUp(Card kitty)
