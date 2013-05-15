@@ -130,7 +130,7 @@ public class Controller {
 			applicationWindow.refreshWindow();
 			return;
 		}
-		else if(text == "Continue with Game"){
+		else if(text == "ContWithGame"){
 			euchre.humanPlayCard("");
 			updateGUI();
 			setUpIntitalRound();
