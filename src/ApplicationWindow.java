@@ -234,7 +234,7 @@ public class ApplicationWindow {
 					.setText(Utils.internationalizeString(toSet));
 			}
 			else{
-				if(!showOppCards.isSelected())
+				if(!showOppCards.isSelected() && toSet != "")
 					toSet = "hidden";
 				((JLabel) playerPanels.get(pos).getComponent(q))
 					.setText(Utils.internationalizeString(toSet));
