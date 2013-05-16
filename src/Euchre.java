@@ -164,19 +164,19 @@ public class Euchre {
 	
 	public void humanPreRoundCallSuit(String suit)
 	{
-		if (suit.equals("Diamonds"))
+		if (suit.equals("DIAMONDS"))
 		{
 			currentRound.preRoundCall(Card.SUIT.DIAMONDS);
 		}
-		else if (suit.equals("Clubs"))
+		else if (suit.equals("CLUBS"))
 		{
 			currentRound.preRoundCall(Card.SUIT.CLUBS);
 		}
-		else if (suit.equals("Spades"))
+		else if (suit.equals("SPADES"))
 		{
 			currentRound.preRoundCall(Card.SUIT.SPADES);
 		}
-		else //if (suit.equals("Hearts"))
+		else //if (suit.equals("HEARTS"))
 		{
 			currentRound.preRoundCall(Card.SUIT.HEARTS);
 		}
